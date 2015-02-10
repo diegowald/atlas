@@ -53,7 +53,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QDateEdit" name="dateEdit"/>
+        <widget class="QDateEdit" name="datePrimerConsulta"/>
        </item>
       </layout>
      </item>
@@ -76,12 +76,12 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QDateEdit" name="dateEdit_2"/>
+        <widget class="QDateEdit" name="dateSegundaConsulta"/>
        </item>
       </layout>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="txtNumeroPaciente"/>
      </item>
     </layout>
    </item>
@@ -91,7 +91,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
@@ -114,7 +114,7 @@
         <number>2</number>
        </property>
        <item>
-        <widget class="WidgetPaciente" name="widget" native="true"/>
+        <widget class="WidgetPaciente" name="widgetPersona" native="true"/>
        </item>
       </layout>
      </widget>
@@ -122,7 +122,10 @@
       <attribute name="title">
        <string>Antecedentes clínicos</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>2</number>
+       </property>
        <property name="leftMargin">
         <number>2</number>
        </property>
@@ -135,49 +138,11 @@
        <property name="bottomMargin">
         <number>2</number>
        </property>
-       <property name="spacing">
-        <number>2</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QCheckBox" name="checkBox">
-         <property name="text">
-          <string>Cardiacos</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QCheckBox" name="checkBox_2">
-         <property name="text">
-          <string>Renales</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <layout class="QGridLayout" name="gridLayoutAntecedentes">
          <property name="spacing">
           <number>2</number>
          </property>
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Nacio Por</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="comboBox">
-           <item>
-            <property name="text">
-             <string>Parto Normal</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Cesarea</string>
-            </property>
-           </item>
-          </widget>
-         </item>
         </layout>
        </item>
       </layout>
@@ -689,8 +654,8 @@
  </connections>
  <buttongroups>
   <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

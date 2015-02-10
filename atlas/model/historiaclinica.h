@@ -14,6 +14,13 @@ public:
                              QObject *parent = 0);
     ~HistoriaClinica();
 
+    PersonaPtr persona();
+    QDate fechaPrimerConsulta();
+    QDate fechaSegundaConsulta();
+    QString numeroPaciente();
+    QList<PreguntaBasePtr> &antecedentes();
+    QList<PreguntaBasePtr> &cuestionario();
+
 signals:
 
 public slots:
@@ -23,6 +30,7 @@ private:
     QDate _fechaSegundaConsulta;
     QList<PreguntaBasePtr> _antecedentes;
     QList<PreguntaBasePtr> _cuestionario;
+    QString _numeroPaciente;
 };
 
 #endif // HISTORIACLINICA_H

@@ -53,6 +53,16 @@ void Persona::setOcupacion(const QString &Ocupacion)
     _ocupacion = Ocupacion;
 }
 
+void Persona::setComoSeEntero(const QString &value)
+{
+    _comoSeEntero = value;
+}
+
+void Persona::setNotas(const QString &notas)
+{
+    _notas = notas;
+}
+
 QString Persona::nombre() const
 {
     return _nombre;
@@ -96,4 +106,14 @@ int Persona::edad() const
 QString Persona::ocupacion() const
 {
     return _ocupacion;
+}
+
+QString Persona::comoSeEntero() const
+{
+    return _comoSeEntero;
+}
+
+QString Persona::notas() const
+{
+    return _notas;
 }

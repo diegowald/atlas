@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
-    <height>364</height>
+    <width>539</width>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,53 +29,55 @@
    <property name="spacing">
     <number>2</number>
    </property>
-   <item row="3" column="2" colspan="2">
-    <widget class="QDateEdit" name="dateEdit"/>
-   </item>
-   <item row="2" column="1" colspan="2">
-    <widget class="QLineEdit" name="lineEdit_3"/>
-   </item>
-   <item row="3" column="5">
-    <widget class="QSpinBox" name="spinBox"/>
-   </item>
-   <item row="2" column="4">
-    <widget class="QLabel" name="label_8">
+   <item row="4" column="4">
+    <widget class="QLabel" name="label_9">
      <property name="text">
-      <string>e-mail</string>
+      <string>Documento</string>
+     </property>
+     <property name="buddy">
+      <cstring>txtDocumento</cstring>
      </property>
     </widget>
    </item>
-   <item row="5" column="0" colspan="3">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Como se entero de AtlasPROfilax?</string>
-     </property>
-    </widget>
+   <item row="4" column="1" colspan="3">
+    <widget class="QLineEdit" name="txtOcupacion"/>
+   </item>
+   <item row="1" column="1" colspan="2">
+    <widget class="QLineEdit" name="txtDomicilio"/>
+   </item>
+   <item row="2" column="6">
+    <widget class="QLineEdit" name="txtEmail"/>
    </item>
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Nombre y Apellido</string>
      </property>
-    </widget>
-   </item>
-   <item row="2" column="5">
-    <widget class="QLineEdit" name="lineEdit_7"/>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Ocupación</string>
+     <property name="buddy">
+      <cstring>txtNombre</cstring>
      </property>
     </widget>
    </item>
-   <item row="0" column="2" colspan="4">
-    <widget class="QLineEdit" name="lineEdit"/>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_3">
+   <item row="2" column="4">
+    <widget class="QLabel" name="label_8">
      <property name="text">
-      <string>Telefonos</string>
+      <string>e-mail</string>
+     </property>
+     <property name="buddy">
+      <cstring>txtEmail</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2" colspan="2">
+    <widget class="QDateEdit" name="dateFechaNacimiento"/>
+   </item>
+   <item row="3" column="6">
+    <widget class="QSpinBox" name="spinEdad"/>
+   </item>
+   <item row="6" column="0" colspan="7">
+    <widget class="QTextEdit" name="txtNotas">
+     <property name="placeholderText">
+      <string>Notas</string>
      </property>
     </widget>
    </item>
@@ -84,50 +86,101 @@
      <property name="text">
       <string>Edad</string>
      </property>
-    </widget>
-   </item>
-   <item row="5" column="3" colspan="3">
-    <widget class="QLineEdit" name="lineEdit_5"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Domicilio</string>
+     <property name="buddy">
+      <cstring>spinEdad</cstring>
      </property>
     </widget>
    </item>
-   <item row="1" column="4">
-    <widget class="QLabel" name="label_7">
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Localidad</string>
+      <string>Telefonos</string>
+     </property>
+     <property name="buddy">
+      <cstring>txtTelefono</cstring>
      </property>
     </widget>
    </item>
-   <item row="1" column="5">
-    <widget class="QLineEdit" name="lineEdit_6"/>
+   <item row="5" column="0" colspan="3">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Como se entero de AtlasPROfilax?</string>
+     </property>
+     <property name="buddy">
+      <cstring>txtComoSeEntero</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2" colspan="5">
+    <widget class="QLineEdit" name="txtNombre"/>
+   </item>
+   <item row="4" column="6">
+    <widget class="QLineEdit" name="txtDocumento"/>
    </item>
    <item row="3" column="0" colspan="2">
     <widget class="QLabel" name="label_4">
      <property name="text">
       <string>Fecha de Nacimiento</string>
      </property>
-    </widget>
-   </item>
-   <item row="4" column="1" colspan="5">
-    <widget class="QLineEdit" name="lineEdit_4"/>
-   </item>
-   <item row="1" column="1" colspan="2">
-    <widget class="QLineEdit" name="lineEdit_2"/>
-   </item>
-   <item row="6" column="0" colspan="6">
-    <widget class="QTextEdit" name="textEdit">
-     <property name="placeholderText">
-      <string>Notas</string>
+     <property name="buddy">
+      <cstring>dateFechaNacimiento</cstring>
      </property>
     </widget>
    </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Ocupación</string>
+     </property>
+     <property name="buddy">
+      <cstring>txtOcupacion</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="3" colspan="4">
+    <widget class="QLineEdit" name="txtComoSeEntero"/>
+   </item>
+   <item row="1" column="4">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Localidad</string>
+     </property>
+     <property name="buddy">
+      <cstring>txtLocalidad</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Domicilio</string>
+     </property>
+     <property name="buddy">
+      <cstring>txtDomicilio</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="6">
+    <widget class="QLineEdit" name="txtLocalidad"/>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QLineEdit" name="txtTelefono"/>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>txtNombre</tabstop>
+  <tabstop>txtDomicilio</tabstop>
+  <tabstop>txtLocalidad</tabstop>
+  <tabstop>txtTelefono</tabstop>
+  <tabstop>txtEmail</tabstop>
+  <tabstop>dateFechaNacimiento</tabstop>
+  <tabstop>spinEdad</tabstop>
+  <tabstop>txtOcupacion</tabstop>
+  <tabstop>txtDocumento</tabstop>
+  <tabstop>txtComoSeEntero</tabstop>
+  <tabstop>txtNotas</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

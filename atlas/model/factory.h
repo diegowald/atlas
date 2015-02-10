@@ -7,9 +7,10 @@
 class Factory : public QObject
 {
     Q_OBJECT
+
 public:
-    explicit Factory(QObject *parent = 0);
     ~Factory();
+    explicit Factory(QObject *parent = NULL);
 
     HistoriaClinicaPtr crearNuevaHistoriaClinica();
 

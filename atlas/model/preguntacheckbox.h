@@ -9,6 +9,9 @@ class PreguntaCheckBox : public PreguntaBase
 public:
     PreguntaCheckBox();
     ~PreguntaCheckBox();
+
+    virtual PreguntaBasePtr clone();
+    virtual QWidget* widget();
 };
 
 #endif // PREGUNTACHECKBOX_H

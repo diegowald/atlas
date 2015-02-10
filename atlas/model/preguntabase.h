@@ -17,9 +17,13 @@ public:
     virtual QString label() const;
     virtual QString nota() const;
 
-    virtual void renderQuestionControl() = 0;
-    virtual QString respuesta() = 0;
+    virtual QWidget *widget(bool includeLabel);
+    virtual QWidget *widget() = 0;
+    //virtual QString respuesta() = 0;
     virtual PreguntaBasePtr clone() = 0;
+
+private:
+    QWidget* widgetWithLabel();
 
 signals:
 

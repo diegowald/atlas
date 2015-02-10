@@ -20,6 +20,8 @@ public:
     void setFechaNacimiento(const QDate &FechaNacimiento);
     void setEdad(int Edad);
     void setOcupacion(const QString &Ocupacion);
+    void setComoSeEntero(const QString &value);
+    void setNotas(const QString &notas);
 
     QString nombre() const;
     QString domicilio() const;
@@ -30,6 +32,8 @@ public:
     QDate fechaNacimiento() const;
     int edad() const;
     QString ocupacion() const;
+    QString comoSeEntero() const;
+    QString notas() const;
 
 signals:
 
@@ -45,6 +49,9 @@ private:
     QDate _fechaNacimiento;
     int _edad;
     QString _ocupacion;
+    QString _comoSeEntero;
+    QString _notas;
+
 };
 
 #endif // PERSONA_H

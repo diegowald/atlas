@@ -11,6 +11,9 @@ public:
     PreguntaCompuesta();
     ~PreguntaCompuesta();
 
+    virtual PreguntaBasePtr clone();
+    virtual QWidget* widget();
+
 private:
     QList<PreguntaBasePtr> _subPreguntas;
 };

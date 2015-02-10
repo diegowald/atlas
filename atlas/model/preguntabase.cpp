@@ -1,4 +1,5 @@
 #include "preguntabase.h"
+#include "../widgets/wdgtwithlabel.h"
 
 PreguntaBase::PreguntaBase(QObject *parent) : QObject(parent)
 {
@@ -28,4 +29,16 @@ QString PreguntaBase::label() const
 QString PreguntaBase::nota() const
 {
     return _nota;
+}
+
+QWidget *PreguntaBase::widget(bool includeLabel)
+{
+    return includeLabel ? widgetWithLabel() : widget();
+}
+
+QWidget *PreguntaBase::widgetWithLabel()
+{
+    WdgtWithLabel *wdget = new WdgtWithLabel();
+    wdget->addWidget(_label, widget());
+    return wdget;
 }

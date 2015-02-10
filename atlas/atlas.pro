@@ -27,7 +27,14 @@ SOURCES += main.cpp\
     model/preguntatexto.cpp \
     model/preguntacombo.cpp \
     model/preguntacombodoble.cpp \
-    model/factory.cpp
+    model/factory.cpp \
+    widgets/wdgtcheckbox.cpp \
+    widgets/wdgtcombo.cpp \
+    widgets/wdgtcombodoble.cpp \
+    widgets/wdgtcompuesto.cpp \
+    widgets/wdgtsino.cpp \
+    widgets/wdgttexto.cpp \
+    widgets/wdgtwithlabel.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -43,9 +50,23 @@ HEADERS  += mainwindow.h \
     model/preguntacombo.h \
     model/preguntacombodoble.h \
     model/forward.h \
-    model/factory.h
+    model/factory.h \
+    widgets/wdgtcheckbox.h \
+    widgets/wdgtcombo.h \
+    widgets/wdgtcombodoble.h \
+    widgets/wdgtcompuesto.h \
+    widgets/wdgtsino.h \
+    widgets/wdgttexto.h \
+    widgets/wdgtwithlabel.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \
     dialogs/dialoghistoriaclinica.ui \
-    widgets/widgetpregunta.ui
+    widgets/widgetpregunta.ui \
+    widgets/wdgtcheckbox.ui \
+    widgets/wdgtcombo.ui \
+    widgets/wdgtcombodoble.ui \
+    widgets/wdgtcompuesto.ui \
+    widgets/wdgtsino.ui \
+    widgets/wdgttexto.ui \
+    widgets/wdgtwithlabel.ui

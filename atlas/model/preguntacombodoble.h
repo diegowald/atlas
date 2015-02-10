@@ -9,6 +9,10 @@ class PreguntaComboDoble : public PreguntaBase
 public:
     PreguntaComboDoble();
     ~PreguntaComboDoble();
+
+    virtual PreguntaBasePtr clone();
+    virtual QWidget* widget();
+
 };
 
 #endif // PREGUNTACOMBODOBLE_H
