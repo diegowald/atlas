@@ -12,3 +12,9 @@ WdgtCombo::~WdgtCombo()
 {
     delete ui;
 }
+
+void WdgtCombo::setLista(QStringList &lista)
+{
+    ui->comboBox->clear();
+    ui->comboBox->addItems(lista);
+}

@@ -1,9 +1,10 @@
 #include "preguntabase.h"
 #include "../widgets/wdgtwithlabel.h"
 
-PreguntaBase::PreguntaBase(QObject *parent) : QObject(parent)
+PreguntaBase::PreguntaBase(const QString &label, const QString &nota, QObject *parent) : QObject(parent)
 {
-
+    _label = label;
+    _nota = nota;
 }
 
 PreguntaBase::~PreguntaBase()

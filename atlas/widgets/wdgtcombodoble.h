@@ -15,6 +15,9 @@ public:
     explicit WdgtComboDoble(QWidget *parent = 0);
     ~WdgtComboDoble();
 
+    void setLista1(QStringList &lista);
+    void setLista2(QStringList &lista);
+
 private:
     Ui::WdgtComboDoble *ui;
 };

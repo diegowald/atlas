@@ -7,7 +7,7 @@
 class PreguntaTexto : public PreguntaBase
 {
 public:
-    PreguntaTexto();
+    PreguntaTexto(const QString &label, const QString &nota, QObject *parent = 0);
     ~PreguntaTexto();
 
     virtual PreguntaBasePtr clone();

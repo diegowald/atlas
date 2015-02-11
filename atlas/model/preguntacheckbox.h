@@ -7,7 +7,7 @@
 class PreguntaCheckBox : public PreguntaBase
 {
 public:
-    PreguntaCheckBox();
+    PreguntaCheckBox(const QString &label, const QString &nota, QObject *parent = 0);
     ~PreguntaCheckBox();
 
     virtual PreguntaBasePtr clone();

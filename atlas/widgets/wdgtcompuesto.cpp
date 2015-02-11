@@ -18,3 +18,8 @@ void WdgtCompuesto::addPregunta(PreguntaBasePtr pregunta)
 {
     ui->formLayout->addRow(pregunta->label(), pregunta->widget());
 }
+
+void WdgtCompuesto::setLabel(const QString &label)
+{
+    ui->groupBox->setTitle(label);
+}

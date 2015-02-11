@@ -16,6 +16,7 @@ public:
     explicit WdgtCompuesto(QWidget *parent = 0);
     ~WdgtCompuesto();
 
+    void setLabel(const QString &label);
     void addPregunta(PreguntaBasePtr pregunta);
 
 private:

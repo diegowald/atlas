@@ -8,7 +8,7 @@
 class PreguntaCompuesta : public PreguntaBase
 {
 public:
-    PreguntaCompuesta();
+    PreguntaCompuesta(const QString &label, const QString &nota, QList<PreguntaBasePtr> &subpreguntas, QObject *parent = 0);
     ~PreguntaCompuesta();
 
     virtual PreguntaBasePtr clone();

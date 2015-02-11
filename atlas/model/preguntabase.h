@@ -8,7 +8,7 @@ class PreguntaBase : public QObject
 {
     Q_OBJECT
 public:
-    explicit PreguntaBase(QObject *parent = 0);
+    explicit PreguntaBase(const QString &label, const QString &nota, QObject *parent = 0);
     ~PreguntaBase();
 
     virtual void setLabel(const QString &Label);

@@ -28,14 +28,13 @@ void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia)
 
 void DialogHistoriaClinica::setAntecedentes(QList<PreguntaBasePtr> &antecedentes)
 {
-    int count = antecedentes.count();
     int currColumn = 0;
     int currRow = 0;
     foreach (PreguntaBasePtr pregunta, antecedentes)
     {
         ui->gridLayoutAntecedentes->addWidget(pregunta->widget(true), currRow, currColumn, 1, 1);
         currColumn++;
-        if (currColumn == 4)
+        if (currColumn == 3)
         {
             currRow++;
             currColumn = 0;
@@ -45,4 +44,16 @@ void DialogHistoriaClinica::setAntecedentes(QList<PreguntaBasePtr> &antecedentes
 
 void DialogHistoriaClinica::setCuestionario(QList<PreguntaBasePtr> &cuestionario)
 {
+    int currColumn = 0;
+    int currRow = 0;
+    foreach (PreguntaBasePtr pregunta, cuestionario)
+    {
+        ui->gridLayoutCuestionario->addWidget(pregunta->widget(false), currRow, currColumn, 1, 1);
+        currColumn++;
+        if (currColumn == 3)
+        {
+            currRow++;
+            currColumn = 0;
+        }
+    }
 }
