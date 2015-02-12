@@ -3,6 +3,7 @@
 #include "dialogs/dialoghistoriaclinica.h"
 #include "model/forward.h"
 #include "model/factory.h"
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,4 +25,14 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
     DialogHistoriaClinica dlg;
     dlg.setData(historia);
     dlg.exec();
+}
+
+void MainWindow::on_pushButton_released()
+{
+    QMessageBox::information(this, "Atlas", "No implementado!");
+}
+
+void MainWindow::on_actionAnalisis_triggered()
+{
+    QMessageBox::information(this, "Atlas", "No implementado!");
 }

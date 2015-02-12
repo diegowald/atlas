@@ -19,6 +19,10 @@ public:
 private slots:
     void on_actionNuevaHistoriaClinica_triggered();
 
+    void on_pushButton_released();
+
+    void on_actionAnalisis_triggered();
+
 private:
     Ui::MainWindow *ui;
     Factory* _factory;

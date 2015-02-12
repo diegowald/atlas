@@ -10,6 +10,9 @@
     <height>25</height>
    </rect>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::CustomContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -31,6 +34,9 @@
    </property>
    <item>
     <widget class="QRadioButton" name="radioSi">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="text">
       <string>Si</string>
      </property>
@@ -38,6 +44,9 @@
    </item>
    <item>
     <widget class="QRadioButton" name="radioNo">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="text">
       <string>No</string>
      </property>

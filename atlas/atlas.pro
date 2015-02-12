@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     widgets/wdgtcompuesto.cpp \
     widgets/wdgtsino.cpp \
     widgets/wdgttexto.cpp \
-    widgets/wdgtwithlabel.cpp
+    widgets/wdgtwithlabel.cpp \
+    widgets/customtooltipwidget.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -57,7 +58,8 @@ HEADERS  += mainwindow.h \
     widgets/wdgtcompuesto.h \
     widgets/wdgtsino.h \
     widgets/wdgttexto.h \
-    widgets/wdgtwithlabel.h
+    widgets/wdgtwithlabel.h \
+    widgets/customtooltipwidget.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \

@@ -1,13 +1,13 @@
 #ifndef WDGTCOMBODOBLE_H
 #define WDGTCOMBODOBLE_H
 
-#include <QWidget>
+#include "customtooltipwidget.h"
 
 namespace Ui {
 class WdgtComboDoble;
 }
 
-class WdgtComboDoble : public QWidget
+class WdgtComboDoble : public CustomTooltipWidget
 {
     Q_OBJECT
 
@@ -17,6 +17,13 @@ public:
 
     void setLista1(QStringList &lista);
     void setLista2(QStringList &lista);
+
+private slots:
+    void on_comboBox_2_customContextMenuRequested(const QPoint &pos);
+
+    void on_comboBox_customContextMenuRequested(const QPoint &pos);
+
+    void on_WdgtComboDoble_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::WdgtComboDoble *ui;

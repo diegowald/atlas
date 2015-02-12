@@ -2,7 +2,7 @@
 #include "ui_wdgtwithlabel.h"
 
 WdgtWithLabel::WdgtWithLabel(QWidget *parent) :
-    QWidget(parent),
+    CustomTooltipWidget(parent),
     ui(new Ui::WdgtWithLabel)
 {
     ui->setupUi(this);
@@ -16,4 +16,9 @@ WdgtWithLabel::~WdgtWithLabel()
 void WdgtWithLabel::addWidget(const QString &label, QWidget *widget)
 {
     ui->formLayout->addRow(label, widget);
+}
+
+void WdgtWithLabel::on_WdgtWithLabel_customContextMenuRequested(const QPoint &pos)
+{
+
 }

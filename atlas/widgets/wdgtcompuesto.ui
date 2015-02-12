@@ -10,6 +10,9 @@
     <height>35</height>
    </rect>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::CustomContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -31,8 +34,14 @@
    </property>
    <item>
     <widget class="QGroupBox" name="groupBox">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="title">
       <string>GroupBox</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
      </property>
      <property name="checkable">
       <bool>true</bool>

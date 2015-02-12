@@ -2,7 +2,7 @@
 #include "ui_wdgtcheckbox.h"
 
 WdgtCheckBox::WdgtCheckBox(QWidget *parent) :
-    QWidget(parent),
+    CustomTooltipWidget(parent),
     ui(new Ui::WdgtCheckBox)
 {
     ui->setupUi(this);
@@ -11,4 +11,14 @@ WdgtCheckBox::WdgtCheckBox(QWidget *parent) :
 WdgtCheckBox::~WdgtCheckBox()
 {
     delete ui;
+}
+
+void WdgtCheckBox::on_check_customContextMenuRequested(const QPoint &pos)
+{
+
+}
+
+void WdgtCheckBox::on_WdgtCheckBox_customContextMenuRequested(const QPoint &pos)
+{
+
 }

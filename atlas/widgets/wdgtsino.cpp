@@ -2,7 +2,7 @@
 #include "ui_wdgtsino.h"
 
 WdgtSiNo::WdgtSiNo(QWidget *parent) :
-    QWidget(parent),
+    CustomTooltipWidget(parent),
     ui(new Ui::WdgtSiNo)
 {
     ui->setupUi(this);
@@ -11,4 +11,19 @@ WdgtSiNo::WdgtSiNo(QWidget *parent) :
 WdgtSiNo::~WdgtSiNo()
 {
     delete ui;
+}
+
+void WdgtSiNo::on_radioSi_customContextMenuRequested(const QPoint &pos)
+{
+
+}
+
+void WdgtSiNo::on_radioNo_customContextMenuRequested(const QPoint &pos)
+{
+
+}
+
+void WdgtSiNo::on_WdgtSiNo_customContextMenuRequested(const QPoint &pos)
+{
+
 }

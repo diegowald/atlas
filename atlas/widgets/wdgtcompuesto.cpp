@@ -3,7 +3,7 @@
 #include "../model/preguntabase.h"
 
 WdgtCompuesto::WdgtCompuesto(QWidget *parent) :
-    QWidget(parent),
+    CustomTooltipWidget(parent),
     ui(new Ui::WdgtCompuesto)
 {
     ui->setupUi(this);
@@ -22,4 +22,14 @@ void WdgtCompuesto::addPregunta(PreguntaBasePtr pregunta)
 void WdgtCompuesto::setLabel(const QString &label)
 {
     ui->groupBox->setTitle(label);
+}
+
+void WdgtCompuesto::on_groupBox_customContextMenuRequested(const QPoint &pos)
+{
+
+}
+
+void WdgtCompuesto::on_WdgtCompuesto_customContextMenuRequested(const QPoint &pos)
+{
+
 }

@@ -10,6 +10,9 @@
     <height>25</height>
    </rect>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::CustomContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -31,6 +34,9 @@
    </property>
    <item>
     <widget class="QCheckBox" name="check">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
