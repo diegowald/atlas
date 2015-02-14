@@ -11,7 +11,7 @@ public:
     ~CustomTooltipWidget();
 
 signals:
-    void tooltipFired();
+    void tooltipFired(QWidget *src);
 
 public slots:
 };

@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QDate>
+#include "../db/serializable.h"
 
-class Persona : public QObject
+class Persona : public QObject, public Serializable
 {
     Q_OBJECT
 public:
@@ -34,6 +35,8 @@ public:
     QString ocupacion() const;
     QString comoSeEntero() const;
     QString notas() const;
+
+    virtual mongo::BSONObj toBson();
 
 signals:
 

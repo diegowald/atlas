@@ -15,15 +15,18 @@ WdgtSiNo::~WdgtSiNo()
 
 void WdgtSiNo::on_radioSi_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }
 
 void WdgtSiNo::on_radioNo_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }
 
 void WdgtSiNo::on_WdgtSiNo_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }

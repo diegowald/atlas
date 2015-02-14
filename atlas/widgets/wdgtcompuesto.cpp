@@ -26,10 +26,12 @@ void WdgtCompuesto::setLabel(const QString &label)
 
 void WdgtCompuesto::on_groupBox_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }
 
 void WdgtCompuesto::on_WdgtCompuesto_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }

@@ -21,10 +21,12 @@ void WdgtCombo::setLista(QStringList &lista)
 
 void WdgtCombo::on_comboBox_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }
 
 void WdgtCombo::on_WdgtCombo_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }

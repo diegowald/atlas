@@ -15,10 +15,12 @@ WdgtTexto::~WdgtTexto()
 
 void WdgtTexto::on_textEdit_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }
 
 void WdgtTexto::on_WdgtTexto_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }

@@ -15,10 +15,12 @@ WdgtCheckBox::~WdgtCheckBox()
 
 void WdgtCheckBox::on_check_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }
 
 void WdgtCheckBox::on_WdgtCheckBox_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }

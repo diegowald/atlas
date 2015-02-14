@@ -27,15 +27,18 @@ void WdgtComboDoble::setLista2(QStringList &lista)
 
 void WdgtComboDoble::on_comboBox_2_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }
 
 void WdgtComboDoble::on_comboBox_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }
 
 void WdgtComboDoble::on_WdgtComboDoble_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }

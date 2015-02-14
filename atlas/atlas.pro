@@ -12,6 +12,13 @@ CONFIG += c++11
 TARGET = atlas
 TEMPLATE = app
 
+LIBS += -lboost_system
+LIBS += -L$$PWD/../../mongo-cxx-driver/build/linux2/use-system-boost/ -lmongoclient
+#LIBS += -L/home/diego/QtProjects/mongo-cxx-driver/build/linux2/use-system-boost -lmongoclient
+
+INCLUDEPATH += $$PWD/../../mongo-cxx-driver/src
+DEPENDPATH += $$PWD/../../mongo-cxx-driver/src
+
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -35,7 +42,8 @@ SOURCES += main.cpp\
     widgets/wdgtsino.cpp \
     widgets/wdgttexto.cpp \
     widgets/wdgtwithlabel.cpp \
-    widgets/customtooltipwidget.cpp
+    widgets/customtooltipwidget.cpp \
+    db/serializable.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -59,7 +67,8 @@ HEADERS  += mainwindow.h \
     widgets/wdgtsino.h \
     widgets/wdgttexto.h \
     widgets/wdgtwithlabel.h \
-    widgets/customtooltipwidget.h
+    widgets/customtooltipwidget.h \
+    db/serializable.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \
@@ -72,3 +81,4 @@ FORMS    += mainwindow.ui \
     widgets/wdgtsino.ui \
     widgets/wdgttexto.ui \
     widgets/wdgtwithlabel.ui
+

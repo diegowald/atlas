@@ -117,3 +117,20 @@ QString Persona::notas() const
 {
     return _notas;
 }
+
+mongo::BSONObj Persona::toBson()
+{
+    mongo::BSONObj obj = BSON(
+                "nombre" << _nombre.toStdString()
+                << "domicilio" << _domicilio.toStdString()
+                << "dni" << _dni.toStdString()
+                << "localidad" << _localidad.toStdString()
+                << "telefonos" << _telefonos.toStdString()
+                << "email" << _email.toStdString()
+                << "fechaNacimiento" << _fechaNacimiento.toString().toStdString()
+                << "edad" << _edad
+                << "ocupacion" << _ocupacion.toStdString()
+                << "comoSeEntero" << _comoSeEntero.toStdString()
+                << "notas" << _notas.toStdString());
+    return obj;
+}

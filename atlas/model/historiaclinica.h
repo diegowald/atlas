@@ -4,8 +4,9 @@
 #include <QObject>
 #include "forward.h"
 #include <QDate>
+#include "../db/serializable.h"
 
-class HistoriaClinica : public QObject
+class HistoriaClinica : public QObject, public Serializable
 {
     Q_OBJECT
 public:
@@ -20,6 +21,15 @@ public:
     QString numeroPaciente();
     QList<PreguntaBasePtr> &antecedentes();
     QList<PreguntaBasePtr> &cuestionario();
+
+    void setFechaPrimerConsulta(QDate &date);
+    void setFechaSegundaConsulta(QDate &date);
+    void setNumeroPaciente(const QString &nro);
+
+    virtual mongo::BSONObj toBson();
+
+private:
+    mongo::BSONObj arrayBson(QList<PreguntaBasePtr> list);
 
 signals:
 

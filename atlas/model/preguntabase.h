@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include "forward.h"
+#include "../db/serializable.h"
 
-class PreguntaBase : public QObject
+class PreguntaBase : public QObject, public Serializable
 {
     Q_OBJECT
 public:

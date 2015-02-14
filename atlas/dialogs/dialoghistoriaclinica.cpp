@@ -24,6 +24,17 @@ void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia)
     ui->txtNumeroPaciente->setText(historia->numeroPaciente());
     setAntecedentes(historia->antecedentes());
     setCuestionario(historia->cuestionario());
+    _historia = historia;
+}
+
+void DialogHistoriaClinica::applyData()
+{
+    QDate date = ui->datePrimerConsulta->date();
+    ui->widgetPersona->applyData();
+    _historia->setFechaPrimerConsulta(date);
+    date = ui->dateSegundaConsulta->date();
+    _historia->setFechaSegundaConsulta(date);
+    _historia->setNumeroPaciente(ui->txtNumeroPaciente->text());
 }
 
 void DialogHistoriaClinica::setAntecedentes(QList<PreguntaBasePtr> &antecedentes)

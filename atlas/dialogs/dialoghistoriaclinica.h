@@ -17,6 +17,7 @@ public:
     ~DialogHistoriaClinica();
 
     void setData(HistoriaClinicaPtr historia);
+    void applyData();
 
 private:
     void setAntecedentes(QList<PreguntaBasePtr> &antecedentes);
@@ -24,6 +25,7 @@ private:
 
 private:
     Ui::DialogHistoriaClinica *ui;
+    HistoriaClinicaPtr _historia;
 };
 
 #endif // DIALOGHISTORIACLINICA_H

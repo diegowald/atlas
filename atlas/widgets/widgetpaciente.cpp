@@ -26,4 +26,18 @@ void WidgetPaciente::setData(PersonaPtr persona)
     ui->txtOcupacion->setText(persona->ocupacion());
     ui->txtComoSeEntero->setText(persona->comoSeEntero());
     ui->txtNotas->setText(persona->notas());
+    _persona = persona;
+}
+
+void WidgetPaciente::applyData()
+{
+    _persona->setNombre(ui->txtNombre->text());
+    _persona->setDNI(ui->txtDocumento->text());
+    _persona->setDomicilio(ui->txtDomicilio->text());
+    _persona->setLocalidad(ui->txtLocalidad->text());
+    _persona->setTelefonos(ui->txtTelefono->text());
+    _persona->setEmail(ui->txtEmail->text());
+    _persona->setOcupacion(ui->txtOcupacion->text());
+    _persona->setComoSeEntero(ui->txtComoSeEntero->text());
+    _persona->setNotas(ui->txtNotas->toHtml());
 }

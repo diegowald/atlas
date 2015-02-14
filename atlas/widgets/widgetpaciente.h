@@ -16,9 +16,11 @@ public:
     explicit WidgetPaciente(QWidget *parent = 0);
     ~WidgetPaciente();
     void setData(PersonaPtr persona);
+    void applyData();
 
 private:
     Ui::WidgetPaciente *ui;
+    PersonaPtr _persona;
 };
 
 #endif // WIDGETPACIENTE_H

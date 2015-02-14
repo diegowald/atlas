@@ -20,5 +20,6 @@ void WdgtWithLabel::addWidget(const QString &label, QWidget *widget)
 
 void WdgtWithLabel::on_WdgtWithLabel_customContextMenuRequested(const QPoint &pos)
 {
-
+    (void) pos;
+    emit tooltipFired(this);
 }
