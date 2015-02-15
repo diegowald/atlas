@@ -14,6 +14,9 @@ public:
     virtual PreguntaBasePtr clone();
     virtual QWidget* widget();
 
+    virtual mongo::BSONObj value();
+
+    virtual void applyChanges();
 private:
     QList<PreguntaBasePtr> _subPreguntas;
 };

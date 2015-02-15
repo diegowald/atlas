@@ -31,6 +31,8 @@ void DialogHistoriaClinica::applyData()
 {
     QDate date = ui->datePrimerConsulta->date();
     ui->widgetPersona->applyData();
+    applyAntecedentes();
+    applyCuestionario();
     _historia->setFechaPrimerConsulta(date);
     date = ui->dateSegundaConsulta->date();
     _historia->setFechaSegundaConsulta(date);
@@ -66,5 +68,21 @@ void DialogHistoriaClinica::setCuestionario(QList<PreguntaBasePtr> &cuestionario
             currRow++;
             currColumn = 0;
         }
+    }
+}
+
+void DialogHistoriaClinica::applyAntecedentes()
+{
+    foreach (PreguntaBasePtr pregunta, _historia->antecedentes())
+    {
+        pregunta->applyChanges();
+    }
+}
+
+void DialogHistoriaClinica::applyCuestionario()
+{
+    foreach (PreguntaBasePtr pregunta, _historia->cuestionario())
+    {
+        pregunta->applyChanges();
     }
 }

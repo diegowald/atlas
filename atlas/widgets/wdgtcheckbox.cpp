@@ -24,3 +24,8 @@ void WdgtCheckBox::on_WdgtCheckBox_customContextMenuRequested(const QPoint &pos)
     (void) pos;
     emit tooltipFired(this);
 }
+
+bool WdgtCheckBox::value()
+{
+    return ui->check->isChecked();
+}

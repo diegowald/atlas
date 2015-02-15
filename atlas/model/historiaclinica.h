@@ -13,6 +13,9 @@ public:
     explicit HistoriaClinica(PersonaPtr persona, QList<PreguntaBasePtr> &templateAntecedentes,
                              QList<PreguntaBasePtr> &templateCuestionario,
                              QObject *parent = 0);
+
+    HistoriaClinica(mongo::BSONObj &obj, QObject *parent = 0);
+
     ~HistoriaClinica();
 
     PersonaPtr persona();

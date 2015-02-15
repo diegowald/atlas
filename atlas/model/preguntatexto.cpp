@@ -1,7 +1,6 @@
 #include "preguntatexto.h"
-#include "../widgets/wdgttexto.h"
 
-PreguntaTexto::PreguntaTexto(const QString &label, const QString &nota, QObject *parent) : PreguntaBase(label, nota, parent)
+PreguntaTexto::PreguntaTexto(const QString &label, const QString &nota, QObject *parent) : PreguntaBase(label, nota, "text", parent)
 {
 
 }
@@ -19,5 +18,17 @@ PreguntaBasePtr PreguntaTexto::clone()
 
 QWidget* PreguntaTexto::widget()
 {
-    return new WdgtTexto();
+    _widget = new WdgtTexto();
+    return _widget;
+}
+
+mongo::BSONObj PreguntaTexto::value()
+{
+    mongo::BSONObj obj = BSON("text" << _text.toStdString());
+    return obj;
+}
+
+void PreguntaTexto::applyChanges()
+{
+    _text = _widget->value();
 }

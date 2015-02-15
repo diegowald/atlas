@@ -15,6 +15,11 @@ HistoriaClinica::HistoriaClinica(PersonaPtr persona,
     _numeroPaciente = "-1";
 }
 
+HistoriaClinica::HistoriaClinica(mongo::BSONObj &obj, QObject *parent) : QObject(parent)
+{
+
+}
+
 HistoriaClinica::~HistoriaClinica()
 {
 
@@ -73,7 +78,7 @@ mongo::BSONObj HistoriaClinica::toBson()
                   << "FechaPrimerConsulta" << _fechaPrimerConsulta.toString().toStdString()
                   << "FechaSegundaConsulta" << _fechaSegundaConsulta.toString().toStdString()
                   << "antecedentes" << arrayBson(_antecedentes)
-                  /*<< "cuestionario" << _cuestionario.toBson()*/
+                  << "cuestionario" << arrayBson(_cuestionario)
                   << "numeroPaciente" << _numeroPaciente.toStdString());
     return obj;
 }

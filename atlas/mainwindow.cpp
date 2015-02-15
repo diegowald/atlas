@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <mongo/client/dbclient.h>
 #include "model/historiaclinica.h"
+#include <auto_ptr.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,6 +39,14 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
 void MainWindow::on_pushButton_released()
 {
     QMessageBox::information(this, "Atlas", "No implementado!");
+    mongo::DBClientConnection c;
+    c.connect("localhost");
+    auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.historias", mongo::BSONObj());
+    while(cursor->more())
+    {
+        mongo::BSONObj obj = cursor->next();
+        Factory::crearHistoria(obj);
+    }
 }
 
 void MainWindow::on_actionAnalisis_triggered()

@@ -1,7 +1,6 @@
 #include "preguntacheckbox.h"
-#include "../widgets/wdgtcheckbox.h"
 
-PreguntaCheckBox::PreguntaCheckBox(const QString &label, const QString &nota, QObject *parent) : PreguntaBase(label, nota, parent)
+PreguntaCheckBox::PreguntaCheckBox(const QString &label, const QString &nota, QObject *parent) : PreguntaBase(label, nota, "checkbox", parent)
 {
 
 }
@@ -19,5 +18,17 @@ PreguntaBasePtr PreguntaCheckBox::clone()
 
 QWidget* PreguntaCheckBox::widget()
 {
-    return new WdgtCheckBox();
+    _widget = new WdgtCheckBox();
+    return _widget;
+}
+
+mongo::BSONObj PreguntaCheckBox::value()
+{
+    mongo::BSONObj obj = BSON("checked" << _checked);
+    return obj;
+}
+
+void PreguntaCheckBox::applyChanges()
+{
+    _checked = _widget->value();
 }

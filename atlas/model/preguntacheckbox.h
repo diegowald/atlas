@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include "preguntabase.h"
+#include "../widgets/wdgtcheckbox.h"
+
 
 class PreguntaCheckBox : public PreguntaBase
 {
@@ -12,6 +14,13 @@ public:
 
     virtual PreguntaBasePtr clone();
     virtual QWidget* widget();
+
+    virtual mongo::BSONObj value();
+
+    virtual void applyChanges();
+private:
+    bool _checked;
+    WdgtCheckBox *_widget;
 };
 
 #endif // PREGUNTACHECKBOX_H

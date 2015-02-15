@@ -29,6 +29,12 @@ HistoriaClinicaPtr Factory::crearNuevaHistoriaClinica()
     return hist;
 }
 
+HistoriaClinicaPtr Factory::crearHistoria(mongo::BSONObj &obj)
+{
+    HistoriaClinicaPtr hist = HistoriaClinicaPtr::create(obj);
+    return hist;
+}
+
 PersonaPtr Factory::crearPersona()
 {
     PersonaPtr persona = PersonaPtr::create();

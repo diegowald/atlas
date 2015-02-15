@@ -9,7 +9,7 @@ class PreguntaBase : public QObject, public Serializable
 {
     Q_OBJECT
 public:
-    explicit PreguntaBase(const QString &label, const QString &nota, QObject *parent = 0);
+    explicit PreguntaBase(const QString &label, const QString &nota, const QString &type, QObject *parent = 0);
     ~PreguntaBase();
 
     virtual void setLabel(const QString &Label);
@@ -23,6 +23,11 @@ public:
     //virtual QString respuesta() = 0;
     virtual PreguntaBasePtr clone() = 0;
 
+    virtual void applyChanges() = 0;
+
+    virtual mongo::BSONObj toBson();
+    virtual mongo::BSONObj value() = 0;
+
 private:
     QWidget* widgetWithLabel();
 
@@ -32,6 +37,7 @@ public slots:
 private:
     QString _label;
     QString _nota;
+    QString _type;
 };
 
 #endif // PREGUNTABASE_H

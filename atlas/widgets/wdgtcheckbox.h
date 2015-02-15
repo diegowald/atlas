@@ -15,6 +15,8 @@ public:
     explicit WdgtCheckBox(QWidget *parent = 0);
     ~WdgtCheckBox();
 
+    bool value();
+
 private slots:
     void on_check_customContextMenuRequested(const QPoint &pos);
 

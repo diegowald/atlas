@@ -15,6 +15,8 @@ public:
     explicit WdgtTexto(QWidget *parent = 0);
     ~WdgtTexto();
 
+    QString value();
+
 private slots:
     void on_textEdit_customContextMenuRequested(const QPoint &pos);
 

@@ -1,10 +1,11 @@
 #include "preguntabase.h"
 #include "../widgets/wdgtwithlabel.h"
 
-PreguntaBase::PreguntaBase(const QString &label, const QString &nota, QObject *parent) : QObject(parent)
+PreguntaBase::PreguntaBase(const QString &label, const QString &nota, const QString &type, QObject *parent) : QObject(parent)
 {
     _label = label;
     _nota = nota;
+    _type = type;
 }
 
 PreguntaBase::~PreguntaBase()
@@ -42,4 +43,14 @@ QWidget *PreguntaBase::widgetWithLabel()
     WdgtWithLabel *wdget = new WdgtWithLabel();
     wdget->addWidget(_label, widget());
     return wdget;
+}
+
+mongo::BSONObj PreguntaBase::toBson()
+{
+    mongo::BSONObj obj = BSON(
+                "label" << _label.toStdString()
+                << "nota" << _nota.toStdString()
+                << "type" << _type.toStdString()
+                << "value" << value());
+    return obj;
 }

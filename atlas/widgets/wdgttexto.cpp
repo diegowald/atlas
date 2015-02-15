@@ -24,3 +24,8 @@ void WdgtTexto::on_WdgtTexto_customContextMenuRequested(const QPoint &pos)
     (void) pos;
     emit tooltipFired(this);
 }
+
+QString WdgtTexto::value()
+{
+    return ui->textEdit->toHtml();
+}

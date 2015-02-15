@@ -17,6 +17,7 @@ public:
     ~WdgtCombo();
 
     void setLista(QStringList &lista);
+    QString value();
 
 private slots:
     void on_comboBox_customContextMenuRequested(const QPoint &pos);

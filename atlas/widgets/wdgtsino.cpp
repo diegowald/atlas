@@ -30,3 +30,8 @@ void WdgtSiNo::on_WdgtSiNo_customContextMenuRequested(const QPoint &pos)
     (void) pos;
     emit tooltipFired(this);
 }
+
+bool WdgtSiNo::value()
+{
+    return ui->radioSi->isChecked();
+}

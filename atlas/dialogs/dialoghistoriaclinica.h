@@ -23,6 +23,9 @@ private:
     void setAntecedentes(QList<PreguntaBasePtr> &antecedentes);
     void setCuestionario(QList<PreguntaBasePtr> &cuestionario);
 
+    void applyAntecedentes();
+    void applyCuestionario();
+
 private:
     Ui::DialogHistoriaClinica *ui;
     HistoriaClinicaPtr _historia;

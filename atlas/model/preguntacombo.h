@@ -4,6 +4,7 @@
 #include <QObject>
 #include "preguntabase.h"
 #include <QStringList>
+#include "../widgets/wdgtcombo.h"
 
 class PreguntaCombo : public PreguntaBase
 {
@@ -13,8 +14,13 @@ public:
 
     virtual PreguntaBasePtr clone();
     virtual QWidget* widget();
+    virtual void applyChanges();
+
+    virtual mongo::BSONObj value();
 private:
     QStringList _listaValores;
+    QString _selectedValue;
+    WdgtCombo *_widget;
 };
 
 #endif // PREGUNTACOMBO_H

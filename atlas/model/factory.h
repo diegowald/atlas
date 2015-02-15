@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include "forward.h"
+#include <mongo/client/dbclient.h>
+
 
 class Factory : public QObject
 {
@@ -13,7 +15,7 @@ public:
     explicit Factory(QObject *parent = NULL);
 
     HistoriaClinicaPtr crearNuevaHistoriaClinica();
-
+    HistoriaClinicaPtr crearHistoria(mongo::BSONObj &obj);
 
 protected:
     PersonaPtr crearPersona();

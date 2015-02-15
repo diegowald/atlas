@@ -15,6 +15,8 @@ public:
     explicit WdgtSiNo(QWidget *parent = 0);
     ~WdgtSiNo();
 
+    bool value();
+
 private slots:
     void on_radioSi_customContextMenuRequested(const QPoint &pos);
 

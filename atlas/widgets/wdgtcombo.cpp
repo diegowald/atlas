@@ -30,3 +30,8 @@ void WdgtCombo::on_WdgtCombo_customContextMenuRequested(const QPoint &pos)
     (void) pos;
     emit tooltipFired(this);
 }
+
+QString WdgtCombo::value()
+{
+    return ui->comboBox->currentText();
+}

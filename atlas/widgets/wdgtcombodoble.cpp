@@ -42,3 +42,13 @@ void WdgtComboDoble::on_WdgtComboDoble_customContextMenuRequested(const QPoint &
     (void) pos;
     emit tooltipFired(this);
 }
+
+QString WdgtComboDoble::value1()
+{
+    return ui->comboBox->currentText();
+}
+
+QString WdgtComboDoble::value2()
+{
+    return ui->comboBox_2->currentText();
+}

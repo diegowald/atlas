@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "preguntabase.h"
+#include "../widgets/wdgttexto.h"
 
 class PreguntaTexto : public PreguntaBase
 {
@@ -13,6 +14,11 @@ public:
     virtual PreguntaBasePtr clone();
     virtual QWidget* widget();
 
+    virtual mongo::BSONObj value();
+    virtual void applyChanges();
+private:
+    QString _text;
+    WdgtTexto *_widget;
 };
 
 #endif // PREGUNTATEXTO_H
