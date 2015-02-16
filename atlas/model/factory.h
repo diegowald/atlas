@@ -1,4 +1,4 @@
-#ifndef FACTORY_H
+  #ifndef FACTORY_H
 #define FACTORY_H
 
 #include <QObject>
@@ -16,6 +16,8 @@ public:
 
     HistoriaClinicaPtr crearNuevaHistoriaClinica();
     HistoriaClinicaPtr crearHistoria(mongo::BSONObj &obj);
+
+    static PreguntaBasePtr crearPregunta(mongo::BSONObj &obj);
 
 protected:
     PersonaPtr crearPersona();

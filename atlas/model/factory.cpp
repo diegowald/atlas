@@ -169,3 +169,33 @@ void Factory::cargarCuestionario()
                                                                             << PreguntaComboPtr(new PreguntaCombo("Se levanta", "", QStringList() << "Cansado" << "Descansado")))));
 }
 
+PreguntaBasePtr Factory::crearPregunta(mongo::BSONObj &obj)
+{
+    QString type = obj["type"].String().c_str();
+    PreguntaBasePtr preg;
+    if (type == "checkbox")
+    {
+        preg = PreguntaCheckBoxPtr(new PreguntaCheckBox(obj));
+    }
+    else if (type == "combo")
+    {
+        preg = PreguntaComboPtr(new PreguntaCombo(obj));
+    }
+    else if (type == "combodoble")
+    {
+        preg = PreguntaComboDoblePtr(new PreguntaComboDoble(obj));
+    }
+    else if (type == "compuesta")
+    {
+        preg = PreguntaCompuestaPtr(new PreguntaCompuesta(obj));
+    }
+    else if (type == "yesno")
+    {
+        preg = PreguntaSiNoPtr(new PreguntaSiNo(obj));
+    }
+    else if (type == "text")
+    {
+        preg = PreguntaTextoPtr(new PreguntaTexto(obj));
+    }
+    return preg;
+}

@@ -8,6 +8,13 @@ PreguntaBase::PreguntaBase(const QString &label, const QString &nota, const QStr
     _type = type;
 }
 
+PreguntaBase::PreguntaBase(mongo::BSONObj &obj, QObject *parent)
+{
+    _label = obj["label"].String().c_str();
+    _nota = obj["nota"].String().c_str();
+    _type = obj["type"].String().c_str();
+}
+
 PreguntaBase::~PreguntaBase()
 {
 

@@ -71,7 +71,28 @@
      </layout>
     </item>
     <item>
-     <widget class="QTableWidget" name="tableWidget"/>
+     <widget class="QTableWidget" name="tableWidget">
+      <column>
+       <property name="text">
+        <string>Nombre</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>DNI</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Primer Consulta</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Segunda Consulta</string>
+       </property>
+      </column>
+     </widget>
     </item>
    </layout>
   </widget>

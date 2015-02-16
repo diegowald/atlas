@@ -6,6 +6,12 @@ PreguntaSiNo::PreguntaSiNo(const QString &label, const QString &nota, QObject *p
 
 }
 
+PreguntaSiNo::PreguntaSiNo(mongo::BSONObj &obj, QObject *parent) : PreguntaBase(obj, parent)
+{
+    mongo::BSONObj value = obj["value"].Obj();
+    _value = value["value"].Bool();
+}
+
 PreguntaSiNo::~PreguntaSiNo()
 {
 

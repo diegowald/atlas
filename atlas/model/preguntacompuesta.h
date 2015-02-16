@@ -9,6 +9,7 @@ class PreguntaCompuesta : public PreguntaBase
 {
 public:
     PreguntaCompuesta(const QString &label, const QString &nota, QList<PreguntaBasePtr> &subpreguntas, QObject *parent = 0);
+    PreguntaCompuesta(mongo::BSONObj &obj, QObject *parent = 0);
     ~PreguntaCompuesta();
 
     virtual PreguntaBasePtr clone();

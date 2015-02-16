@@ -33,6 +33,7 @@ public:
 
 private:
     mongo::BSONObj arrayBson(QList<PreguntaBasePtr> list);
+    void fromArrayBson(std::vector<mongo::BSONElement> &arr, QList<PreguntaBasePtr> &list);
 
 signals:
 

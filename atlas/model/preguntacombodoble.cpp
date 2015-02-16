@@ -6,6 +6,27 @@ PreguntaComboDoble::PreguntaComboDoble(const QString &label, const QString &nota
     _lista2 = lista2;
 }
 
+PreguntaComboDoble::PreguntaComboDoble(mongo::BSONObj &obj, QObject *parent) : PreguntaBase(obj, parent)
+{
+    mongo::BSONObj value = obj["value"].Obj();
+    mongo::BSONObj objValues = value["values1"].Obj();
+    std::vector<mongo::BSONElement> values;
+    objValues.elems(values);
+    for (std::vector<mongo::BSONElement>::iterator it = values.begin(); it != values.end(); ++it)
+    {
+        _lista1.append(it->String().c_str());
+    }
+    _selected1 = value["selected1"].String().c_str();
+
+    objValues = value["values2"].Obj();
+    objValues.elems(values);
+    for (std::vector<mongo::BSONElement>::iterator it = values.begin(); it != values.end(); ++it)
+    {
+        _lista2.append(it->String().c_str());
+    }
+    _selected2 = value["selected2"].String().c_str();
+}
+
 PreguntaComboDoble::~PreguntaComboDoble()
 {
 

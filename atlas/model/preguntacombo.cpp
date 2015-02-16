@@ -1,8 +1,23 @@
 #include "preguntacombo.h"
+#include <QDebug>
 
 PreguntaCombo::PreguntaCombo(const QString &label, const QString &nota, QStringList &listaValores, QObject *parent) : PreguntaBase(label, nota, "combo", parent)
 {
     _listaValores = listaValores;
+}
+
+PreguntaCombo::PreguntaCombo(mongo::BSONObj &obj, QObject *parent) : PreguntaBase(obj, parent)
+{
+    mongo::BSONObj value = obj["value"].Obj();
+    qDebug() << value.jsonString().c_str();
+    mongo::BSONObj objValues = value["values"].Obj();
+    std::vector<mongo::BSONElement> values;
+    objValues.elems(values);
+    for (std::vector<mongo::BSONElement>::iterator it = values.begin(); it != values.end(); ++it)
+    {
+        _listaValores.append(it->String().c_str());
+    }
+    _selectedValue = value["selected"].String().c_str();
 }
 
 PreguntaCombo::~PreguntaCombo()

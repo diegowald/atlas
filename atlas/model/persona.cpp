@@ -4,6 +4,21 @@ Persona::Persona(QObject *parent) : QObject(parent)
 {
 }
 
+Persona::Persona(mongo::BSONObj &persona, QObject *parent)
+{
+    _nombre = persona["nombre"].String().c_str();
+    _domicilio = persona["domicilio"].String().c_str();
+    _dni = persona["dni"].String().c_str();
+    _localidad = persona["localidad"].String().c_str();
+    _telefonos = persona["telefonos"].String().c_str();
+    _email = persona["email"].String().c_str();
+    _fechaNacimiento = QDate::fromString(QString(persona["fechaNacimiento"].String().c_str()));
+    _edad = persona["edad"].Int();
+    _ocupacion = persona["ocupacion"].String().c_str();
+    _comoSeEntero = persona["comoSeEntero"].String().c_str();
+    _notas = persona["notas"].String().c_str();
+}
+
 Persona::~Persona()
 {
 }

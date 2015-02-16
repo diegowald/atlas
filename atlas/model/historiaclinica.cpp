@@ -1,6 +1,10 @@
 #include "historiaclinica.h"
 #include "persona.h"
 #include "preguntabase.h"
+#include <QDebug>
+#include <mongo/bson/bsonelement.h>
+#include "persona.h"
+#include "factory.h"
 
 HistoriaClinica::HistoriaClinica(PersonaPtr persona,
                                  QList<PreguntaBasePtr> &templateAntecedentes,
@@ -17,7 +21,19 @@ HistoriaClinica::HistoriaClinica(PersonaPtr persona,
 
 HistoriaClinica::HistoriaClinica(mongo::BSONObj &obj, QObject *parent) : QObject(parent)
 {
-
+    qDebug() << QString(obj.jsonString().c_str());
+    mongo::BSONObj p = obj["persona"].Obj();
+    _persona = PersonaPtr::create(p);
+    _fechaPrimerConsulta = QDate::fromString(QString(obj["FechaPrimerConsulta"].String().c_str()));
+    _fechaSegundaConsulta = QDate::fromString(QString(obj["FechaSegundaConsulta"].String().c_str()));
+    mongo::BSONObj arr = obj["antecedentes"].Obj();
+    std::vector<mongo::BSONElement> elements;
+    arr.elems(elements);
+    fromArrayBson(elements, _antecedentes);
+    arr = obj["cuestionario"].Obj();
+    arr.elems(elements);
+    fromArrayBson(elements, _cuestionario);
+    _numeroPaciente = obj["numeroPaciente"].String().c_str();
 }
 
 HistoriaClinica::~HistoriaClinica()
@@ -91,4 +107,16 @@ mongo::BSONObj HistoriaClinica::arrayBson(QList<PreguntaBasePtr> list)
         builder.append(pregunta->toBson());
     }
     return builder.arr();
+}
+
+void HistoriaClinica::fromArrayBson(std::vector<mongo::BSONElement> &arr, QList<PreguntaBasePtr> &list)
+{
+    list.clear();
+    qDebug() << arr.size();
+    for(uint i = 0; i < arr.size(); ++i)
+    {
+        mongo::BSONObj obj = arr[i].Obj();
+        qDebug() << obj.jsonString().c_str();
+        list.append(Factory::crearPregunta(obj));
+    }
 }

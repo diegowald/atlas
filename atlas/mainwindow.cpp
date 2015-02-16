@@ -7,6 +7,7 @@
 #include <mongo/client/dbclient.h>
 #include "model/historiaclinica.h"
 #include <auto_ptr.h>
+#include "model/persona.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,18 +39,32 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
 
 void MainWindow::on_pushButton_released()
 {
+    _historias.clear();
     QMessageBox::information(this, "Atlas", "No implementado!");
     mongo::DBClientConnection c;
     c.connect("localhost");
-    auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.historias", mongo::BSONObj());
+    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.historias", mongo::BSONObj());
     while(cursor->more())
     {
         mongo::BSONObj obj = cursor->next();
-        Factory::crearHistoria(obj);
+        _historias.append(_factory->crearHistoria(obj));
     }
+    fillView();
 }
 
 void MainWindow::on_actionAnalisis_triggered()
 {
     QMessageBox::information(this, "Atlas", "No implementado!");
+}
+
+void MainWindow::fillView()
+{
+    ui->tableWidget->clear();
+    foreach (HistoriaClinicaPtr historia, _historias)
+    {
+        int row = ui->tableWidget->rowCount();
+        ui->tableWidget->insertRow(row);
+        QTableWidgetItem *item = new QTableWidgetItem(historia->persona()->nombre());
+        ui->tableWidget->setItem(row, 0, item);
+    }
 }

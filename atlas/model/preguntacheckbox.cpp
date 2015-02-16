@@ -5,6 +5,12 @@ PreguntaCheckBox::PreguntaCheckBox(const QString &label, const QString &nota, QO
 
 }
 
+PreguntaCheckBox::PreguntaCheckBox(mongo::BSONObj &obj, QObject *parent) : PreguntaBase(obj, parent)
+{
+    mongo::BSONObj value = obj["value"].Obj();
+    _checked = value["checked"].Bool();
+}
+
 PreguntaCheckBox::~PreguntaCheckBox()
 {
 

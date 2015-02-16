@@ -10,6 +10,7 @@ class Persona : public QObject, public Serializable
     Q_OBJECT
 public:
     explicit Persona(QObject *parent = 0);
+    Persona(mongo::BSONObj &persona, QObject *parent = 0);
     ~Persona();
 
     void setNombre(const QString &Nombre);

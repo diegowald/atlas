@@ -16,6 +16,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private:
+    void fillView();
+
 private slots:
     void on_actionNuevaHistoriaClinica_triggered();
 
@@ -26,6 +29,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Factory* _factory;
+    QList<HistoriaClinicaPtr> _historias;
 };
 
 #endif // MAINWINDOW_H

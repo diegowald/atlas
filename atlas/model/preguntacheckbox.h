@@ -10,6 +10,7 @@ class PreguntaCheckBox : public PreguntaBase
 {
 public:
     PreguntaCheckBox(const QString &label, const QString &nota, QObject *parent = 0);
+    PreguntaCheckBox(mongo::BSONObj &obj, QObject *parent = 0);
     ~PreguntaCheckBox();
 
     virtual PreguntaBasePtr clone();

@@ -10,6 +10,7 @@ class PreguntaBase : public QObject, public Serializable
     Q_OBJECT
 public:
     explicit PreguntaBase(const QString &label, const QString &nota, const QString &type, QObject *parent = 0);
+    PreguntaBase(mongo::BSONObj &obj, QObject *parent = 0);
     ~PreguntaBase();
 
     virtual void setLabel(const QString &Label);

@@ -1,11 +1,26 @@
 #include "preguntacompuesta.h"
 #include "../widgets/wdgtcompuesto.h"
+#include <QDebug>
+#include "factory.h"
 
 PreguntaCompuesta::PreguntaCompuesta(const QString &label, const QString &nota, QList<PreguntaBasePtr> &subpreguntas, QObject *parent) : PreguntaBase(label, nota, "compuesta", parent)
 {
     foreach (PreguntaBasePtr pb, subpreguntas)
     {
         _subPreguntas.append(pb->clone());
+    }
+}
+
+PreguntaCompuesta::PreguntaCompuesta(mongo::BSONObj &obj, QObject *parent) : PreguntaBase(obj, parent)
+{
+    mongo::BSONObj arr = obj["value"].Obj();
+    std::vector<mongo::BSONElement> elements;
+    arr.elems(elements);
+    for (std::vector<mongo::BSONElement>::iterator it = elements.begin(); it != elements.end(); ++it)
+    {
+        mongo::BSONObj obj2 = it->Obj();
+        qDebug() << obj2.jsonString().c_str();
+        _subPreguntas.append(Factory::crearPregunta(obj2));
     }
 }
 
