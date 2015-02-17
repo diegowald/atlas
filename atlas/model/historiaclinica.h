@@ -24,12 +24,14 @@ public:
     QString numeroPaciente();
     QList<PreguntaBasePtr> &antecedentes();
     QList<PreguntaBasePtr> &cuestionario();
+    QString idString();
 
     void setFechaPrimerConsulta(QDate &date);
     void setFechaSegundaConsulta(QDate &date);
     void setNumeroPaciente(const QString &nro);
 
     virtual mongo::BSONObj toBson();
+
 
 private:
     mongo::BSONObj arrayBson(QList<PreguntaBasePtr> list);
@@ -45,6 +47,7 @@ private:
     QList<PreguntaBasePtr> _antecedentes;
     QList<PreguntaBasePtr> _cuestionario;
     QString _numeroPaciente;
+    mongo::OID _id;
 };
 
 #endif // HISTORIACLINICA_H

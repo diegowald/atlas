@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "model/factory.h"
+#include <QMap>
 
 namespace Ui {
 class MainWindow;
@@ -26,10 +27,12 @@ private slots:
 
     void on_actionAnalisis_triggered();
 
+    void on_tableWidget_cellDoubleClicked(int row, int column);
+
 private:
     Ui::MainWindow *ui;
     Factory* _factory;
-    QList<HistoriaClinicaPtr> _historias;
+    QMap<QString, HistoriaClinicaPtr> _historias;
 };
 
 #endif // MAINWINDOW_H
