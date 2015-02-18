@@ -18,6 +18,8 @@ public:
 
     void setLabel(const QString &label);
     void addPregunta(PreguntaBasePtr pregunta);
+    void setChecked(bool checked);
+    bool isChecked() const;
 
 private slots:
     void on_groupBox_customContextMenuRequested(const QPoint &pos);

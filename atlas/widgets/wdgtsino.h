@@ -16,6 +16,7 @@ public:
     ~WdgtSiNo();
 
     bool value();
+    void setValue(bool newValue);
 
 private slots:
     void on_radioSi_customContextMenuRequested(const QPoint &pos);

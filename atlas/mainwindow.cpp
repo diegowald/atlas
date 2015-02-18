@@ -94,7 +94,7 @@ void MainWindow::on_tableWidget_cellDoubleClicked(int row, int column)
         mongo::DBClientConnection c;
         c.connect("localhost");
         c.update("atlas.historias",
-                 BSON("_id" << mongo::OID(historia->idString().toStdString())),
+                 BSON("_id" << historia->id()),
                  historia->toBson());
     }
 }

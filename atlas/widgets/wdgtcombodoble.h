@@ -20,6 +20,8 @@ public:
 
     QString value1();
     QString value2();
+    void setValue1(const QString &newValue);
+    void setValue2(const QString &newValue);
 
 private slots:
     void on_comboBox_2_customContextMenuRequested(const QPoint &pos);

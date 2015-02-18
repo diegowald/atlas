@@ -29,3 +29,8 @@ QString WdgtTexto::value()
 {
     return ui->textEdit->toHtml();
 }
+
+void WdgtTexto::setValue(const QString &value)
+{
+    ui->textEdit->setHtml(value);
+}

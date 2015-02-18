@@ -26,6 +26,7 @@ PreguntaBasePtr PreguntaSiNo::clone()
 QWidget* PreguntaSiNo::widget()
 {
     _widget = new WdgtSiNo();
+    _widget->setValue(_value);
     return _widget;
 }
 

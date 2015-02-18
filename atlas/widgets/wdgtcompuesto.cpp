@@ -35,3 +35,13 @@ void WdgtCompuesto::on_WdgtCompuesto_customContextMenuRequested(const QPoint &po
     (void) pos;
     emit tooltipFired(this);
 }
+
+void WdgtCompuesto::setChecked(bool checked)
+{
+    ui->groupBox->setChecked(checked);
+}
+
+bool WdgtCompuesto::isChecked() const
+{
+    return ui->groupBox->isChecked();
+}

@@ -1,5 +1,4 @@
 #include "preguntacompuesta.h"
-#include "../widgets/wdgtcompuesto.h"
 #include <QDebug>
 #include "factory.h"
 
@@ -9,11 +8,13 @@ PreguntaCompuesta::PreguntaCompuesta(const QString &label, const QString &nota, 
     {
         _subPreguntas.append(pb->clone());
     }
+    _checked = true;
 }
 
 PreguntaCompuesta::PreguntaCompuesta(mongo::BSONObj &obj, QObject *parent) : PreguntaBase(obj, parent)
 {
-    mongo::BSONObj arr = obj["value"].Obj();
+    mongo::BSONObj o = obj["value"].Obj();
+    mongo::BSONObj arr = o["questions"].Obj();
     std::vector<mongo::BSONElement> elements;
     arr.elems(elements);
     for (std::vector<mongo::BSONElement>::iterator it = elements.begin(); it != elements.end(); ++it)
@@ -22,6 +23,7 @@ PreguntaCompuesta::PreguntaCompuesta(mongo::BSONObj &obj, QObject *parent) : Pre
         qDebug() << obj2.jsonString().c_str();
         _subPreguntas.append(Factory::crearPregunta(obj2));
     }
+    _checked = o["checked"].Bool();
 }
 
 PreguntaCompuesta::~PreguntaCompuesta()
@@ -37,13 +39,14 @@ PreguntaBasePtr PreguntaCompuesta::clone()
 
 QWidget* PreguntaCompuesta::widget()
 {
-    WdgtCompuesto* wdg = new WdgtCompuesto();
-    wdg->setLabel(label());
+    _widget = new WdgtCompuesto();
+    _widget->setLabel(label());
+    _widget->setChecked(_checked);
     foreach (PreguntaBasePtr preg, _subPreguntas)
     {
-        wdg->addPregunta(preg);
+        _widget->addPregunta(preg);
     }
-    return wdg;
+    return _widget;
 }
 
 mongo::BSONObj PreguntaCompuesta::value()
@@ -53,7 +56,9 @@ mongo::BSONObj PreguntaCompuesta::value()
     {
         builder.append(pregunta->toBson());
     }
-    return builder.arr();
+    mongo::BSONObj obj = BSON("questions" << builder.arr()
+                              << "checked" << _checked);
+    return obj;
 }
 
 void PreguntaCompuesta::applyChanges()
@@ -62,4 +67,5 @@ void PreguntaCompuesta::applyChanges()
     {
         pregunta->applyChanges();
     }
+    _checked = _widget->isChecked();
 }

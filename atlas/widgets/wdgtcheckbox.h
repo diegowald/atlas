@@ -16,6 +16,7 @@ public:
     ~WdgtCheckBox();
 
     bool value();
+    void setValue(bool newValue);
 
 private slots:
     void on_check_customContextMenuRequested(const QPoint &pos);

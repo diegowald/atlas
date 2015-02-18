@@ -25,6 +25,7 @@ PreguntaBasePtr PreguntaCheckBox::clone()
 QWidget* PreguntaCheckBox::widget()
 {
     _widget = new WdgtCheckBox();
+    _widget->setValue(_checked);
     return _widget;
 }
 

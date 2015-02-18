@@ -16,6 +16,7 @@ public:
     ~WdgtTexto();
 
     QString value();
+    void setValue(const QString &value);
 
 private slots:
     void on_textEdit_customContextMenuRequested(const QPoint &pos);

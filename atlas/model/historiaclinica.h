@@ -25,6 +25,7 @@ public:
     QList<PreguntaBasePtr> &antecedentes();
     QList<PreguntaBasePtr> &cuestionario();
     QString idString();
+    mongo::OID id();
 
     void setFechaPrimerConsulta(QDate &date);
     void setFechaSegundaConsulta(QDate &date);

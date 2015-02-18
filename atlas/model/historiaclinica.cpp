@@ -31,6 +31,7 @@ HistoriaClinica::HistoriaClinica(mongo::BSONObj &obj, QObject *parent) : QObject
     arr.elems(elements);
     fromArrayBson(elements, _antecedentes);
     arr = obj["cuestionario"].Obj();
+    elements.clear();
     arr.elems(elements);
     fromArrayBson(elements, _cuestionario);
     _numeroPaciente = obj["numeroPaciente"].String().c_str();
@@ -125,4 +126,9 @@ void HistoriaClinica::fromArrayBson(std::vector<mongo::BSONElement> &arr, QList<
 QString HistoriaClinica::idString()
 {
     return QString(_id.toString().c_str());
+}
+
+mongo::OID HistoriaClinica::id()
+{
+    return _id;
 }

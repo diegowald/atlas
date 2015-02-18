@@ -29,3 +29,8 @@ bool WdgtCheckBox::value()
 {
     return ui->check->isChecked();
 }
+
+void WdgtCheckBox::setValue(bool newValue)
+{
+    ui->check->setChecked(newValue);
+}

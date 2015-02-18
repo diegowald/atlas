@@ -52,3 +52,13 @@ QString WdgtComboDoble::value2()
 {
     return ui->comboBox_2->currentText();
 }
+
+void WdgtComboDoble::setValue1(const QString &newValue)
+{
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(newValue));
+}
+
+void WdgtComboDoble::setValue2(const QString &newValue)
+{
+    ui->comboBox_2->setCurrentIndex(ui->comboBox_2->findText(newValue));
+}

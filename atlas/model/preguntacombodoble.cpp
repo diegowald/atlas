@@ -43,6 +43,8 @@ QWidget* PreguntaComboDoble::widget()
     _widget = new WdgtComboDoble();
     _widget->setLista1(_lista1);
     _widget->setLista2(_lista2);
+    _widget->setValue1(_selected1);
+    _widget->setValue2(_selected2);
     return _widget;
 }
 

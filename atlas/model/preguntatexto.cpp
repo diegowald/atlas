@@ -25,6 +25,7 @@ PreguntaBasePtr PreguntaTexto::clone()
 QWidget* PreguntaTexto::widget()
 {
     _widget = new WdgtTexto();
+    _widget->setValue(_text);
     return _widget;
 }
 

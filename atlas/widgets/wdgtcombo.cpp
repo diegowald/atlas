@@ -35,3 +35,8 @@ QString WdgtCombo::value()
 {
     return ui->comboBox->currentText();
 }
+
+void WdgtCombo::setValue(const QString &newValue)
+{
+    ui->comboBox->setCurrentIndex(ui->comboBox->findText(newValue));
+}

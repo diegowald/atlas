@@ -35,6 +35,7 @@ QWidget* PreguntaCombo::widget()
 {
     _widget = new WdgtCombo();
     _widget->setLista(_listaValores);
+    _widget->setValue(_selectedValue);
     return _widget;
 }
 

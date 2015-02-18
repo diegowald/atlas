@@ -4,6 +4,7 @@
 #include <QObject>
 #include "preguntabase.h"
 #include "forward.h"
+#include "../widgets/wdgtcompuesto.h"
 
 class PreguntaCompuesta : public PreguntaBase
 {
@@ -20,6 +21,8 @@ public:
     virtual void applyChanges();
 private:
     QList<PreguntaBasePtr> _subPreguntas;
+    bool _checked;
+    WdgtCompuesto *_widget;
 };
 
 #endif // PREGUNTACOMPUESTA_H

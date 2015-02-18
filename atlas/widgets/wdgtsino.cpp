@@ -35,3 +35,9 @@ bool WdgtSiNo::value()
 {
     return ui->radioSi->isChecked();
 }
+
+void WdgtSiNo::setValue(bool newValue)
+{
+    ui->radioSi->setChecked(newValue);
+    ui->radioNo->setChecked(!newValue);
+}
