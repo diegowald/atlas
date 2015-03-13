@@ -19,6 +19,8 @@ public:
     void setLista(QStringList &lista);
     QString value();
     void setValue(const QString &newValue);
+    void setNotes(const QString &newNote);
+    QString notes() const;
 
 private slots:
     void on_comboBox_customContextMenuRequested(const QPoint &pos);

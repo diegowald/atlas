@@ -26,6 +26,7 @@ QWidget* PreguntaCheckBox::widget()
 {
     _widget = new WdgtCheckBox();
     _widget->setValue(_checked);
+    _widget->setNotes(nota());
     return _widget;
 }
 
@@ -38,4 +39,5 @@ mongo::BSONObj PreguntaCheckBox::value()
 void PreguntaCheckBox::applyChanges()
 {
     _checked = _widget->value();
+    setNota(_widget->notes());
 }

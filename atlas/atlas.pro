@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -43,7 +43,8 @@ SOURCES += main.cpp\
     widgets/wdgttexto.cpp \
     widgets/wdgtwithlabel.cpp \
     widgets/customtooltipwidget.cpp \
-    db/serializable.cpp
+    db/serializable.cpp \
+    dialogs/dlglocalips.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -68,7 +69,8 @@ HEADERS  += mainwindow.h \
     widgets/wdgttexto.h \
     widgets/wdgtwithlabel.h \
     widgets/customtooltipwidget.h \
-    db/serializable.h
+    db/serializable.h \
+    dialogs/dlglocalips.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \
@@ -80,5 +82,6 @@ FORMS    += mainwindow.ui \
     widgets/wdgtcompuesto.ui \
     widgets/wdgtsino.ui \
     widgets/wdgttexto.ui \
-    widgets/wdgtwithlabel.ui
+    widgets/wdgtwithlabel.ui \
+    dialogs/dlglocalips.ui
 

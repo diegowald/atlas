@@ -17,6 +17,8 @@ public:
 
     QString value();
     void setValue(const QString &value);
+    void setNotes(const QString &newNote);
+    QString notes() const;
 
 private slots:
     void on_textEdit_customContextMenuRequested(const QPoint &pos);

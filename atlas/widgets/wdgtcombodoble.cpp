@@ -62,3 +62,15 @@ void WdgtComboDoble::setValue2(const QString &newValue)
 {
     ui->comboBox_2->setCurrentIndex(ui->comboBox_2->findText(newValue));
 }
+
+void WdgtComboDoble::setNotes(const QString &newNote)
+{
+    ui->comboBox->setToolTip(newNote);
+    ui->comboBox_2->setToolTip(newNote);
+    setToolTip(newNote);
+}
+
+QString WdgtComboDoble::notes() const
+{
+    return toolTip();
+}

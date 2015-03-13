@@ -20,6 +20,8 @@ public:
     void addPregunta(PreguntaBasePtr pregunta);
     void setChecked(bool checked);
     bool isChecked() const;
+    void setNotes(const QString &newNote);
+    QString notes() const;
 
 private slots:
     void on_groupBox_customContextMenuRequested(const QPoint &pos);

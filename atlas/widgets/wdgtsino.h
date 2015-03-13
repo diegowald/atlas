@@ -17,6 +17,8 @@ public:
 
     bool value();
     void setValue(bool newValue);
+    void setNotes(const QString &newNote);
+    QString notes() const;
 
 private slots:
     void on_radioSi_customContextMenuRequested(const QPoint &pos);

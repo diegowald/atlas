@@ -41,3 +41,15 @@ void WdgtSiNo::setValue(bool newValue)
     ui->radioSi->setChecked(newValue);
     ui->radioNo->setChecked(!newValue);
 }
+
+void WdgtSiNo::setNotes(const QString &newNote)
+{
+    ui->radioNo->setToolTip(newNote);
+    ui->radioSi->setToolTip(newNote);
+    setToolTip(newNote);
+}
+
+QString WdgtSiNo::notes() const
+{
+    return ui->radioNo->toolTip();
+}

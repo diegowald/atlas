@@ -1,5 +1,4 @@
 #include "preguntacombo.h"
-#include <QDebug>
 
 PreguntaCombo::PreguntaCombo(const QString &label, const QString &nota, QStringList &listaValores, QObject *parent) : PreguntaBase(label, nota, "combo", parent)
 {
@@ -9,7 +8,7 @@ PreguntaCombo::PreguntaCombo(const QString &label, const QString &nota, QStringL
 PreguntaCombo::PreguntaCombo(mongo::BSONObj &obj, QObject *parent) : PreguntaBase(obj, parent)
 {
     mongo::BSONObj value = obj["value"].Obj();
-    qDebug() << value.jsonString().c_str();
+    //qDebug() << value.jsonString().c_str();
     mongo::BSONObj objValues = value["values"].Obj();
     std::vector<mongo::BSONElement> values;
     objValues.elems(values);
@@ -36,6 +35,7 @@ QWidget* PreguntaCombo::widget()
     _widget = new WdgtCombo();
     _widget->setLista(_listaValores);
     _widget->setValue(_selectedValue);
+    _widget->setNotes(nota());
     return _widget;
 }
 
@@ -54,4 +54,5 @@ mongo::BSONObj PreguntaCombo::value()
 void PreguntaCombo::applyChanges()
 {
     _selectedValue = _widget->value();
+    setNota(_widget->notes());
 }

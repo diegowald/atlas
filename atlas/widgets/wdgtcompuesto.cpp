@@ -45,3 +45,14 @@ bool WdgtCompuesto::isChecked() const
 {
     return ui->groupBox->isChecked();
 }
+
+void WdgtCompuesto::setNotes(const QString &newNote)
+{
+    ui->groupBox->setToolTip(newNote);
+    setToolTip(newNote);
+}
+
+QString WdgtCompuesto::notes() const
+{
+    return toolTip();
+}

@@ -1,5 +1,4 @@
 #include "preguntacompuesta.h"
-#include <QDebug>
 #include "factory.h"
 
 PreguntaCompuesta::PreguntaCompuesta(const QString &label, const QString &nota, QList<PreguntaBasePtr> &subpreguntas, QObject *parent) : PreguntaBase(label, nota, "compuesta", parent)
@@ -20,7 +19,7 @@ PreguntaCompuesta::PreguntaCompuesta(mongo::BSONObj &obj, QObject *parent) : Pre
     for (std::vector<mongo::BSONElement>::iterator it = elements.begin(); it != elements.end(); ++it)
     {
         mongo::BSONObj obj2 = it->Obj();
-        qDebug() << obj2.jsonString().c_str();
+        //qDebug() << obj2.jsonString().c_str();
         _subPreguntas.append(Factory::crearPregunta(obj2));
     }
     _checked = o["checked"].Bool();
@@ -42,6 +41,7 @@ QWidget* PreguntaCompuesta::widget()
     _widget = new WdgtCompuesto();
     _widget->setLabel(label());
     _widget->setChecked(_checked);
+    _widget->setNotes(nota());
     foreach (PreguntaBasePtr preg, _subPreguntas)
     {
         _widget->addPregunta(preg);
@@ -68,4 +68,5 @@ void PreguntaCompuesta::applyChanges()
         pregunta->applyChanges();
     }
     _checked = _widget->isChecked();
+    setNota(_widget->notes());
 }

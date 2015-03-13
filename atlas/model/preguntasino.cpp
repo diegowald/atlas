@@ -27,6 +27,7 @@ QWidget* PreguntaSiNo::widget()
 {
     _widget = new WdgtSiNo();
     _widget->setValue(_value);
+    _widget->setNotes(nota());
     return _widget;
 }
 
@@ -39,4 +40,5 @@ mongo::BSONObj PreguntaSiNo::value()
 void PreguntaSiNo::applyChanges()
 {
     _value = _widget->value();
+    setNota(_widget->notes());
 }

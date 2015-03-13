@@ -34,3 +34,14 @@ void WdgtTexto::setValue(const QString &value)
 {
     ui->textEdit->setHtml(value);
 }
+
+void WdgtTexto::setNotes(const QString &newNote)
+{
+    ui->textEdit->setToolTip(newNote);
+    setToolTip(newNote);
+}
+
+QString WdgtTexto::notes() const
+{
+    return toolTip();
+}

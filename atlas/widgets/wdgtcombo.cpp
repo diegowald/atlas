@@ -40,3 +40,14 @@ void WdgtCombo::setValue(const QString &newValue)
 {
     ui->comboBox->setCurrentIndex(ui->comboBox->findText(newValue));
 }
+
+void WdgtCombo::setNotes(const QString &newNote)
+{
+    ui->comboBox->setToolTip(newNote);
+    setToolTip(newNote);
+}
+
+QString WdgtCombo::notes() const
+{
+    return toolTip();
+}

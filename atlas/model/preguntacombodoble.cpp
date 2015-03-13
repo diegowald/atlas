@@ -45,6 +45,7 @@ QWidget* PreguntaComboDoble::widget()
     _widget->setLista2(_lista2);
     _widget->setValue1(_selected1);
     _widget->setValue2(_selected2);
+    _widget->setNotes(nota());
     return _widget;
 }
 
@@ -73,4 +74,5 @@ void PreguntaComboDoble::applyChanges()
 {
     _selected1 = _widget->value1();
     _selected2 = _widget->value2();
+    setNota(_widget->notes());
 }

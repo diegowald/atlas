@@ -5,9 +5,12 @@
 #include "model/factory.h"
 #include <QMessageBox>
 #include <mongo/client/dbclient.h>
+#include <mongo/db/json.h>
 #include "model/historiaclinica.h"
 #include <auto_ptr.h>
 #include "model/persona.h"
+#include "dialogs/dlglocalips.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -32,23 +35,57 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
     {
         dlg.applyData();
         mongo::DBClientConnection c;
-        c.connect("localhost");
-        c.insert("atlas.historias", historia->toBson());
+        //c.connect("localhost");
+        std::string s = "";
+        for (int i = 0; i < 3000; ++i)
+        {
+            c.connect(connectionString().toStdString(), s);
+            qDebug() << QString(historia->toBson().toString().c_str());
+            c.insert("atlas.historias", historia->toBson());
+            std::string err = c.getLastError();
+            mongo::BSONObj errObj = c.getLastErrorDetailed();
+            qDebug() << QString(err.c_str());
+            qDebug() << errObj.toString().c_str();
+        }
     }
 }
 
 void MainWindow::on_pushButton_released()
 {
     _historias.clear();
-    QMessageBox::information(this, "Atlas", "No implementado!");
     mongo::DBClientConnection c;
-    c.connect("localhost");
-    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.historias", mongo::BSONObj());
+    std::string s = "";
+    c.connect(connectionString().toStdString(), s);
+    //c.connect("mongodb://atlas:atlas1234ds049661.mongolab.com:49661", s);
+    qDebug() << s.c_str();
+
+    mongo::BSONObj query;
+    QString queryString = "";
+
+    if (ui->txtNombre->text().trimmed().length() > 0)
+    {
+        queryString = QString("$text : { $search : \"%1\" }").arg(ui->txtNombre->text().trimmed());
+    }
+    if (ui->txtDNI->text().trimmed().length() > 0)
+    {
+        if (queryString.length() > 0)
+            queryString += ", ";
+        queryString += QString("'persona.dni' : \"%1\"").arg(ui->txtDNI->text().trimmed());
+    }
+    queryString = "{ " + queryString + " }";
+    query = mongo::fromjson(queryString.toStdString());
+    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.historias", query);
+    qDebug() << c.getLastError().c_str();
+    mongo::BSONObj errObj = c.getLastErrorDetailed();
+    qDebug() << errObj.toString().c_str();
     while(cursor->more())
     {
         mongo::BSONObj obj = cursor->next();
-        HistoriaClinicaPtr his = _factory->crearHistoria(obj);
-        _historias[his->idString()] = his;
+        if (!obj.isEmpty())
+        {
+            HistoriaClinicaPtr his = _factory->crearHistoria(obj);
+            _historias[his->idString()] = his;
+        }
     }
     fillView();
 }
@@ -60,6 +97,8 @@ void MainWindow::on_actionAnalisis_triggered()
 
 void MainWindow::fillView()
 {
+    QString recCount = "Se encontraton %1 registros.";
+    ui->statusBar->showMessage(recCount.arg(_historias.count()), 2000);
     ui->tableWidget->clearContents();
     ui->tableWidget->setRowCount(0);
     foreach (HistoriaClinicaPtr historia, _historias.values())
@@ -92,9 +131,23 @@ void MainWindow::on_tableWidget_cellDoubleClicked(int row, int column)
     {
         dlg.applyData();
         mongo::DBClientConnection c;
-        c.connect("localhost");
+        //c.connect("localhost");
+        std::string s = "";
+        c.connect(connectionString().toStdString(), s);
         c.update("atlas.historias",
                  BSON("_id" << historia->id()),
                  historia->toBson());
     }
+}
+
+void MainWindow::on_actionDetectar_mi_IP_triggered()
+{
+    DlgLocalIPs dlg;
+    dlg.exec();
+}
+
+QString MainWindow::connectionString() const
+{
+    //return "ds049661.mongolab.com:49661/atlas -u atlas_dev -p atlas1234"; // --authenticationDatabase atlas";
+    return "localhost";
 }

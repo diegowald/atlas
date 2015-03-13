@@ -19,6 +19,7 @@ public:
 
 private:
     void fillView();
+    QString connectionString() const;
 
 private slots:
     void on_actionNuevaHistoriaClinica_triggered();
@@ -28,6 +29,9 @@ private slots:
     void on_actionAnalisis_triggered();
 
     void on_tableWidget_cellDoubleClicked(int row, int column);
+
+    void on_actionDetectar_mi_IP_triggered();
+
 
 private:
     Ui::MainWindow *ui;

@@ -26,6 +26,7 @@ QWidget* PreguntaTexto::widget()
 {
     _widget = new WdgtTexto();
     _widget->setValue(_text);
+    _widget->setNotes(nota());
     return _widget;
 }
 
@@ -38,4 +39,5 @@ mongo::BSONObj PreguntaTexto::value()
 void PreguntaTexto::applyChanges()
 {
     _text = _widget->value();
+    setNota(_widget->notes());
 }
