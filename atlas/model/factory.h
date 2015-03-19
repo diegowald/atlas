@@ -19,6 +19,9 @@ public:
 
     static PreguntaBasePtr crearPregunta(mongo::BSONObj &obj);
 
+    static AlarmaPtr crearAlarma(mongo::BSONObj &obj);
+    static AlarmaPtr crearNuevaAlarma(HistoriaClinicaPtr historia);
+
 protected:
     PersonaPtr crearPersona();
     QList<PreguntaBasePtr> cloneAntecedentes();

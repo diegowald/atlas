@@ -11,6 +11,7 @@
 #include "model/persona.h"
 #include "dialogs/dlglocalips.h"
 #include <QDebug>
+#include "model/alarma.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -30,7 +31,7 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
 {
     HistoriaClinicaPtr historia = _factory->crearNuevaHistoriaClinica();
     DialogHistoriaClinica dlg;
-    dlg.setData(historia);
+    dlg.setData(historia, AlarmaPtr(NULL));
     if (dlg.exec() == QDialog::Accepted)
     {
         dlg.applyData();
@@ -62,6 +63,7 @@ void MainWindow::on_pushButton_released()
     mongo::BSONObj query;
     QString queryString = "";
 
+    ui->statusBar->showMessage("Buscando registros", 2000);
     if (ui->txtNombre->text().trimmed().length() > 0)
     {
         queryString = QString("$text : { $search : \"%1\" }").arg(ui->txtNombre->text().trimmed());
@@ -99,34 +101,35 @@ void MainWindow::fillView()
 {
     QString recCount = "Se encontraton %1 registros.";
     ui->statusBar->showMessage(recCount.arg(_historias.count()), 2000);
-    ui->tableWidget->clearContents();
-    ui->tableWidget->setRowCount(0);
+    ui->tablePacientes->clearContents();
+    ui->tablePacientes->setRowCount(0);
     foreach (HistoriaClinicaPtr historia, _historias.values())
     {
-        int row = ui->tableWidget->rowCount();
-        ui->tableWidget->insertRow(row);
+        int row = ui->tablePacientes->rowCount();
+        ui->tablePacientes->insertRow(row);
         QTableWidgetItem *item = new QTableWidgetItem(historia->persona()->nombre());
-        ui->tableWidget->setItem(row, 0, item);
+        ui->tablePacientes->setItem(row, 0, item);
         item->setData(Qt::UserRole, historia->idString());
         item = new QTableWidgetItem(historia->persona()->dni());
-        ui->tableWidget->setItem(row, 1, item);
+        ui->tablePacientes->setItem(row, 1, item);
         item = new QTableWidgetItem(historia->fechaPrimerConsulta().toString());
-        ui->tableWidget->setItem(row, 2, item);
+        ui->tablePacientes->setItem(row, 2, item);
         item = new QTableWidgetItem(historia->fechaSegundaConsulta().toString());
-        ui->tableWidget->setItem(row, 3, item);
+        ui->tablePacientes->setItem(row, 3, item);
         item = new QTableWidgetItem(historia->persona()->telefonos());
-        ui->tableWidget->setItem(row, 4, item);
+        ui->tablePacientes->setItem(row, 4, item);
         item = new QTableWidgetItem(historia->persona()->email());
-        ui->tableWidget->setItem(row, 5, item);
+        ui->tablePacientes->setItem(row, 5, item);
     }
 }
 
 void MainWindow::on_tableWidget_cellDoubleClicked(int row, int column)
 {
-    QString id = ui->tableWidget->item(row, 0)->data(Qt::UserRole).toString();
+    QString id = ui->tablePacientes->item(row, 0)->data(Qt::UserRole).toString();
     HistoriaClinicaPtr historia = _historias[id];
+    AlarmaPtr alarma = getAlarmaPaciente(historia->id());
     DialogHistoriaClinica dlg;
-    dlg.setData(historia);
+    dlg.setData(historia, alarma);
     if (dlg.exec() == QDialog::Accepted)
     {
         dlg.applyData();
@@ -137,6 +140,11 @@ void MainWindow::on_tableWidget_cellDoubleClicked(int row, int column)
         c.update("atlas.historias",
                  BSON("_id" << historia->id()),
                  historia->toBson());
+
+        AlarmaPtr alarma = dlg.alarma();
+        c.update("atlas.alarmas",
+                 BSON("_id" << alarma->id()),
+                 alarma->toBson());
     }
 }
 
@@ -150,4 +158,29 @@ QString MainWindow::connectionString() const
 {
     //return "ds049661.mongolab.com:49661/atlas -u atlas_dev -p atlas1234"; // --authenticationDatabase atlas";
     return "localhost";
+}
+
+AlarmaPtr MainWindow::getAlarmaPaciente(mongo::OID historiaID)
+{
+    mongo::DBClientConnection c;
+    std::string s = "";
+    c.connect(connectionString().toStdString(), s);
+    qDebug() << s.c_str();
+
+    ui->statusBar->showMessage("Buscando alarma", 2000);
+    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", BSON("idHistoria" << historiaID));
+    qDebug() << c.getLastError().c_str();
+    mongo::BSONObj errObj = c.getLastErrorDetailed();
+    qDebug() << errObj.toString().c_str();
+    AlarmaPtr alarma;
+    alarma.clear();
+    while(cursor->more())
+    {
+        mongo::BSONObj obj = cursor->next();
+        if (!obj.isEmpty())
+        {
+            alarma = _factory->crearAlarma(obj);
+        }
+    }
+    return alarma;
 }

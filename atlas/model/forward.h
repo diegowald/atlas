@@ -16,6 +16,6 @@ CONSTRUCT(PreguntaComboDoble)
 CONSTRUCT(PreguntaCompuesta)
 CONSTRUCT(PreguntaSiNo)
 CONSTRUCT(PreguntaTexto)
-
+CONSTRUCT(Alarma)
 #endif // FORWARD
 

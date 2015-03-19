@@ -20,6 +20,7 @@ public:
 private:
     void fillView();
     QString connectionString() const;
+    AlarmaPtr getAlarmaPaciente(mongo::OID historiaID);
 
 private slots:
     void on_actionNuevaHistoriaClinica_triggered();

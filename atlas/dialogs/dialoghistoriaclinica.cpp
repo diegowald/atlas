@@ -5,6 +5,8 @@
 #include "model/persona.h"
 #include "model/preguntabase.h"
 #include "model/preguntatexto.h"
+#include "dlgsetalarma.h"
+#include "model/factory.h"
 
 DialogHistoriaClinica::DialogHistoriaClinica(QWidget *parent) :
     QDialog(parent),
@@ -18,7 +20,7 @@ DialogHistoriaClinica::~DialogHistoriaClinica()
     delete ui;
 }
 
-void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia)
+void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia, AlarmaPtr alarma)
 {
     QString s = "Historia clínica %1";
     setWindowTitle(s.arg(historia->persona()->nombre().length() == 0 ? "" : ("de " + historia->persona()->nombre())));
@@ -29,6 +31,7 @@ void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia)
     setAntecedentes(historia->antecedentes());
     setCuestionario(historia->cuestionario());
     _historia = historia;
+    _alarma = alarma;
 }
 
 void DialogHistoriaClinica::applyData()
@@ -111,4 +114,23 @@ void DialogHistoriaClinica::applyCuestionario()
     {
         pregunta->applyChanges();
     }
+}
+
+void DialogHistoriaClinica::on_btnAlarma_released()
+{
+    DlgSetAlarma dlg(this);
+    if (_alarma.isNull())
+    {
+        _alarma = Factory::crearNuevaAlarma(_historia);
+    }
+    dlg.setData(_alarma);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        dlg.updateData(_alarma);
+    }
+}
+
+AlarmaPtr DialogHistoriaClinica::alarma()
+{
+    return _alarma;
 }

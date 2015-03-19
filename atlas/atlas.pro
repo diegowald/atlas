@@ -44,7 +44,9 @@ SOURCES += main.cpp\
     widgets/wdgtwithlabel.cpp \
     widgets/customtooltipwidget.cpp \
     db/serializable.cpp \
-    dialogs/dlglocalips.cpp
+    dialogs/dlglocalips.cpp \
+    dialogs/dlgsetalarma.cpp \
+    model/alarma.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -70,7 +72,9 @@ HEADERS  += mainwindow.h \
     widgets/wdgtwithlabel.h \
     widgets/customtooltipwidget.h \
     db/serializable.h \
-    dialogs/dlglocalips.h
+    dialogs/dlglocalips.h \
+    dialogs/dlgsetalarma.h \
+    model/alarma.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \
@@ -83,5 +87,6 @@ FORMS    += mainwindow.ui \
     widgets/wdgtsino.ui \
     widgets/wdgttexto.ui \
     widgets/wdgtwithlabel.ui \
-    dialogs/dlglocalips.ui
+    dialogs/dlglocalips.ui \
+    dialogs/dlgsetalarma.ui
 

@@ -80,6 +80,13 @@
      <item>
       <widget class="QLineEdit" name="txtNumeroPaciente"/>
      </item>
+     <item>
+      <widget class="QPushButton" name="btnAlarma">
+       <property name="text">
+        <string>Alarma...</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>

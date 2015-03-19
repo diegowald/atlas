@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>514</width>
-    <height>300</height>
+    <width>561</width>
+    <height>384</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,21 +15,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="spacing">
-     <number>2</number>
-    </property>
-    <property name="leftMargin">
-     <number>2</number>
-    </property>
-    <property name="topMargin">
-     <number>2</number>
-    </property>
-    <property name="rightMargin">
-     <number>2</number>
-    </property>
-    <property name="bottomMargin">
-     <number>2</number>
-    </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
@@ -71,52 +56,58 @@
      </layout>
     </item>
     <item>
-     <widget class="QTableWidget" name="tableWidget">
-      <property name="editTriggers">
-       <set>QAbstractItemView::NoEditTriggers</set>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
-      <property name="alternatingRowColors">
-       <bool>true</bool>
-      </property>
-      <property name="selectionMode">
-       <enum>QAbstractItemView::SingleSelection</enum>
-      </property>
-      <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectRows</enum>
-      </property>
-      <property name="sortingEnabled">
-       <bool>true</bool>
-      </property>
-      <column>
-       <property name="text">
-        <string>Nombre</string>
+      <widget class="QTableWidget" name="tablePacientes">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
        </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>DNI</string>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
        </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Primer Consulta</string>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
        </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Segunda Consulta</string>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
        </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Telefonos</string>
+       <property name="sortingEnabled">
+        <bool>true</bool>
        </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Email</string>
-       </property>
-      </column>
+       <column>
+        <property name="text">
+         <string>Nombre</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>DNI</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Primer Consulta</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Segunda Consulta</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Telefonos</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Email</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QTableWidget" name="tableAlarmas"/>
      </widget>
     </item>
    </layout>
@@ -126,7 +117,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>514</width>
+     <width>561</width>
      <height>24</height>
     </rect>
    </property>
@@ -196,7 +187,7 @@
   <tabstop>txtNombre</tabstop>
   <tabstop>txtDNI</tabstop>
   <tabstop>pushButton</tabstop>
-  <tabstop>tableWidget</tabstop>
+  <tabstop>tablePacientes</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -8,6 +8,7 @@
 #include "preguntacompuesta.h"
 #include "preguntasino.h"
 #include "preguntatexto.h"
+#include "alarma.h"
 
 Factory::Factory(QObject *parent) : QObject(parent)
 {
@@ -198,4 +199,14 @@ PreguntaBasePtr Factory::crearPregunta(mongo::BSONObj &obj)
         preg = PreguntaTextoPtr(new PreguntaTexto(obj));
     }
     return preg;
+}
+
+AlarmaPtr Factory::crearAlarma(mongo::BSONObj &obj)
+{
+    return AlarmaPtr(new Alarma(obj));
+}
+
+AlarmaPtr Factory::crearNuevaAlarma(HistoriaClinicaPtr historia)
+{
+    return AlarmaPtr(new Alarma(historia));
 }

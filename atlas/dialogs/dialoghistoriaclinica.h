@@ -16,8 +16,14 @@ public:
     explicit DialogHistoriaClinica(QWidget *parent = 0);
     ~DialogHistoriaClinica();
 
-    void setData(HistoriaClinicaPtr historia);
+    void setData(HistoriaClinicaPtr historia, AlarmaPtr alarma);
     void applyData();
+
+    AlarmaPtr alarma();
+
+
+private slots:
+    void on_btnAlarma_released();
 
 private:
     void setAntecedentes(QList<PreguntaBasePtr> &antecedentes);
@@ -29,6 +35,7 @@ private:
 private:
     Ui::DialogHistoriaClinica *ui;
     HistoriaClinicaPtr _historia;
+    AlarmaPtr _alarma;
 };
 
 #endif // DIALOGHISTORIACLINICA_H
