@@ -19,6 +19,7 @@ public:
 
 private:
     void fillView();
+    void fillViewAlarmas();
     QString connectionString() const;
     AlarmaPtr getAlarmaPaciente(mongo::OID historiaID);
 
@@ -29,15 +30,17 @@ private slots:
 
     void on_actionAnalisis_triggered();
 
-    void on_tableWidget_cellDoubleClicked(int row, int column);
+    void on_tablePacientes_cellDoubleClicked(int row, int column);
 
     void on_actionDetectar_mi_IP_triggered();
 
+    void refreshAlarmas();
 
 private:
     Ui::MainWindow *ui;
     Factory* _factory;
     QMap<QString, HistoriaClinicaPtr> _historias;
+    QMap<QString, AlarmaPtr> _alarmas;
 };
 
 #endif // MAINWINDOW_H

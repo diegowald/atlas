@@ -32,6 +32,7 @@ void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia, AlarmaPtr alarm
     setCuestionario(historia->cuestionario());
     _historia = historia;
     _alarma = alarma;
+    _alarmaNueva = _alarma.isNull();
 }
 
 void DialogHistoriaClinica::applyData()
@@ -133,4 +134,9 @@ void DialogHistoriaClinica::on_btnAlarma_released()
 AlarmaPtr DialogHistoriaClinica::alarma()
 {
     return _alarma;
+}
+
+bool DialogHistoriaClinica::alarmaNueva() const
+{
+    return _alarmaNueva;
 }

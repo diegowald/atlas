@@ -25,7 +25,7 @@ public:
     void setFechaCreacion(const QDate &value);
     void setFechaAlarma(const QDate &value);
     mongo::OID id();
-
+    QString idString();
 signals:
 
 public slots:

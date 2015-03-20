@@ -107,7 +107,18 @@
         </property>
        </column>
       </widget>
-      <widget class="QTableWidget" name="tableAlarmas"/>
+      <widget class="QTableWidget" name="tableAlarmas">
+       <column>
+        <property name="text">
+         <string>Nombre</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Fecha</string>
+        </property>
+       </column>
+      </widget>
      </widget>
     </item>
    </layout>

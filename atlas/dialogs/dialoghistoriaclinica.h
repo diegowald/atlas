@@ -20,7 +20,7 @@ public:
     void applyData();
 
     AlarmaPtr alarma();
-
+    bool alarmaNueva() const;
 
 private slots:
     void on_btnAlarma_released();
@@ -36,6 +36,7 @@ private:
     Ui::DialogHistoriaClinica *ui;
     HistoriaClinicaPtr _historia;
     AlarmaPtr _alarma;
+    bool _alarmaNueva;
 };
 
 #endif // DIALOGHISTORIACLINICA_H

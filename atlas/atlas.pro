@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     db/serializable.cpp \
     dialogs/dlglocalips.cpp \
     dialogs/dlgsetalarma.cpp \
-    model/alarma.cpp
+    model/alarma.cpp \
+    db/dbmanager.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -74,7 +75,8 @@ HEADERS  += mainwindow.h \
     db/serializable.h \
     dialogs/dlglocalips.h \
     dialogs/dlgsetalarma.h \
-    model/alarma.h
+    model/alarma.h \
+    db/dbmanager.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \

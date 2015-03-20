@@ -4,7 +4,7 @@
 #include "model/forward.h"
 #include "model/factory.h"
 #include <QMessageBox>
-#include <mongo/client/dbclient.h>
+
 #include <mongo/db/json.h>
 #include "model/historiaclinica.h"
 #include <auto_ptr.h>
@@ -12,6 +12,7 @@
 #include "dialogs/dlglocalips.h"
 #include <QDebug>
 #include "model/alarma.h"
+#include "db/dbmanager.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     _factory = new Factory();
+    refreshAlarmas();
 }
 
 MainWindow::~MainWindow()
@@ -35,18 +37,12 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
     if (dlg.exec() == QDialog::Accepted)
     {
         dlg.applyData();
-        mongo::DBClientConnection c;
-        //c.connect("localhost");
-        std::string s = "";
-        for (int i = 0; i < 3000; ++i)
+        dbManager::instance()->insertHistoria(historia);
+
+        AlarmaPtr alarma = dlg.alarma();
+        if (!alarma.isNull())
         {
-            c.connect(connectionString().toStdString(), s);
-            qDebug() << QString(historia->toBson().toString().c_str());
-            c.insert("atlas.historias", historia->toBson());
-            std::string err = c.getLastError();
-            mongo::BSONObj errObj = c.getLastErrorDetailed();
-            qDebug() << QString(err.c_str());
-            qDebug() << errObj.toString().c_str();
+            dbManager::instance()->insertAlarma(alarma);
         }
     }
 }
@@ -54,16 +50,8 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
 void MainWindow::on_pushButton_released()
 {
     _historias.clear();
-    mongo::DBClientConnection c;
-    std::string s = "";
-    c.connect(connectionString().toStdString(), s);
-    //c.connect("mongodb://atlas:atlas1234ds049661.mongolab.com:49661", s);
-    qDebug() << s.c_str();
-
-    mongo::BSONObj query;
-    QString queryString = "";
-
     ui->statusBar->showMessage("Buscando registros", 2000);
+    QString queryString = "";
     if (ui->txtNombre->text().trimmed().length() > 0)
     {
         queryString = QString("$text : { $search : \"%1\" }").arg(ui->txtNombre->text().trimmed());
@@ -75,20 +63,8 @@ void MainWindow::on_pushButton_released()
         queryString += QString("'persona.dni' : \"%1\"").arg(ui->txtDNI->text().trimmed());
     }
     queryString = "{ " + queryString + " }";
-    query = mongo::fromjson(queryString.toStdString());
-    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.historias", query);
-    qDebug() << c.getLastError().c_str();
-    mongo::BSONObj errObj = c.getLastErrorDetailed();
-    qDebug() << errObj.toString().c_str();
-    while(cursor->more())
-    {
-        mongo::BSONObj obj = cursor->next();
-        if (!obj.isEmpty())
-        {
-            HistoriaClinicaPtr his = _factory->crearHistoria(obj);
-            _historias[his->idString()] = his;
-        }
-    }
+
+    _historias = dbManager::instance()->historias(queryString);
     fillView();
 }
 
@@ -123,28 +99,47 @@ void MainWindow::fillView()
     }
 }
 
-void MainWindow::on_tableWidget_cellDoubleClicked(int row, int column)
+void MainWindow::fillViewAlarmas()
+{
+    ui->tableAlarmas->clearContents();
+    ui->tableAlarmas->setRowCount(0);
+    foreach (AlarmaPtr alarma, _alarmas)
+    {
+        int row = ui->tableAlarmas->rowCount();
+        ui->tableAlarmas->insertRow(row);
+        QTableWidgetItem *item = new QTableWidgetItem(alarma->historiaClinica()->persona()->nombre());
+        item->setData(Qt::UserRole, alarma->idString());
+        ui->tableAlarmas->setItem(row, 0, item);
+
+        item = new QTableWidgetItem(alarma->fechaAlarma().toString());
+        ui->tableAlarmas->setItem(row, 1, item);
+    }
+}
+
+void MainWindow::on_tablePacientes_cellDoubleClicked(int row, int column)
 {
     QString id = ui->tablePacientes->item(row, 0)->data(Qt::UserRole).toString();
     HistoriaClinicaPtr historia = _historias[id];
-    AlarmaPtr alarma = getAlarmaPaciente(historia->id());
+    AlarmaPtr alarma = dbManager::instance()->getAlarmaPaciente(historia->id());
     DialogHistoriaClinica dlg;
     dlg.setData(historia, alarma);
     if (dlg.exec() == QDialog::Accepted)
     {
         dlg.applyData();
-        mongo::DBClientConnection c;
-        //c.connect("localhost");
-        std::string s = "";
-        c.connect(connectionString().toStdString(), s);
-        c.update("atlas.historias",
-                 BSON("_id" << historia->id()),
-                 historia->toBson());
+        dbManager::instance()->updateHistoria(historia);
 
         AlarmaPtr alarma = dlg.alarma();
-        c.update("atlas.alarmas",
-                 BSON("_id" << alarma->id()),
-                 alarma->toBson());
+        if (!alarma.isNull())
+        {
+            if (dlg.alarmaNueva())
+            {
+                dbManager::instance()->insertAlarma(alarma);
+            }
+            else
+            {
+                dbManager::instance()->updateAlarma(alarma);
+            }
+        }
     }
 }
 
@@ -154,33 +149,10 @@ void MainWindow::on_actionDetectar_mi_IP_triggered()
     dlg.exec();
 }
 
-QString MainWindow::connectionString() const
-{
-    //return "ds049661.mongolab.com:49661/atlas -u atlas_dev -p atlas1234"; // --authenticationDatabase atlas";
-    return "localhost";
-}
 
-AlarmaPtr MainWindow::getAlarmaPaciente(mongo::OID historiaID)
+void MainWindow::refreshAlarmas()
 {
-    mongo::DBClientConnection c;
-    std::string s = "";
-    c.connect(connectionString().toStdString(), s);
-    qDebug() << s.c_str();
-
-    ui->statusBar->showMessage("Buscando alarma", 2000);
-    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", BSON("idHistoria" << historiaID));
-    qDebug() << c.getLastError().c_str();
-    mongo::BSONObj errObj = c.getLastErrorDetailed();
-    qDebug() << errObj.toString().c_str();
-    AlarmaPtr alarma;
-    alarma.clear();
-    while(cursor->more())
-    {
-        mongo::BSONObj obj = cursor->next();
-        if (!obj.isEmpty())
-        {
-            alarma = _factory->crearAlarma(obj);
-        }
-    }
-    return alarma;
+    ui->statusBar->showMessage("Buscando alarmas", 2000);
+    _alarmas = dbManager::instance()->alarmas();
+    fillViewAlarmas();
 }
