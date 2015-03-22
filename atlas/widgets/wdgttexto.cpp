@@ -6,23 +6,13 @@ WdgtTexto::WdgtTexto(QWidget *parent) :
     ui(new Ui::WdgtTexto)
 {
     ui->setupUi(this);
+    registerTooltipHandler(ui->textEdit);
+    registerTooltipHandler(this);
 }
 
 WdgtTexto::~WdgtTexto()
 {
     delete ui;
-}
-
-void WdgtTexto::on_textEdit_customContextMenuRequested(const QPoint &pos)
-{
-    (void) pos;
-    emit tooltipFired(this);
-}
-
-void WdgtTexto::on_WdgtTexto_customContextMenuRequested(const QPoint &pos)
-{
-    (void) pos;
-    emit tooltipFired(this);
 }
 
 QString WdgtTexto::value()

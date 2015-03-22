@@ -17,7 +17,7 @@ HistoriaClinica::HistoriaClinica(PersonaPtr persona,
     _testKinesiologico = templateTestKinesiologico;
     _cuestionario1erConsulta = templateCuestionario1erConsulta;
     _cuestionario2daConsulta = templateCuestionario2daConsulta;
-    _fechaPrimerConsulta = QDate(0, 0, 0);
+    _fechaPrimerConsulta = QDate::currentDate();
     _fechaSegundaConsulta = QDate(0, 0, 0);
     _numeroPaciente = "-1";
 }

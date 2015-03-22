@@ -6,6 +6,7 @@ WdgtWithLabel::WdgtWithLabel(QWidget *parent) :
     ui(new Ui::WdgtWithLabel)
 {
     ui->setupUi(this);
+    registerTooltipHandler(this);
 }
 
 WdgtWithLabel::~WdgtWithLabel()
@@ -16,10 +17,4 @@ WdgtWithLabel::~WdgtWithLabel()
 void WdgtWithLabel::addWidget(const QString &label, QWidget *widget)
 {
     ui->formLayout->addRow(label, widget);
-}
-
-void WdgtWithLabel::on_WdgtWithLabel_customContextMenuRequested(const QPoint &pos)
-{
-    (void) pos;
-    emit tooltipFired(this);
 }

@@ -7,6 +7,8 @@ WdgtCompuesto::WdgtCompuesto(QWidget *parent) :
     ui(new Ui::WdgtCompuesto)
 {
     ui->setupUi(this);
+    registerTooltipHandler(ui->groupBox);
+    registerTooltipHandler(this);
 }
 
 WdgtCompuesto::~WdgtCompuesto()
@@ -22,18 +24,6 @@ void WdgtCompuesto::addPregunta(PreguntaBasePtr pregunta)
 void WdgtCompuesto::setLabel(const QString &label)
 {
     ui->groupBox->setTitle(label);
-}
-
-void WdgtCompuesto::on_groupBox_customContextMenuRequested(const QPoint &pos)
-{
-    (void) pos;
-    emit tooltipFired(this);
-}
-
-void WdgtCompuesto::on_WdgtCompuesto_customContextMenuRequested(const QPoint &pos)
-{
-    (void) pos;
-    emit tooltipFired(this);
 }
 
 void WdgtCompuesto::setChecked(bool checked)

@@ -21,11 +21,6 @@ public:
     QString notes() const;
 
 private slots:
-    void on_radioSi_customContextMenuRequested(const QPoint &pos);
-
-    void on_radioNo_customContextMenuRequested(const QPoint &pos);
-
-    void on_WdgtSiNo_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::WdgtSiNo *ui;

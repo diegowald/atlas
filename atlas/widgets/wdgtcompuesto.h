@@ -24,9 +24,6 @@ public:
     QString notes() const;
 
 private slots:
-    void on_groupBox_customContextMenuRequested(const QPoint &pos);
-
-    void on_WdgtCompuesto_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::WdgtCompuesto *ui;

@@ -69,7 +69,14 @@
     </widget>
    </item>
    <item row="3" column="2" colspan="2">
-    <widget class="QDateEdit" name="dateFechaNacimiento"/>
+    <widget class="QDateEdit" name="dateFechaNacimiento">
+     <property name="displayFormat">
+      <string>dd-M-yyyy</string>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item row="3" column="6">
     <widget class="QSpinBox" name="spinEdad"/>

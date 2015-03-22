@@ -21,9 +21,6 @@ public:
     QString notes() const;
 
 private slots:
-    void on_check_customContextMenuRequested(const QPoint &pos);
-
-    void on_WdgtCheckBox_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::WdgtCheckBox *ui;

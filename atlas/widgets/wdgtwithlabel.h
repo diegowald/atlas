@@ -17,7 +17,6 @@ public:
     void addWidget(const QString &label, QWidget* widget);
 
 private slots:
-    void on_WdgtWithLabel_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::WdgtWithLabel *ui;

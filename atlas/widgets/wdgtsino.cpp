@@ -6,29 +6,14 @@ WdgtSiNo::WdgtSiNo(QWidget *parent) :
     ui(new Ui::WdgtSiNo)
 {
     ui->setupUi(this);
+    registerTooltipHandler(ui->radioNo);
+    registerTooltipHandler(ui->radioSi);
+    registerTooltipHandler(this);
 }
 
 WdgtSiNo::~WdgtSiNo()
 {
     delete ui;
-}
-
-void WdgtSiNo::on_radioSi_customContextMenuRequested(const QPoint &pos)
-{
-    (void) pos;
-    emit tooltipFired(this);
-}
-
-void WdgtSiNo::on_radioNo_customContextMenuRequested(const QPoint &pos)
-{
-    (void) pos;
-    emit tooltipFired(this);
-}
-
-void WdgtSiNo::on_WdgtSiNo_customContextMenuRequested(const QPoint &pos)
-{
-    (void) pos;
-    emit tooltipFired(this);
 }
 
 bool WdgtSiNo::value()

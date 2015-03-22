@@ -24,7 +24,7 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     widgets/widgetpaciente.cpp \
     dialogs/dialoghistoriaclinica.cpp \
-    widgets/widgetpregunta.cpp \
+    #widgets/widgetpregunta.cpp \
     model/persona.cpp \
     model/preguntabase.cpp \
     model/historiaclinica.cpp \
@@ -47,12 +47,13 @@ SOURCES += main.cpp\
     dialogs/dlglocalips.cpp \
     dialogs/dlgsetalarma.cpp \
     model/alarma.cpp \
-    db/dbmanager.cpp
+    db/dbmanager.cpp \
+    dialogs/dlgedittooltip.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
     dialogs/dialoghistoriaclinica.h \
-    widgets/widgetpregunta.h \
+    #widgets/widgetpregunta.h \
     model/persona.h \
     model/preguntabase.h \
     model/historiaclinica.h \
@@ -76,12 +77,13 @@ HEADERS  += mainwindow.h \
     dialogs/dlglocalips.h \
     dialogs/dlgsetalarma.h \
     model/alarma.h \
-    db/dbmanager.h
+    db/dbmanager.h \
+    dialogs/dlgedittooltip.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \
     dialogs/dialoghistoriaclinica.ui \
-    widgets/widgetpregunta.ui \
+    #widgets/widgetpregunta.ui \
     widgets/wdgtcheckbox.ui \
     widgets/wdgtcombo.ui \
     widgets/wdgtcombodoble.ui \
@@ -90,5 +92,6 @@ FORMS    += mainwindow.ui \
     widgets/wdgttexto.ui \
     widgets/wdgtwithlabel.ui \
     dialogs/dlglocalips.ui \
-    dialogs/dlgsetalarma.ui
+    dialogs/dlgsetalarma.ui \
+    dialogs/dlgedittooltip.ui
 

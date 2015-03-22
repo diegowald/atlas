@@ -6,6 +6,9 @@ WdgtComboDoble::WdgtComboDoble(QWidget *parent) :
     ui(new Ui::WdgtComboDoble)
 {
     ui->setupUi(this);
+    registerTooltipHandler(ui->comboBox);
+    registerTooltipHandler(ui->comboBox_2);
+    registerTooltipHandler(this);
 }
 
 WdgtComboDoble::~WdgtComboDoble()
@@ -23,24 +26,6 @@ void WdgtComboDoble::setLista2(QStringList &lista)
 {
     ui->comboBox_2->clear();
     ui->comboBox_2->addItems(lista);
-}
-
-void WdgtComboDoble::on_comboBox_2_customContextMenuRequested(const QPoint &pos)
-{
-    (void) pos;
-    emit tooltipFired(this);
-}
-
-void WdgtComboDoble::on_comboBox_customContextMenuRequested(const QPoint &pos)
-{
-    (void) pos;
-    emit tooltipFired(this);
-}
-
-void WdgtComboDoble::on_WdgtComboDoble_customContextMenuRequested(const QPoint &pos)
-{
-    (void) pos;
-    emit tooltipFired(this);
 }
 
 QString WdgtComboDoble::value1()

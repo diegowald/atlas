@@ -26,11 +26,6 @@ public:
     QString notes() const;
 
 private slots:
-    void on_comboBox_2_customContextMenuRequested(const QPoint &pos);
-
-    void on_comboBox_customContextMenuRequested(const QPoint &pos);
-
-    void on_WdgtComboDoble_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::WdgtComboDoble *ui;

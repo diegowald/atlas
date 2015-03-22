@@ -21,9 +21,6 @@ public:
     QString notes() const;
 
 private slots:
-    void on_textEdit_customContextMenuRequested(const QPoint &pos);
-
-    void on_WdgtTexto_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::WdgtTexto *ui;
