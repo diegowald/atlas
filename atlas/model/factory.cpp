@@ -13,6 +13,7 @@
 Factory::Factory(QObject *parent) : QObject(parent)
 {
     cargarAntecedentes();
+    cargarTestKinesiologico();
     cargarCuestionario();
 }
 
@@ -24,9 +25,13 @@ Factory::~Factory()
 HistoriaClinicaPtr Factory::crearNuevaHistoriaClinica()
 {
     QList<PreguntaBasePtr> antecedentes = cloneAntecedentes();
-    QList<PreguntaBasePtr> cuestionario = cloneCuestionario();
+    QList<PreguntaBasePtr> testKinesiologico = cloneTestKinesiologico();
+    QList<PreguntaBasePtr> cuestionario1erConsulta = cloneCuestionario();
+    QList<PreguntaBasePtr> cuestionario2daConsulta = cloneCuestionario();
 
-    HistoriaClinicaPtr hist = HistoriaClinicaPtr::create(crearPersona(), antecedentes, cuestionario);
+    HistoriaClinicaPtr hist = HistoriaClinicaPtr::create(crearPersona(), antecedentes,
+                                                         testKinesiologico,
+                                                         cuestionario1erConsulta, cuestionario2daConsulta);
     return hist;
 }
 
@@ -50,6 +55,16 @@ QList<PreguntaBasePtr> Factory::cloneAntecedentes()
         ant.append(preg->clone());
     }
     return ant;
+}
+
+QList<PreguntaBasePtr> Factory::cloneTestKinesiologico()
+{
+    QList<PreguntaBasePtr> t;
+    foreach (PreguntaBasePtr preg, _templateTestKinesiologico)
+    {
+        t.append(preg->clone());
+    }
+    return t;
 }
 
 QList<PreguntaBasePtr> Factory::cloneCuestionario()
@@ -77,6 +92,26 @@ void Factory::cargarAntecedentes()
     _templateAntecedentes.append(PreguntaCheckBoxPtr(new PreguntaCheckBox("Caidas, golpes intensos, accidentes, fracturas?", "")));
     _templateAntecedentes.append(PreguntaTextoPtr(new PreguntaTexto("Tratamiento Medico?", "")));
     _templateAntecedentes.append(PreguntaTextoPtr(new PreguntaTexto("Como ha estado animicamente", "")));
+}
+
+void Factory::cargarTestKinesiologico()
+{
+    _templateTestKinesiologico.clear();
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Test PCF ext. A", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Test PCF flex. A", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Dolor cadera/pierna", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("ECM. Tensión", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("ECM. Oblicuidad", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Mastoides-Mandib.", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Tono musc. subocc.", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Dolor Movil. Cuello", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Restricción Mov.", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Línea Mordida oclusión", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Línea Mordida apert.", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Brazo Corto F. Ext.", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("brazo Corto F. Elev.", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Elev. Hombros", "")));
+    _templateTestKinesiologico.append(PreguntaTextoPtr(new PreguntaTexto("Postura", "")));
 }
 
 void Factory::cargarCuestionario()

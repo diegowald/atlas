@@ -19,6 +19,7 @@ PreguntaComboDoble::PreguntaComboDoble(mongo::BSONObj &obj, QObject *parent) : P
     _selected1 = value["selected1"].String().c_str();
 
     objValues = value["values2"].Obj();
+    values.clear();
     objValues.elems(values);
     for (std::vector<mongo::BSONElement>::iterator it = values.begin(); it != values.end(); ++it)
     {

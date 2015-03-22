@@ -10,8 +10,8 @@ class HistoriaClinica : public QObject, public Serializable
 {
     Q_OBJECT
 public:
-    explicit HistoriaClinica(PersonaPtr persona, QList<PreguntaBasePtr> &templateAntecedentes,
-                             QList<PreguntaBasePtr> &templateCuestionario,
+    explicit HistoriaClinica(PersonaPtr persona, QList<PreguntaBasePtr> &templateAntecedentes, QList<PreguntaBasePtr> &templateTestKinesiologico,
+                             QList<PreguntaBasePtr> &templateCuestionario1erConsulta, QList<PreguntaBasePtr> &templateCuestionario2daConsulta,
                              QObject *parent = 0);
 
     HistoriaClinica(mongo::BSONObj &obj, QObject *parent = 0);
@@ -23,7 +23,9 @@ public:
     QDate fechaSegundaConsulta();
     QString numeroPaciente();
     QList<PreguntaBasePtr> &antecedentes();
-    QList<PreguntaBasePtr> &cuestionario();
+    QList<PreguntaBasePtr> &testKinesiologico();
+    QList<PreguntaBasePtr> &cuestionario1erConsulta();
+    QList<PreguntaBasePtr> &cuestionario2daConsulta();
     QString idString();
     mongo::OID id();
 
@@ -46,7 +48,9 @@ private:
     QDate _fechaPrimerConsulta;
     QDate _fechaSegundaConsulta;
     QList<PreguntaBasePtr> _antecedentes;
-    QList<PreguntaBasePtr> _cuestionario;
+    QList<PreguntaBasePtr> _testKinesiologico;
+    QList<PreguntaBasePtr> _cuestionario1erConsulta;
+    QList<PreguntaBasePtr> _cuestionario2daConsulta;
     QString _numeroPaciente;
     mongo::OID _id;
 };

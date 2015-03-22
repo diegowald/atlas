@@ -25,9 +25,11 @@ public:
 protected:
     PersonaPtr crearPersona();
     QList<PreguntaBasePtr> cloneAntecedentes();
+    QList<PreguntaBasePtr> cloneTestKinesiologico();
     QList<PreguntaBasePtr> cloneCuestionario();
 
     void cargarAntecedentes();
+    void cargarTestKinesiologico();
     void cargarCuestionario();
 
 signals:
@@ -36,6 +38,7 @@ public slots:
 
 private:
     QList<PreguntaBasePtr> _templateAntecedentes;
+    QList<PreguntaBasePtr> _templateTestKinesiologico;
     QList<PreguntaBasePtr> _templateCuestionario;
 };
 

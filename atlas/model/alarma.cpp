@@ -15,8 +15,8 @@ Alarma::Alarma(mongo::BSONObj &obj, QObject *parent) : QObject(parent)
     _idHistoria = obj["idHistoria"].OID();
     _historiaClinica = dbManager::instance()->getHistoria(_idHistoria);
     _nota = obj["nota"].String().c_str();
-    _fechaCreacion = QDate::fromString(QString(obj["fechaCreacion"].String().c_str()));
-    _fechaAlarma = QDate::fromString(QString(obj["fechaAlarma"].String().c_str()));
+    _fechaCreacion = QDate::fromJulianDay(obj["fechaCreacion"].Int());
+    _fechaAlarma = QDate::fromJulianDay(obj["fechaAlarma"].Int());
 }
 
 Alarma::~Alarma()
@@ -53,8 +53,8 @@ mongo::BSONObj Alarma::toBson()
     mongo::BSONObj obj = BSON(
                 "idHistoria" << _idHistoria
                 << "nota" << _nota.toStdString()
-                << "fechaCreacion" << _fechaCreacion.toString().toStdString()
-                << "fechaAlarma" << _fechaAlarma.toString().toStdString());
+                << "fechaCreacion" << _fechaCreacion.toJulianDay()
+                << "fechaAlarma" << _fechaAlarma.toJulianDay());
     return obj;
 }
 

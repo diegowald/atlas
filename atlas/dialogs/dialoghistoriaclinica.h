@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "model/forward.h"
+#include <QGridLayout>
 
 namespace Ui {
 class DialogHistoriaClinica;
@@ -27,9 +28,11 @@ private slots:
 
 private:
     void setAntecedentes(QList<PreguntaBasePtr> &antecedentes);
-    void setCuestionario(QList<PreguntaBasePtr> &cuestionario);
+    void setTestKinesiologico(QList<PreguntaBasePtr> &testKinesiologico);
+    void setCuestionario(QList<PreguntaBasePtr> &cuestionario, QGridLayout *grid);
 
     void applyAntecedentes();
+    void applyTestKinesiologico();
     void applyCuestionario();
 
 private:

@@ -29,7 +29,9 @@ void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia, AlarmaPtr alarm
     ui->dateSegundaConsulta->setDate(historia->fechaSegundaConsulta());
     ui->txtNumeroPaciente->setText(historia->numeroPaciente());
     setAntecedentes(historia->antecedentes());
-    setCuestionario(historia->cuestionario());
+    setTestKinesiologico(historia->testKinesiologico());
+    setCuestionario(historia->cuestionario1erConsulta(), ui->gridPrimerConsulta);
+    setCuestionario(historia->cuestionario2daConsulta(), ui->gridSegundaConsulta);
     _historia = historia;
     _alarma = alarma;
     _alarmaNueva = _alarma.isNull();
@@ -40,6 +42,7 @@ void DialogHistoriaClinica::applyData()
     QDate date = ui->datePrimerConsulta->date();
     ui->widgetPersona->applyData();
     applyAntecedentes();
+    applyTestKinesiologico();
     applyCuestionario();
     _historia->setFechaPrimerConsulta(date);
     date = ui->dateSegundaConsulta->date();
@@ -85,13 +88,42 @@ void DialogHistoriaClinica::setAntecedentes(QList<PreguntaBasePtr> &antecedentes
     }
 }
 
-void DialogHistoriaClinica::setCuestionario(QList<PreguntaBasePtr> &cuestionario)
+void DialogHistoriaClinica::setTestKinesiologico(QList<PreguntaBasePtr> &testKinesiologico)
+{
+    int currColumn = 0;
+    int currRow = 0;
+    foreach (PreguntaBasePtr pregunta, testKinesiologico)
+    {
+        QFormLayout * layout;
+        switch (currColumn)
+        {
+        case 0:
+            layout = ui->formColumnKinesio1;
+            break;
+        case 1:
+            layout = ui->formColumnKinesio2;
+            break;
+        case 2:
+            layout = ui->formColumnKinesio3;
+            break;
+        }
+        layout->addRow(pregunta->label(), pregunta->widget());
+        currColumn++;
+        if (currColumn == 3)
+        {
+            currRow++;
+            currColumn = 0;
+        }
+    }
+}
+
+void DialogHistoriaClinica::setCuestionario(QList<PreguntaBasePtr> &cuestionario, QGridLayout* grid)
 {
     int currColumn = 0;
     int currRow = 0;
     foreach (PreguntaBasePtr pregunta, cuestionario)
     {
-        ui->gridLayoutCuestionario->addWidget(pregunta->widget(false), currRow, currColumn, 1, 1);
+        grid->addWidget(pregunta->widget(false), currRow, currColumn, 1, 1);
         currColumn++;
         if (currColumn == 3)
         {
@@ -109,9 +141,21 @@ void DialogHistoriaClinica::applyAntecedentes()
     }
 }
 
+void DialogHistoriaClinica::applyTestKinesiologico()
+{
+    foreach (PreguntaBasePtr pregunta, _historia->testKinesiologico())
+    {
+        pregunta->applyChanges();
+    }
+}
+
 void DialogHistoriaClinica::applyCuestionario()
 {
-    foreach (PreguntaBasePtr pregunta, _historia->cuestionario())
+    foreach (PreguntaBasePtr pregunta, _historia->cuestionario1erConsulta())
+    {
+        pregunta->applyChanges();
+    }
+    foreach (PreguntaBasePtr pregunta, _historia->cuestionario2daConsulta())
     {
         pregunta->applyChanges();
     }
