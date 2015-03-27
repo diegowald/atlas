@@ -13,6 +13,7 @@
 #include <QDebug>
 #include "model/alarma.h"
 #include "db/dbmanager.h"
+#include "dialogs/dlgsetalarma.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -155,4 +156,18 @@ void MainWindow::refreshAlarmas()
     ui->statusBar->showMessage("Buscando alarmas", 2000);
     _alarmas = dbManager::instance()->alarmas();
     fillViewAlarmas();
+}
+
+void MainWindow::on_tableAlarmas_cellDoubleClicked(int row, int column)
+{
+    QString id = ui->tableAlarmas->item(row, 0)->data(Qt::UserRole).toString();
+    AlarmaPtr alarma = _alarmas[id];
+    DlgSetAlarma dlg;
+    dlg.setData(alarma);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        dlg.updateData(alarma);
+        dbManager::instance()->updateAlarma(alarma);
+    }
+    refreshAlarmas();
 }

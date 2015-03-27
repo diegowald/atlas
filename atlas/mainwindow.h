@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "model/factory.h"
 #include <QMap>
+#include <QTableWidgetItem>
 
 namespace Ui {
 class MainWindow;
@@ -35,6 +36,8 @@ private slots:
     void on_actionDetectar_mi_IP_triggered();
 
     void refreshAlarmas();
+
+    void on_tableAlarmas_cellDoubleClicked(int row, int column);
 
 private:
     Ui::MainWindow *ui;

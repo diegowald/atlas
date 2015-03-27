@@ -19,8 +19,12 @@ public:
     void setData(AlarmaPtr value);
     void updateData(AlarmaPtr alarma);
 
+private slots:
+    void on_btnRealizado_released();
+
 private:
     Ui::DlgSetAlarma *ui;
+    bool _realizado;
 };
 
 #endif // DLGSETALARMA_H

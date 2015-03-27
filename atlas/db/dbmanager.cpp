@@ -87,6 +87,8 @@ QMap<QString, AlarmaPtr> dbManager::alarmas()
     c.connect(connectionString().toStdString(), s);
     qDebug() << s.c_str();
 
+    QString q = "{ $and : [ {realizado : false}, {fechaAlarma : { $lte : NumberLong(%1)} } ] }";
+    mongo::BSONObj qry = mongo::fromjson(q.arg(QDate::currentDate().toJulianDay()).toStdString());
     std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", mongo::BSONObj());
     qDebug() << c.getLastError().c_str();
     mongo::BSONObj errObj = c.getLastErrorDetailed();
@@ -97,7 +99,8 @@ QMap<QString, AlarmaPtr> dbManager::alarmas()
         if (!obj.isEmpty())
         {
             AlarmaPtr alarma = _factory->crearAlarma(obj);
-            map[QString(alarma->id().toString().c_str())] = alarma;
+            if (!alarma->realizado())
+                map[QString(alarma->id().toString().c_str())] = alarma;
         }
     }
     return map;
@@ -126,6 +129,11 @@ void dbManager::updateHistoria(HistoriaClinicaPtr historia)
     c.update("atlas.historias",
              BSON("_id" << historia->id()),
              historia->toBson());
+    std::string err = c.getLastError();
+    mongo::BSONObj errObj = c.getLastErrorDetailed();
+
+    qDebug() << QString(err.c_str());
+    qDebug() << errObj.toString().c_str();
 }
 
 void dbManager::insertAlarma(AlarmaPtr alarma)
@@ -138,6 +146,11 @@ void dbManager::insertAlarma(AlarmaPtr alarma)
 
     c.insert("atlas.alarmas",
              alarma->toBson());
+    std::string err = c.getLastError();
+    mongo::BSONObj errObj = c.getLastErrorDetailed();
+
+    qDebug() << QString(err.c_str());
+    qDebug() << errObj.toString().c_str();
 }
 
 void dbManager::updateAlarma(AlarmaPtr alarma)
@@ -150,7 +163,12 @@ void dbManager::updateAlarma(AlarmaPtr alarma)
 
     c.update("atlas.alarmas",
              BSON("_id" << alarma->id()),
-             alarma->toBson());
+             alarma->toBson(), true);
+    std::string err = c.getLastError();
+    mongo::BSONObj errObj = c.getLastErrorDetailed();
+
+    qDebug() << QString(err.c_str());
+    qDebug() << errObj.toString().c_str();
 }
 
 QMap<QString, HistoriaClinicaPtr> dbManager::historias(const QString queryString)

@@ -27,8 +27,8 @@ HistoriaClinica::HistoriaClinica(mongo::BSONObj &obj, QObject *parent) : QObject
     //qDebug() << QString(obj.jsonString().c_str());
     mongo::BSONObj p = obj["persona"].Obj();
     _persona = PersonaPtr::create(p);
-    _fechaPrimerConsulta = QDate::fromJulianDay(obj["FechaPrimerConsulta"].Int());
-    _fechaSegundaConsulta = QDate::fromJulianDay(obj["FechaSegundaConsulta"].Int());
+    _fechaPrimerConsulta = QDate::fromJulianDay(obj["FechaPrimerConsulta"].Long());
+    _fechaSegundaConsulta = QDate::fromJulianDay(obj["FechaSegundaConsulta"].Long());
 
     mongo::BSONObj arr = obj["antecedentes"].Obj();
     std::vector<mongo::BSONElement> elements;

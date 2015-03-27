@@ -18,6 +18,7 @@ public:
     QString nota() const;
     QDate fechaCreacion() const;
     QDate fechaAlarma() const;
+    bool realizado() const;
 
     virtual mongo::BSONObj toBson();
 
@@ -26,6 +27,8 @@ public:
     void setFechaAlarma(const QDate &value);
     mongo::OID id();
     QString idString();
+    void setRealizado(bool value);
+
 signals:
 
 public slots:
@@ -37,6 +40,7 @@ private:
     QString _nota;
     QDate _fechaCreacion;
     QDate _fechaAlarma;
+    bool _realizado;
 
 };
 

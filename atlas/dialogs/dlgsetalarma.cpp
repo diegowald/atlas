@@ -9,6 +9,7 @@ DlgSetAlarma::DlgSetAlarma(QWidget *parent) :
     ui(new Ui::DlgSetAlarma)
 {
     ui->setupUi(this);
+    _realizado = false;
 }
 
 DlgSetAlarma::~DlgSetAlarma()
@@ -22,6 +23,7 @@ void DlgSetAlarma::setData(AlarmaPtr value)
     ui->txtNota->setPlainText(value->nota());
     ui->dateFechaCreacion->setDate(value->fechaCreacion());
     ui->dateFechaAlarma->setDate(value->fechaAlarma());
+    _realizado = value->realizado();
 }
 
 void DlgSetAlarma::updateData(AlarmaPtr alarma)
@@ -29,4 +31,10 @@ void DlgSetAlarma::updateData(AlarmaPtr alarma)
     alarma->setNota(ui->txtNota->toPlainText());
     alarma->setFechaCreacion(ui->dateFechaCreacion->date());
     alarma->setFechaAlarma(ui->dateFechaAlarma->date());
+    alarma->setRealizado(_realizado);
+}
+
+void DlgSetAlarma::on_btnRealizado_released()
+{
+    _realizado = true;
 }

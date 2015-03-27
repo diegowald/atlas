@@ -12,7 +12,7 @@ Persona::Persona(mongo::BSONObj &persona, QObject *parent)
     _localidad = persona["localidad"].String().c_str();
     _telefonos = persona["telefonos"].String().c_str();
     _email = persona["email"].String().c_str();
-    _fechaNacimiento = QDate::fromJulianDay(persona["fechaNacimiento"].Int());
+    _fechaNacimiento = QDate::fromJulianDay(persona["fechaNacimiento"].Long());
     _edad = persona["edad"].Int();
     _ocupacion = persona["ocupacion"].String().c_str();
     _comoSeEntero = persona["comoSeEntero"].String().c_str();
@@ -142,7 +142,7 @@ mongo::BSONObj Persona::toBson()
                 << "localidad" << _localidad.toStdString()
                 << "telefonos" << _telefonos.toStdString()
                 << "email" << _email.toStdString()
-                << "fechaNacimiento" << _fechaNacimiento.toJulianDay()
+                << "fechaNacimiento" << (long long) _fechaNacimiento.toJulianDay()
                 << "edad" << _edad
                 << "ocupacion" << _ocupacion.toStdString()
                 << "comoSeEntero" << _comoSeEntero.toStdString()

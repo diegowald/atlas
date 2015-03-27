@@ -8,6 +8,7 @@ Alarma::Alarma(HistoriaClinicaPtr historia, QObject *parent) : QObject(parent)
     _idHistoria = historia->id();
     _fechaCreacion = QDate::currentDate();
     _fechaAlarma = QDate::currentDate();
+    _realizado = false;
 }
 
 Alarma::Alarma(mongo::BSONObj &obj, QObject *parent) : QObject(parent)
@@ -15,8 +16,10 @@ Alarma::Alarma(mongo::BSONObj &obj, QObject *parent) : QObject(parent)
     _idHistoria = obj["idHistoria"].OID();
     _historiaClinica = dbManager::instance()->getHistoria(_idHistoria);
     _nota = obj["nota"].String().c_str();
-    _fechaCreacion = QDate::fromJulianDay(obj["fechaCreacion"].Int());
-    _fechaAlarma = QDate::fromJulianDay(obj["fechaAlarma"].Int());
+    _fechaCreacion = QDate::fromJulianDay(obj["fechaCreacion"].Long());
+    _fechaAlarma = QDate::fromJulianDay(obj["fechaAlarma"].Long());
+    _realizado = obj["realizado"].Bool();
+    _id = obj["_id"].OID();
 }
 
 Alarma::~Alarma()
@@ -54,7 +57,8 @@ mongo::BSONObj Alarma::toBson()
                 "idHistoria" << _idHistoria
                 << "nota" << _nota.toStdString()
                 << "fechaCreacion" << _fechaCreacion.toJulianDay()
-                << "fechaAlarma" << _fechaAlarma.toJulianDay());
+                << "fechaAlarma" << _fechaAlarma.toJulianDay()
+                << "realizado" << _realizado);
     return obj;
 }
 
@@ -81,4 +85,14 @@ mongo::OID Alarma::id()
 QString Alarma::idString()
 {
     return QString::fromStdString(_id.toString());
+}
+
+bool Alarma::realizado() const
+{
+    return _realizado;
+}
+
+void Alarma::setRealizado(bool value)
+{
+    _realizado = value;
 }
