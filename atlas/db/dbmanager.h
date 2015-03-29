@@ -30,6 +30,8 @@ public:
 private:
     explicit dbManager(QObject *parent = 0);
 
+    void error(const QString &operacion, const QString &mensaje);
+
 signals:
 
 public slots:
