@@ -7,7 +7,8 @@
 
 #include <mongo/db/json.h>
 #include "model/historiaclinica.h"
-#include <auto_ptr.h>
+
+//#include <auto_ptr.h>
 #include "model/persona.h"
 #include "dialogs/dlglocalips.h"
 #include <QDebug>

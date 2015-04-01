@@ -3,6 +3,12 @@
 
 #include <QObject>
 #include "forward.h"
+
+#ifdef WIN32
+#include <WinSock2.h>
+#include <Windows.h>
+#endif
+
 #include <mongo/client/dbclient.h>
 
 

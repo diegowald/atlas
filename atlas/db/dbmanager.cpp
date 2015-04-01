@@ -37,26 +37,28 @@ AlarmaPtr dbManager::getAlarmaPaciente(mongo::OID historiaID)
 {
     mongo::DBClientConnection c;
     std::string s = "";
-    c.connect(connectionString().toStdString(), s);
-    qDebug() << s.c_str();
+    if (c.connect(connectionString().toStdString(), s))
+    {
+        qDebug() << s.c_str();
 
-    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", BSON("idHistoria" << historiaID));
-    if (c.getLastError().size() != 0)
-    {
-        mongo::BSONObj errObj = c.getLastErrorDetailed();
-        error("Buscar alarma de paciente", QString::fromStdString(errObj.toString().c_str()));
-    }
-    AlarmaPtr alarma;
-    alarma.clear();
-    while(cursor->more())
-    {
-        mongo::BSONObj obj = cursor->next();
-        if (!obj.isEmpty())
+        std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", BSON("idHistoria" << historiaID));
+        if (c.getLastError().size() != 0)
         {
-            alarma = _factory->crearAlarma(obj);
+            mongo::BSONObj errObj = c.getLastErrorDetailed();
+            error("Buscar alarma de paciente", QString::fromStdString(errObj.toString().c_str()));
         }
+        AlarmaPtr alarma;
+        alarma.clear();
+        while(cursor->more())
+        {
+            mongo::BSONObj obj = cursor->next();
+            if (!obj.isEmpty())
+            {
+                alarma = _factory->crearAlarma(obj);
+            }
+        }
+        return alarma;
     }
-    return alarma;
 }
 
 HistoriaClinicaPtr dbManager::getHistoria(mongo::OID historiaID)
@@ -91,25 +93,27 @@ QMap<QString, AlarmaPtr> dbManager::alarmas()
     QMap<QString, AlarmaPtr> map;
     mongo::DBClientConnection c;
     std::string s = "";
-    c.connect(connectionString().toStdString(), s);
-    qDebug() << s.c_str();
+    if (c.connect(connectionString().toStdString(), s))
+    {
+        qDebug() << s.c_str();
 
-    QString q = "{ $and : [ {realizado : false}, {fechaAlarma : { $lte : NumberLong(%1)} } ] }";
-    mongo::BSONObj qry = mongo::fromjson(q.arg(QDate::currentDate().toJulianDay()).toStdString());
-    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", mongo::BSONObj());
-    if (c.getLastError().size() != 0)
-    {
-        mongo::BSONObj errObj = c.getLastErrorDetailed();
-        error("Buscar alarmas", QString::fromStdString(errObj.toString().c_str()));
-    }
-    while(cursor->more())
-    {
-        mongo::BSONObj obj = cursor->next();
-        if (!obj.isEmpty())
+        QString q = "{ $and : [ {realizado : false}, {fechaAlarma : { $lte : NumberLong(%1)} } ] }";
+        mongo::BSONObj qry = mongo::fromjson(q.arg(QDate::currentDate().toJulianDay()).toStdString());
+        std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", mongo::BSONObj());
+        if (c.getLastError().size() != 0)
         {
-            AlarmaPtr alarma = _factory->crearAlarma(obj);
-            if (!alarma->realizado())
-                map[QString(alarma->id().toString().c_str())] = alarma;
+            mongo::BSONObj errObj = c.getLastErrorDetailed();
+            error("Buscar alarmas", QString::fromStdString(errObj.toString().c_str()));
+        }
+        while(cursor->more())
+        {
+            mongo::BSONObj obj = cursor->next();
+            if (!obj.isEmpty())
+            {
+                AlarmaPtr alarma = _factory->crearAlarma(obj);
+                if (!alarma->realizado())
+                    map[QString(alarma->id().toString().c_str())] = alarma;
+            }
         }
     }
     return map;
