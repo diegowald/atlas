@@ -20,18 +20,23 @@ public:
 
     static dbManager* instance();
 
+    void setDB(const QString &db);
+
     AlarmaPtr getAlarmaPaciente(mongo::OID historiaID);
     HistoriaClinicaPtr getHistoria(mongo::OID historiaID);
     QMap<QString, HistoriaClinicaPtr> historias(const QString query);
 
     QMap<QString, AlarmaPtr> alarmas();
-    QString connectionString() const;
+
 
     void insertHistoria(HistoriaClinicaPtr historia);
     void updateHistoria(HistoriaClinicaPtr historia);
 
     void insertAlarma(AlarmaPtr alarma);
     void updateAlarma(AlarmaPtr alarma);
+
+protected:
+    QString connectionString() const;
 
 private:
     explicit dbManager(QObject *parent = 0);
@@ -47,6 +52,9 @@ private:
     static dbManager *_instance;
 
     Factory *_factory;
+
+    QString _connection;
+    QString _db;
 };
 
 #endif // DBMANAGER_H

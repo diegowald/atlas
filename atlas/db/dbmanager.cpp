@@ -29,9 +29,14 @@ dbManager *dbManager::instance()
 QString dbManager::connectionString() const
 {
     //return "ds049661.mongolab.com:49661/atlas -u atlas_dev -p atlas1234"; // --authenticationDatabase atlas";
-    return "localhost";
+    return _connection;
 }
 
+void dbManager::setDB(const QString &db)
+{
+    _db = db;
+    _connection = _db;
+}
 
 AlarmaPtr dbManager::getAlarmaPaciente(mongo::OID historiaID)
 {
@@ -219,3 +224,5 @@ void dbManager::error(const QString &operacion, const QString &mensaje)
     QString msg = "Se ha producido un error en %1: %2";
     QMessageBox::information(QApplication::activeWindow(), "DB Error", msg.arg(operacion, mensaje));
 }
+
+

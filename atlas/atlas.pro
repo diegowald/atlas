@@ -56,7 +56,8 @@ SOURCES += main.cpp\
     dialogs/dlgsetalarma.cpp \
     model/alarma.cpp \
     db/dbmanager.cpp \
-    dialogs/dlgedittooltip.cpp
+    dialogs/dlgedittooltip.cpp \
+    dialogs/dialogdbserver.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -86,7 +87,8 @@ HEADERS  += mainwindow.h \
     dialogs/dlgsetalarma.h \
     model/alarma.h \
     db/dbmanager.h \
-    dialogs/dlgedittooltip.h
+    dialogs/dlgedittooltip.h \
+    dialogs/dialogdbserver.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \
@@ -101,5 +103,6 @@ FORMS    += mainwindow.ui \
     widgets/wdgtwithlabel.ui \
     dialogs/dlglocalips.ui \
     dialogs/dlgsetalarma.ui \
-    dialogs/dlgedittooltip.ui
+    dialogs/dlgedittooltip.ui \
+    dialogs/dialogdbserver.ui
 
