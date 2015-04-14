@@ -9,7 +9,11 @@
 #include <Windows.h>
 #endif
 
+#ifdef WIN32
 #include <mongo/client/dbclient.h>
+#else
+#include "mongo/client/dbclient.h"
+#endif
 
 
 class Factory : public QObject
