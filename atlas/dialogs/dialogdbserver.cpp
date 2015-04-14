@@ -22,17 +22,32 @@ QString DialogDBServer::ip()
     }
     else
     {
-        _ip = ui->txtRemoteDB->text();
+        _ip = ui->txtRemoteServer->text();
     }
     return _ip;
 }
 
 void DialogDBServer::on_radioIPLocal_toggled(bool checked)
 {
-    ui->txtRemoteDB->setEnabled(!checked);
+    ui->txtRemoteServer->setEnabled(!checked);
 }
 
 void DialogDBServer::on_buttonBox_accepted()
 {
 
+}
+
+QString DialogDBServer::database()
+{
+    return ui->txtBase->text();
+}
+
+QString DialogDBServer::username()
+{
+    return ui->txtUser->text();
+}
+
+QString DialogDBServer::password()
+{
+    return ui->txtPassword->text();
 }

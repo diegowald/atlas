@@ -6,29 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>327</width>
-    <height>108</height>
+    <width>341</width>
+    <height>220</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="spacing">
-    <number>2</number>
-   </property>
-   <property name="leftMargin">
-    <number>2</number>
-   </property>
-   <property name="topMargin">
-    <number>2</number>
-   </property>
-   <property name="rightMargin">
-    <number>2</number>
-   </property>
-   <property name="bottomMargin">
-    <number>2</number>
-   </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
@@ -57,13 +42,70 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="txtRemoteDB">
+        <widget class="QLineEdit" name="txtRemoteServer">
          <property name="enabled">
           <bool>false</bool>
          </property>
         </widget>
        </item>
       </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <property name="horizontalSpacing">
+      <number>2</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>2</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Base</string>
+       </property>
+       <property name="buddy">
+        <cstring>txtBase</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="txtBase">
+       <property name="text">
+        <string>atlas</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Usuario</string>
+       </property>
+       <property name="buddy">
+        <cstring>txtUser</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Password</string>
+       </property>
+       <property name="buddy">
+        <cstring>txtPassword</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="txtUser"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="txtPassword">
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

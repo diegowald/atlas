@@ -20,7 +20,7 @@ public:
 
     static dbManager* instance();
 
-    void setDB(const QString &db);
+    void setDB(const QString &server, const QString &databaseName, const QString &user, const QString &password);
 
     AlarmaPtr getAlarmaPaciente(mongo::OID historiaID);
     HistoriaClinicaPtr getHistoria(mongo::OID historiaID);
@@ -54,7 +54,11 @@ private:
     Factory *_factory;
 
     QString _connection;
-    QString _db;
+    QString _server;
+
+    QString _databaseName;
+    QString _user;
+    QString _password;
 };
 
 #endif // DBMANAGER_H
