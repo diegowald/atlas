@@ -32,10 +32,13 @@ QString dbManager::connectionString() const
     return _connection;
 }
 
-void dbManager::setDB(const QString &db)
+void dbManager::setDB(const QString &server, const QString &databaseName, const QString &user, const QString &password)
 {
-    _db = db;
-    _connection = _db;
+    _server = server;
+    _connection = _server;
+    _databaseName = databaseName;
+    _user = user;
+    _password = password;
 }
 
 AlarmaPtr dbManager::getAlarmaPaciente(mongo::OID historiaID)
@@ -102,6 +105,10 @@ QMap<QString, AlarmaPtr> dbManager::alarmas()
     {
         qDebug() << s.c_str();
 
+
+        c.auth("atlas", "atlas_dev", "atlas1234", s, true );
+        qDebug() << s.c_str();
+
         QString q = "{ $and : [ {realizado : false}, {fechaAlarma : { $lte : NumberLong(%1)} } ] }";
         mongo::BSONObj qry = mongo::fromjson(q.arg(QDate::currentDate().toJulianDay()).toStdString());
         std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", mongo::BSONObj());
@@ -121,6 +128,7 @@ QMap<QString, AlarmaPtr> dbManager::alarmas()
             }
         }
     }
+    qDebug() << s.c_str();
     return map;
 }
 

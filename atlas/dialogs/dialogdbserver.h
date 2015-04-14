@@ -16,6 +16,9 @@ public:
     ~DialogDBServer();
 
     QString ip();
+    QString database();
+    QString username();
+    QString password();
 private slots:
     void on_radioIPLocal_toggled(bool checked);
 

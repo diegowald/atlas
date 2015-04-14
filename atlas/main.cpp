@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     DialogDBServer dlg;
     if (dlg.exec() == QDialog::Accepted)
     {
-        dbManager::instance()->setDB(dlg.ip());
+        dbManager::instance()->setDB(dlg.ip(), dlg.database(), dlg.username(), dlg.password());
         MainWindow w;
         w.show();
         return a.exec();

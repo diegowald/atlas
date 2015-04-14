@@ -1,0 +1,5 @@
+http://docs.mongodb.org/manual/reference/method/db.createCollection/
+
+db.createCollection("people", { size: 2147483648 } )
+
+db.getCollectionNames()
