@@ -37,6 +37,7 @@ public:
 
 protected:
     QString connectionString() const;
+    void connectToDatabase(mongo::DBClientConnection &conn);
 
 private:
     explicit dbManager(QObject *parent = 0);

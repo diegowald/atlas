@@ -32,6 +32,21 @@ QString dbManager::connectionString() const
     return _connection;
 }
 
+void dbManager::connectToDatabase(mongo::DBClientConnection &conn)
+{
+    std::string s = "";
+    if (conn.connect(connectionString().toStdString(), s))
+    {
+        qDebug() << s.c_str();
+
+        if (_user.length() > 0)
+        {
+            conn.auth(_databaseName.toStdString(), _user.toStdString(), _password.toStdString(), s, true );
+            qDebug() << s.c_str();
+        }
+    }
+}
+
 void dbManager::setDB(const QString &server, const QString &databaseName, const QString &user, const QString &password)
 {
     _server = server;
@@ -44,11 +59,10 @@ void dbManager::setDB(const QString &server, const QString &databaseName, const 
 AlarmaPtr dbManager::getAlarmaPaciente(mongo::OID historiaID)
 {
     mongo::DBClientConnection c;
+    connectToDatabase(c);
     std::string s = "";
-    if (c.connect(connectionString().toStdString(), s))
+    if (c.isStillConnected())
     {
-        qDebug() << s.c_str();
-
         std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", BSON("idHistoria" << historiaID));
         if (c.getLastError().size() != 0)
         {
@@ -72,9 +86,7 @@ AlarmaPtr dbManager::getAlarmaPaciente(mongo::OID historiaID)
 HistoriaClinicaPtr dbManager::getHistoria(mongo::OID historiaID)
 {
     mongo::DBClientConnection c;
-    std::string s = "";
-    c.connect(connectionString().toStdString(), s);
-    qDebug() << s.c_str();
+    connectToDatabase(c);
 
     std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.historias", BSON("_id" << historiaID));
     if (c.getLastError().size() != 0)
@@ -100,15 +112,10 @@ QMap<QString, AlarmaPtr> dbManager::alarmas()
 {
     QMap<QString, AlarmaPtr> map;
     mongo::DBClientConnection c;
+    connectToDatabase(c);
     std::string s = "";
-    if (c.connect(connectionString().toStdString(), s))
+    if (c.isStillConnected())
     {
-        qDebug() << s.c_str();
-
-
-        c.auth("atlas", "atlas_dev", "atlas1234", s, true );
-        qDebug() << s.c_str();
-
         QString q = "{ $and : [ {realizado : false}, {fechaAlarma : { $lte : NumberLong(%1)} } ] }";
         mongo::BSONObj qry = mongo::fromjson(q.arg(QDate::currentDate().toJulianDay()).toStdString());
         std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", mongo::BSONObj());
@@ -135,10 +142,10 @@ QMap<QString, AlarmaPtr> dbManager::alarmas()
 void dbManager::insertHistoria(HistoriaClinicaPtr historia)
 {
     mongo::DBClientConnection c;
+    connectToDatabase(c);
     //c.connect("localhost");
     std::string s = "";
-    c.connect(connectionString().toStdString(), s);
-    qDebug() << QString(historia->toBson().toString().c_str());
+
     c.insert("atlas.historias", historia->toBson());
     if (c.getLastError().size() != 0)
     {
@@ -150,8 +157,9 @@ void dbManager::insertHistoria(HistoriaClinicaPtr historia)
 void dbManager::updateHistoria(HistoriaClinicaPtr historia)
 {
     mongo::DBClientConnection c;
+    connectToDatabase(c);
     std::string s = "";
-    c.connect(connectionString().toStdString(), s);
+
     c.update("atlas.historias",
              BSON("_id" << historia->id()),
              historia->toBson());
@@ -165,10 +173,9 @@ void dbManager::updateHistoria(HistoriaClinicaPtr historia)
 void dbManager::insertAlarma(AlarmaPtr alarma)
 {
     mongo::DBClientConnection c;
+    connectToDatabase(c);
     //c.connect("localhost");
     std::string s = "";
-
-    c.connect(connectionString().toStdString(), s);
 
     c.insert("atlas.alarmas",
              alarma->toBson());
@@ -182,10 +189,9 @@ void dbManager::insertAlarma(AlarmaPtr alarma)
 void dbManager::updateAlarma(AlarmaPtr alarma)
 {
     mongo::DBClientConnection c;
+    connectToDatabase(c);
     //c.connect("localhost");
     std::string s = "";
-
-    c.connect(connectionString().toStdString(), s);
 
     c.update("atlas.alarmas",
              BSON("_id" << alarma->id()),
@@ -202,9 +208,8 @@ QMap<QString, HistoriaClinicaPtr> dbManager::historias(const QString queryString
     QMap<QString, HistoriaClinicaPtr> map;
 
     mongo::DBClientConnection c;
+    connectToDatabase(c);
     std::string s = "";
-    c.connect(connectionString().toStdString(), s);
-    qDebug() << s.c_str();
 
     mongo::BSONObj query;
 
