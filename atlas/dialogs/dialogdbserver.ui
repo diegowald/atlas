@@ -25,7 +25,7 @@
         <string>Usar Base de datos en mi PC</string>
        </property>
        <property name="checked">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -39,12 +39,18 @@
          <property name="text">
           <string>Usar Base de datos remota</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QLineEdit" name="txtRemoteServer">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>ds049661.mongolab.com:49661</string>
          </property>
         </widget>
        </item>
@@ -98,10 +104,17 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="txtUser"/>
+      <widget class="QLineEdit" name="txtUser">
+       <property name="text">
+        <string>atlas_dev</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="1">
       <widget class="QLineEdit" name="txtPassword">
+       <property name="text">
+        <string>atlas1234</string>
+       </property>
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
        </property>
