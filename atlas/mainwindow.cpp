@@ -64,6 +64,12 @@ void MainWindow::on_pushButton_released()
             queryString += ", ";
         queryString += QString("'persona.dni' : \"%1\"").arg(ui->txtDNI->text().trimmed());
     }
+    if (ui->radioPrimerConsulta->isChecked())
+    {
+        if (queryString.length() > 0)
+            queryString += ", ";
+        queryString += QString("FechaSegundaConsulta : -1");
+    }
     queryString = "{ " + queryString + " }";
 
     _historias = dbManager::instance()->historias(queryString);

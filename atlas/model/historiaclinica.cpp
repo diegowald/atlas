@@ -17,8 +17,8 @@ HistoriaClinica::HistoriaClinica(PersonaPtr persona,
     _testKinesiologico = templateTestKinesiologico;
     _cuestionario1erConsulta = templateCuestionario1erConsulta;
     _cuestionario2daConsulta = templateCuestionario2daConsulta;
-    _fechaPrimerConsulta = QDate::currentDate();
-    _fechaSegundaConsulta = QDate(0, 0, 0);
+    _fechaPrimerConsulta = QDate();
+    _fechaSegundaConsulta = QDate();
     _numeroPaciente = "-1";
 }
 
@@ -27,8 +27,11 @@ HistoriaClinica::HistoriaClinica(mongo::BSONObj &obj, QObject *parent) : QObject
     //qDebug() << QString(obj.jsonString().c_str());
     mongo::BSONObj p = obj["persona"].Obj();
     _persona = PersonaPtr::create(p);
-    _fechaPrimerConsulta = QDate::fromJulianDay(obj["FechaPrimerConsulta"].Long());
-    _fechaSegundaConsulta = QDate::fromJulianDay(obj["FechaSegundaConsulta"].Long());
+
+    long fecha = obj["FechaPrimerConsulta"].Long();
+    _fechaPrimerConsulta = (fecha == -1) ? QDate() : QDate::fromJulianDay(fecha);
+    fecha = obj["FechaSegundaConsulta"].Long();
+    _fechaSegundaConsulta = (fecha == -1) ? QDate() : QDate::fromJulianDay(fecha);
 
     mongo::BSONObj arr = obj["antecedentes"].Obj();
     std::vector<mongo::BSONElement> elements;
@@ -122,8 +125,8 @@ mongo::BSONObj HistoriaClinica::toBson()
 {
     mongo::BSONObj obj =
             BSON( "persona" << _persona->toBson()
-                  << "FechaPrimerConsulta" << _fechaPrimerConsulta.toJulianDay()
-                  << "FechaSegundaConsulta" << _fechaSegundaConsulta.toJulianDay()
+                  << "FechaPrimerConsulta" << (_fechaPrimerConsulta.isValid() ?  _fechaPrimerConsulta.toJulianDay() : -1)
+                  << "FechaSegundaConsulta" << (_fechaSegundaConsulta.isValid() ? _fechaSegundaConsulta.toJulianDay() : -1)
                   << "antecedentes" << arrayBson(_antecedentes)
                   << "testKinesiologico" << arrayBson(_testKinesiologico)
                   << "cuestionario1erConsulta" << arrayBson(_cuestionario1erConsulta)

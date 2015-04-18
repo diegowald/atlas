@@ -47,6 +47,23 @@
        <widget class="QLineEdit" name="txtDNI"/>
       </item>
       <item>
+       <widget class="QRadioButton" name="radioPrimerConsulta">
+        <property name="text">
+         <string>1er consulta</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioTodos">
+        <property name="text">
+         <string>Todos</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="pushButton">
         <property name="text">
          <string>Buscar</string>

@@ -26,8 +26,20 @@ void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia, AlarmaPtr alarm
     QString s = "Historia clínica %1";
     setWindowTitle(s.arg(historia->persona()->nombre().length() == 0 ? "" : ("de " + historia->persona()->nombre())));
     ui->widgetPersona->setData(historia->persona());
-    ui->datePrimerConsulta->setDate(historia->fechaPrimerConsulta());
-    ui->dateSegundaConsulta->setDate(historia->fechaSegundaConsulta());
+    _esPrimerConsulta = !historia->fechaPrimerConsulta().isValid();
+    ui->datePrimerConsulta->setDate(_esPrimerConsulta ? QDate::currentDate() : historia->fechaPrimerConsulta());
+    ui->txt2daConsulta->setVisible(!_esPrimerConsulta);
+    ui->dateSegundaConsulta->setVisible(!_esPrimerConsulta);
+    if (_esPrimerConsulta)
+    {
+        ui->dateSegundaConsulta->setDate(QDate());
+    }
+    else
+    {
+        ui->dateSegundaConsulta->setDate(historia->fechaSegundaConsulta().isValid() ?
+                                             historia->fechaSegundaConsulta() :
+                                             QDate::currentDate());
+    }
     ui->txtNumeroPaciente->setText(historia->numeroPaciente());
     setAntecedentes(historia->antecedentes());
     setTestKinesiologico(historia->testKinesiologico());
@@ -58,7 +70,14 @@ void DialogHistoriaClinica::applyData()
     applyTestKinesiologico();
     applyCuestionario();
     _historia->setFechaPrimerConsulta(date);
-    date = ui->dateSegundaConsulta->date();
+    if (!_esPrimerConsulta)
+    {
+        date = ui->dateSegundaConsulta->date();
+    }
+    else
+    {
+        date = QDate();
+    }
     _historia->setFechaSegundaConsulta(date);
     _historia->setNumeroPaciente(ui->txtNumeroPaciente->text());
 }

@@ -40,6 +40,7 @@ private:
     HistoriaClinicaPtr _historia;
     AlarmaPtr _alarma;
     bool _alarmaNueva;
+    bool _esPrimerConsulta;
 };
 
 #endif // DIALOGHISTORIACLINICA_H
