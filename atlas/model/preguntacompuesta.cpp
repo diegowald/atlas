@@ -1,16 +1,16 @@
 #include "preguntacompuesta.h"
 #include "factory.h"
 
-PreguntaCompuesta::PreguntaCompuesta(const QString &label, const QString &nota, QList<PreguntaBasePtr> &subpreguntas, QObject *parent) : PreguntaBase(label, nota, "compuesta", parent)
+PreguntaCompuesta::PreguntaCompuesta(const QString &label, const QString &nota, QList<PreguntaBasePtr> &subpreguntas, bool showNotes, QObject *parent) : PreguntaBase(label, nota, "compuesta", showNotes, parent)
 {
     foreach (PreguntaBasePtr pb, subpreguntas)
     {
         _subPreguntas.append(pb->clone());
     }
-    _checked = true;
+    _checked = false;
 }
 
-PreguntaCompuesta::PreguntaCompuesta(mongo::BSONObj &obj, QObject *parent) : PreguntaBase(obj, parent)
+PreguntaCompuesta::PreguntaCompuesta(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
 {
     mongo::BSONObj o = obj["value"].Obj();
     mongo::BSONObj arr = o["questions"].Obj();
@@ -20,7 +20,7 @@ PreguntaCompuesta::PreguntaCompuesta(mongo::BSONObj &obj, QObject *parent) : Pre
     {
         mongo::BSONObj obj2 = it->Obj();
         //qDebug() << obj2.jsonString().c_str();
-        _subPreguntas.append(Factory::crearPregunta(obj2));
+        _subPreguntas.append(Factory::crearPregunta(obj2, false));
     }
     _checked = o["checked"].Bool();
 }
@@ -32,13 +32,13 @@ PreguntaCompuesta::~PreguntaCompuesta()
 
 PreguntaBasePtr PreguntaCompuesta::clone()
 {
-    PreguntaCompuestaPtr p = PreguntaCompuestaPtr(new PreguntaCompuesta(label(), nota(), _subPreguntas, parent()));
+    PreguntaCompuestaPtr p = PreguntaCompuestaPtr(new PreguntaCompuesta(label(), nota(), _subPreguntas, isShowingNotes(), parent()));
     return p;
 }
 
 QWidget* PreguntaCompuesta::widget()
 {
-    _widget = new WdgtCompuesto();
+    _widget = new WdgtCompuesto(isShowingNotes());
     _widget->setLabel(label());
     _widget->setChecked(_checked);
     _widget->setNotes(nota());

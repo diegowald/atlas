@@ -7,6 +7,7 @@
 #include "model/preguntatexto.h"
 #include "dlgsetalarma.h"
 #include "model/factory.h"
+#include <QScrollBar>
 
 DialogHistoriaClinica::DialogHistoriaClinica(QWidget *parent) :
     QDialog(parent),
@@ -35,6 +36,18 @@ void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia, AlarmaPtr alarm
     _historia = historia;
     _alarma = alarma;
     _alarmaNueva = _alarma.isNull();
+
+    connect(ui->scrollArea->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollArea_2->verticalScrollBar(), SLOT(setValue(int)));
+
+    connect(ui->scrollArea_2->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollArea->verticalScrollBar(), SLOT(setValue(int)));
+
+    connect(ui->scrollArea->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollArea_2->horizontalScrollBar(), SLOT(setValue(int)));
+
+    connect(ui->scrollArea_2->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollArea->horizontalScrollBar(), SLOT(setValue(int)));
 }
 
 void DialogHistoriaClinica::applyData()

@@ -1,13 +1,14 @@
 #include "wdgtcombo.h"
 #include "ui_wdgtcombo.h"
 
-WdgtCombo::WdgtCombo(QWidget *parent) :
+WdgtCombo::WdgtCombo(bool showNotes, QWidget *parent) :
     CustomTooltipWidget(parent),
     ui(new Ui::WdgtCombo)
 {
     ui->setupUi(this);
     registerTooltipHandler(ui->comboBox);
     registerTooltipHandler(this);
+    ui->txtNotes->setVisible(showNotes);
 }
 
 WdgtCombo::~WdgtCombo()
@@ -35,6 +36,7 @@ void WdgtCombo::setNotes(const QString &newNote)
 {
     ui->comboBox->setToolTip(newNote);
     setToolTip(newNote);
+    ui->txtNotes->setText(newNote);
 }
 
 QString WdgtCombo::notes() const

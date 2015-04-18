@@ -7,7 +7,7 @@ class CustomTooltipWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CustomTooltipWidget(QWidget *parent = 0);
+    explicit CustomTooltipWidget(QWidget *parent /*= 0*/);
     ~CustomTooltipWidget();
 
 protected:

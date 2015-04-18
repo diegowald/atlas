@@ -12,7 +12,7 @@ class WdgtTexto : public CustomTooltipWidget
     Q_OBJECT
 
 public:
-    explicit WdgtTexto(QWidget *parent = 0);
+    explicit WdgtTexto(bool showNotes, QWidget *parent = 0);
     ~WdgtTexto();
 
     QString value();

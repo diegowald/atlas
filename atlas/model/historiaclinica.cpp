@@ -150,7 +150,7 @@ void HistoriaClinica::fromArrayBson(std::vector<mongo::BSONElement> &arr, QList<
     {
         mongo::BSONObj obj = arr[i].Obj();
         //qDebug() << obj.jsonString().c_str();
-        list.append(Factory::crearPregunta(obj));
+        list.append(Factory::crearPregunta(obj, true));
     }
 }
 

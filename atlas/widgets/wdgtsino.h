@@ -12,7 +12,7 @@ class WdgtSiNo : public CustomTooltipWidget
     Q_OBJECT
 
 public:
-    explicit WdgtSiNo(QWidget *parent = 0);
+    explicit WdgtSiNo(bool showNotes, QWidget *parent = 0);
     ~WdgtSiNo();
 
     bool value();

@@ -1,7 +1,7 @@
 #include "wdgtsino.h"
 #include "ui_wdgtsino.h"
 
-WdgtSiNo::WdgtSiNo(QWidget *parent) :
+WdgtSiNo::WdgtSiNo(bool showNotes, QWidget *parent) :
     CustomTooltipWidget(parent),
     ui(new Ui::WdgtSiNo)
 {
@@ -9,6 +9,7 @@ WdgtSiNo::WdgtSiNo(QWidget *parent) :
     registerTooltipHandler(ui->radioNo);
     registerTooltipHandler(ui->radioSi);
     registerTooltipHandler(this);
+    ui->txtNotes->setVisible(showNotes);
 }
 
 WdgtSiNo::~WdgtSiNo()
@@ -32,6 +33,7 @@ void WdgtSiNo::setNotes(const QString &newNote)
     ui->radioNo->setToolTip(newNote);
     ui->radioSi->setToolTip(newNote);
     setToolTip(newNote);
+    ui->txtNotes->setText(newNote);
 }
 
 QString WdgtSiNo::notes() const

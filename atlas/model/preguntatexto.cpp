@@ -1,11 +1,12 @@
 #include "preguntatexto.h"
 
-PreguntaTexto::PreguntaTexto(const QString &label, const QString &nota, QObject *parent) : PreguntaBase(label, nota, "text", parent)
+PreguntaTexto::PreguntaTexto(const QString &label, const QString &nota, bool showNotes, QObject *parent)
+    : PreguntaBase(label, nota, "text", showNotes, parent)
 {
 
 }
 
-PreguntaTexto::PreguntaTexto(mongo::BSONObj &obj, QObject *parent) : PreguntaBase(obj, parent)
+PreguntaTexto::PreguntaTexto(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
 {
     mongo::BSONObj value = obj["value"].Obj();
     _text = value["text"].String().c_str();
@@ -18,13 +19,13 @@ PreguntaTexto::~PreguntaTexto()
 
 PreguntaBasePtr PreguntaTexto::clone()
 {
-    PreguntaTextoPtr p = PreguntaTextoPtr(new PreguntaTexto(label(), nota(), parent()));
+    PreguntaTextoPtr p = PreguntaTextoPtr(new PreguntaTexto(label(), nota(), isShowingNotes(), parent()));
     return p;
 }
 
 QWidget* PreguntaTexto::widget()
 {
-    _widget = new WdgtTexto();
+    _widget = new WdgtTexto(isShowingNotes());
     _widget->setValue(_text);
     _widget->setNotes(nota());
     return _widget;

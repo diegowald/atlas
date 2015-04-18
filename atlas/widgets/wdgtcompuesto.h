@@ -13,7 +13,7 @@ class WdgtCompuesto : public CustomTooltipWidget
     Q_OBJECT
 
 public:
-    explicit WdgtCompuesto(QWidget *parent = 0);
+    explicit WdgtCompuesto(bool showNotes, QWidget *parent = 0);
     ~WdgtCompuesto();
 
     void setLabel(const QString &label);

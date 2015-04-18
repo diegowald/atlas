@@ -9,8 +9,8 @@
 class PreguntaCheckBox : public PreguntaBase
 {
 public:
-    PreguntaCheckBox(const QString &label, const QString &nota, QObject *parent = 0);
-    PreguntaCheckBox(mongo::BSONObj &obj, QObject *parent = 0);
+    PreguntaCheckBox(const QString &label, const QString &nota, bool showNotes, QObject *parent = 0);
+    PreguntaCheckBox(mongo::BSONObj &obj, bool showNotes, QObject *parent = 0);
     ~PreguntaCheckBox();
 
     virtual PreguntaBasePtr clone();

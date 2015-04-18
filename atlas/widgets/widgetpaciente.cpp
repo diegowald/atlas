@@ -41,3 +41,12 @@ void WidgetPaciente::applyData()
     _persona->setComoSeEntero(ui->txtComoSeEntero->text());
     _persona->setNotas(ui->txtNotas->toHtml());
 }
+
+void WidgetPaciente::on_dateFechaNacimiento_userDateChanged(const QDate &date)
+{
+    QDate currentDate = QDate::currentDate();
+    int age = (date.month() > currentDate.month()) ?
+                currentDate.year() - date.year() - 1 :
+                currentDate.year() - date.year();
+    ui->spinEdad->setValue(age);
+}

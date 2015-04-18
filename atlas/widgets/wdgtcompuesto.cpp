@@ -2,13 +2,15 @@
 #include "ui_wdgtcompuesto.h"
 #include "../model/preguntabase.h"
 
-WdgtCompuesto::WdgtCompuesto(QWidget *parent) :
+WdgtCompuesto::WdgtCompuesto(bool showNotes, QWidget *parent) :
     CustomTooltipWidget(parent),
     ui(new Ui::WdgtCompuesto)
 {
     ui->setupUi(this);
     registerTooltipHandler(ui->groupBox);
     registerTooltipHandler(this);
+    ui->groupBox->setChecked(false);
+    ui->txtNotes->setVisible(showNotes);
 }
 
 WdgtCompuesto::~WdgtCompuesto()
@@ -40,6 +42,7 @@ void WdgtCompuesto::setNotes(const QString &newNote)
 {
     ui->groupBox->setToolTip(newNote);
     setToolTip(newNote);
+    ui->txtNotes->setText(newNote);
 }
 
 QString WdgtCompuesto::notes() const

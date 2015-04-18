@@ -12,7 +12,7 @@ class WdgtCheckBox : public CustomTooltipWidget
     Q_OBJECT
 
 public:
-    explicit WdgtCheckBox(QWidget *parent = 0);
+    explicit WdgtCheckBox(bool showNotes, QWidget *parent = 0);
     ~WdgtCheckBox();
 
     bool value();

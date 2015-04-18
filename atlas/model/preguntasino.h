@@ -8,8 +8,8 @@
 class PreguntaSiNo : public PreguntaBase
 {
 public:
-    PreguntaSiNo(const QString &label, const QString &nota, QObject *parent = 0);
-    PreguntaSiNo(mongo::BSONObj &obj, QObject *parent = 0);
+    PreguntaSiNo(const QString &label, const QString &nota, bool showNotes, QObject *parent = 0);
+    PreguntaSiNo(mongo::BSONObj &obj, bool showNotes, QObject *parent = 0);
     ~PreguntaSiNo();
 
     virtual PreguntaBasePtr clone();

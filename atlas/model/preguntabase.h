@@ -9,8 +9,8 @@ class PreguntaBase : public QObject, public Serializable
 {
     Q_OBJECT
 public:
-    explicit PreguntaBase(const QString &label, const QString &nota, const QString &type, QObject *parent = 0);
-    PreguntaBase(mongo::BSONObj &obj, QObject *parent = 0);
+    explicit PreguntaBase(const QString &label, const QString &nota, const QString &type, bool showNotes, QObject *parent /*= 0*/);
+    PreguntaBase(mongo::BSONObj &obj, bool showNotes, QObject *parent = 0);
     ~PreguntaBase();
 
     virtual void setLabel(const QString &Label);
@@ -29,6 +29,8 @@ public:
     virtual mongo::BSONObj toBson();
     virtual mongo::BSONObj value() = 0;
 
+    bool isShowingNotes() const;
+
 private:
     QWidget* widgetWithLabel();
 
@@ -39,6 +41,7 @@ private:
     QString _label;
     QString _nota;
     QString _type;
+    bool _showNotes;
 };
 
 #endif // PREGUNTABASE_H

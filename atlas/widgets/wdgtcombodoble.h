@@ -12,7 +12,7 @@ class WdgtComboDoble : public CustomTooltipWidget
     Q_OBJECT
 
 public:
-    explicit WdgtComboDoble(QWidget *parent = 0);
+    explicit WdgtComboDoble(bool showNotes, QWidget *parent = 0);
     ~WdgtComboDoble();
 
     void setLista1(QStringList &lista);

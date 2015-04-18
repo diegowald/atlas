@@ -1,10 +1,11 @@
 #include "wdgttexto.h"
 #include "ui_wdgttexto.h"
 
-WdgtTexto::WdgtTexto(QWidget *parent) :
+WdgtTexto::WdgtTexto(bool showNotes, QWidget *parent) :
     CustomTooltipWidget(parent),
     ui(new Ui::WdgtTexto)
 {
+    (void) showNotes;
     ui->setupUi(this);
     registerTooltipHandler(ui->textEdit);
     registerTooltipHandler(this);

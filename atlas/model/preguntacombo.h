@@ -9,8 +9,8 @@
 class PreguntaCombo : public PreguntaBase
 {
 public:
-    PreguntaCombo(const QString &label, const QString &nota, QStringList &listaValores, QObject *parent = 0);
-    PreguntaCombo(mongo::BSONObj &obj, QObject *parent = 0);
+    PreguntaCombo(const QString &label, const QString &nota, QStringList &listaValores, bool showNotes, QObject *parent = 0);
+    PreguntaCombo(mongo::BSONObj &obj, bool showNotes, QObject *parent = 0);
     ~PreguntaCombo();
 
     virtual PreguntaBasePtr clone();

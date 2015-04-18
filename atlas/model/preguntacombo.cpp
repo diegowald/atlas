@@ -1,11 +1,12 @@
 #include "preguntacombo.h"
 
-PreguntaCombo::PreguntaCombo(const QString &label, const QString &nota, QStringList &listaValores, QObject *parent) : PreguntaBase(label, nota, "combo", parent)
+PreguntaCombo::PreguntaCombo(const QString &label, const QString &nota, QStringList &listaValores, bool showNotes, QObject *parent)
+    : PreguntaBase(label, nota, "combo", showNotes, parent)
 {
     _listaValores = listaValores;
 }
 
-PreguntaCombo::PreguntaCombo(mongo::BSONObj &obj, QObject *parent) : PreguntaBase(obj, parent)
+PreguntaCombo::PreguntaCombo(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
 {
     mongo::BSONObj value = obj["value"].Obj();
     //qDebug() << value.jsonString().c_str();
@@ -26,13 +27,13 @@ PreguntaCombo::~PreguntaCombo()
 
 PreguntaBasePtr PreguntaCombo::clone()
 {
-    PreguntaComboPtr p = PreguntaComboPtr(new PreguntaCombo(label(), nota(), _listaValores, parent()));
+    PreguntaComboPtr p = PreguntaComboPtr(new PreguntaCombo(label(), nota(), _listaValores, isShowingNotes(), parent()));
     return p;
 }
 
 QWidget* PreguntaCombo::widget()
 {
-    _widget = new WdgtCombo();
+    _widget = new WdgtCombo(isShowingNotes());
     _widget->setLista(_listaValores);
     _widget->setValue(_selectedValue);
     _widget->setNotes(nota());

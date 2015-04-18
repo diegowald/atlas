@@ -12,9 +12,11 @@ class WdgtWithLabel : public CustomTooltipWidget
     Q_OBJECT
 
 public:
-    explicit WdgtWithLabel(QWidget *parent = 0);
+    explicit WdgtWithLabel(bool showNotes, QWidget *parent = 0);
     ~WdgtWithLabel();
     void addWidget(const QString &label, QWidget* widget);
+    void setNotes(const QString &newNote);
+    QString notes() const;
 
 private slots:
 

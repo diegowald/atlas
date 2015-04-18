@@ -3,7 +3,6 @@
 
 CustomTooltipWidget::CustomTooltipWidget(QWidget *parent) : QWidget(parent)
 {
-
 }
 
 CustomTooltipWidget::~CustomTooltipWidget()

@@ -27,7 +27,7 @@ public:
     HistoriaClinicaPtr crearNuevaHistoriaClinica();
     HistoriaClinicaPtr crearHistoria(mongo::BSONObj &obj);
 
-    static PreguntaBasePtr crearPregunta(mongo::BSONObj &obj);
+    static PreguntaBasePtr crearPregunta(mongo::BSONObj &obj, bool showNotes);
 
     static AlarmaPtr crearAlarma(mongo::BSONObj &obj);
     static AlarmaPtr crearNuevaAlarma(HistoriaClinicaPtr historia);

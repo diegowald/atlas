@@ -18,6 +18,9 @@ public:
     void setData(PersonaPtr persona);
     void applyData();
 
+private slots:
+    void on_dateFechaNacimiento_userDateChanged(const QDate &date);
+
 private:
     Ui::WidgetPaciente *ui;
     PersonaPtr _persona;

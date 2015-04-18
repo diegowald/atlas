@@ -45,7 +45,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>1err consulta</string>
+          <string>1er consulta</string>
          </property>
         </widget>
        </item>
@@ -81,11 +81,24 @@
        </item>
        <item row="0" column="1">
         <widget class="QDateEdit" name="dateSegundaConsulta">
+         <property name="specialValueText">
+          <string/>
+         </property>
+         <property name="currentSection">
+          <enum>QDateTimeEdit::DaySection</enum>
+         </property>
          <property name="displayFormat">
           <string>dd-M-yyyy</string>
          </property>
          <property name="calendarPopup">
           <bool>true</bool>
+         </property>
+         <property name="date">
+          <date>
+           <year>2000</year>
+           <month>2</month>
+           <day>1</day>
+          </date>
          </property>
         </widget>
        </item>
@@ -311,11 +324,45 @@
            <number>2</number>
           </property>
           <item>
-           <layout class="QGridLayout" name="gridPrimerConsulta">
-            <property name="spacing">
-             <number>2</number>
+           <widget class="QScrollArea" name="scrollArea">
+            <property name="widgetResizable">
+             <bool>true</bool>
             </property>
-           </layout>
+            <widget class="QWidget" name="scrollAreaWidgetContents_2">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>374</width>
+               <height>394</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>2</number>
+              </property>
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="rightMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <layout class="QGridLayout" name="gridPrimerConsulta">
+                <property name="spacing">
+                 <number>2</number>
+                </property>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -349,11 +396,45 @@
            <number>2</number>
           </property>
           <item>
-           <layout class="QGridLayout" name="gridSegundaConsulta">
-            <property name="spacing">
-             <number>2</number>
+           <widget class="QScrollArea" name="scrollArea_2">
+            <property name="widgetResizable">
+             <bool>true</bool>
             </property>
-           </layout>
+            <widget class="QWidget" name="scrollAreaWidgetContents_3">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>374</width>
+               <height>394</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>2</number>
+              </property>
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="rightMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <layout class="QGridLayout" name="gridSegundaConsulta">
+                <property name="spacing">
+                 <number>2</number>
+                </property>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </widget>
           </item>
          </layout>
         </widget>

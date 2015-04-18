@@ -1,12 +1,12 @@
 #include "preguntacombodoble.h"
 
-PreguntaComboDoble::PreguntaComboDoble(const QString &label, const QString &nota, QStringList &lista1, QStringList &lista2, QObject *parent) : PreguntaBase(label, nota, "combodoble", parent)
+PreguntaComboDoble::PreguntaComboDoble(const QString &label, const QString &nota, QStringList &lista1, QStringList &lista2, bool showNotes, QObject *parent) : PreguntaBase(label, nota, "combodoble", showNotes, parent)
 {
     _lista1 = lista1;
     _lista2 = lista2;
 }
 
-PreguntaComboDoble::PreguntaComboDoble(mongo::BSONObj &obj, QObject *parent) : PreguntaBase(obj, parent)
+PreguntaComboDoble::PreguntaComboDoble(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, parent)
 {
     mongo::BSONObj value = obj["value"].Obj();
     mongo::BSONObj objValues = value["values1"].Obj();
@@ -35,13 +35,13 @@ PreguntaComboDoble::~PreguntaComboDoble()
 
 PreguntaBasePtr PreguntaComboDoble::clone()
 {
-    PreguntaComboDoblePtr p = PreguntaComboDoblePtr(new PreguntaComboDoble(label(), nota(), _lista1, _lista2, parent()));
+    PreguntaComboDoblePtr p = PreguntaComboDoblePtr(new PreguntaComboDoble(label(), nota(), _lista1, _lista2, isShowingNotes(), parent()));
     return p;
 }
 
 QWidget* PreguntaComboDoble::widget()
 {
-    _widget = new WdgtComboDoble();
+    _widget = new WdgtComboDoble(isShowingNotes());
     _widget->setLista1(_lista1);
     _widget->setLista2(_lista2);
     _widget->setValue1(_selected1);

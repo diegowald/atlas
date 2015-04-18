@@ -1,18 +1,20 @@
 #include "preguntabase.h"
 #include "../widgets/wdgtwithlabel.h"
 
-PreguntaBase::PreguntaBase(const QString &label, const QString &nota, const QString &type, QObject *parent) : QObject(parent)
+PreguntaBase::PreguntaBase(const QString &label, const QString &nota, const QString &type, bool showNotes, QObject *parent) : QObject(parent)
 {
     _label = label;
     _nota = nota;
     _type = type;
+    _showNotes = showNotes;
 }
 
-PreguntaBase::PreguntaBase(mongo::BSONObj &obj, QObject *parent)
+PreguntaBase::PreguntaBase(mongo::BSONObj &obj, bool showNotes, QObject *parent)
 {
     _label = obj["label"].String().c_str();
     _nota = obj["nota"].String().c_str();
     _type = obj["type"].String().c_str();
+    _showNotes = showNotes;
 }
 
 PreguntaBase::~PreguntaBase()
@@ -47,7 +49,7 @@ QWidget *PreguntaBase::widget(bool includeLabel)
 
 QWidget *PreguntaBase::widgetWithLabel()
 {
-    WdgtWithLabel *wdget = new WdgtWithLabel();
+    WdgtWithLabel *wdget = new WdgtWithLabel(isShowingNotes());
     wdget->addWidget(_label, widget());
     return wdget;
 }
@@ -60,4 +62,9 @@ mongo::BSONObj PreguntaBase::toBson()
                 << "type" << _type.toStdString()
                 << "value" << value());
     return obj;
+}
+
+bool PreguntaBase::isShowingNotes() const
+{
+    return _showNotes;
 }
