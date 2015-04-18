@@ -57,8 +57,7 @@ SOURCES += main.cpp\
     model/alarma.cpp \
     db/dbmanager.cpp \
     dialogs/dlgedittooltip.cpp \
-    dialogs/dialogdbserver.cpp \
-    widgets/nulldateedit.cpp
+    dialogs/dialogdbserver.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -89,8 +88,7 @@ HEADERS  += mainwindow.h \
     model/alarma.h \
     db/dbmanager.h \
     dialogs/dlgedittooltip.h \
-    dialogs/dialogdbserver.h \
-    widgets/nulldateedit.h
+    dialogs/dialogdbserver.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \
