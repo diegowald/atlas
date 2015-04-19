@@ -149,3 +149,4 @@ mongo::BSONObj Persona::toBson()
                 << "notas" << _notas.toStdString());
     return obj;
 }
+

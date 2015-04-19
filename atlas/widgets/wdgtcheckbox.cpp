@@ -2,12 +2,10 @@
 #include "ui_wdgtcheckbox.h"
 
 WdgtCheckBox::WdgtCheckBox(bool showNotes, QWidget *parent) :
-    CustomTooltipWidget(parent),
+    QWidget(parent),
     ui(new Ui::WdgtCheckBox)
 {
     ui->setupUi(this);
-    registerTooltipHandler(ui->check);
-    registerTooltipHandler(this);
     ui->txtNotes->setVisible(showNotes);
 }
 
@@ -28,12 +26,10 @@ void WdgtCheckBox::setValue(bool newValue)
 
 void WdgtCheckBox::setNotes(const QString &newNote)
 {
-    ui->check->setToolTip(newNote);
-    setToolTip(newNote);
     ui->txtNotes->setText(newNote);
 }
 
 QString WdgtCheckBox::notes() const
 {
-    return toolTip();
+    return ui->txtNotes->text();
 }

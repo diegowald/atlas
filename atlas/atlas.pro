@@ -50,7 +50,6 @@ SOURCES += main.cpp\
     widgets/wdgtsino.cpp \
     widgets/wdgttexto.cpp \
     widgets/wdgtwithlabel.cpp \
-    widgets/customtooltipwidget.cpp \
     db/serializable.cpp \
     dialogs/dlglocalips.cpp \
     dialogs/dlgsetalarma.cpp \
@@ -81,7 +80,6 @@ HEADERS  += mainwindow.h \
     widgets/wdgtsino.h \
     widgets/wdgttexto.h \
     widgets/wdgtwithlabel.h \
-    widgets/customtooltipwidget.h \
     db/serializable.h \
     dialogs/dlglocalips.h \
     dialogs/dlgsetalarma.h \

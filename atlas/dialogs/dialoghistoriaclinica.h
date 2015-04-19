@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "model/forward.h"
 #include <QGridLayout>
+#include <QAbstractButton>
 
 namespace Ui {
 class DialogHistoriaClinica;
@@ -23,8 +24,16 @@ public:
     AlarmaPtr alarma();
     bool alarmaNueva() const;
 
+protected:
+    void closeEvent(QCloseEvent *evt);
+
+
 private slots:
     void on_btnAlarma_released();
+
+    void on_btnCancel_released();
+
+    void on_btnOK_released();
 
 private:
     void setAntecedentes(QList<PreguntaBasePtr> &antecedentes);

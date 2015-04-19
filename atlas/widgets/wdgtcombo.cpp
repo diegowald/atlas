@@ -2,12 +2,10 @@
 #include "ui_wdgtcombo.h"
 
 WdgtCombo::WdgtCombo(bool showNotes, QWidget *parent) :
-    CustomTooltipWidget(parent),
+    QWidget(parent),
     ui(new Ui::WdgtCombo)
 {
     ui->setupUi(this);
-    registerTooltipHandler(ui->comboBox);
-    registerTooltipHandler(this);
     ui->txtNotes->setVisible(showNotes);
 }
 
@@ -34,12 +32,10 @@ void WdgtCombo::setValue(const QString &newValue)
 
 void WdgtCombo::setNotes(const QString &newNote)
 {
-    ui->comboBox->setToolTip(newNote);
-    setToolTip(newNote);
     ui->txtNotes->setText(newNote);
 }
 
 QString WdgtCombo::notes() const
 {
-    return toolTip();
+    return ui->txtNotes->text();
 }

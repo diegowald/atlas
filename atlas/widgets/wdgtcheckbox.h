@@ -1,13 +1,13 @@
 #ifndef WDGTCHECKBOX_H
 #define WDGTCHECKBOX_H
 
-#include "customtooltipwidget.h"
+#include <QWidget>
 
 namespace Ui {
 class WdgtCheckBox;
 }
 
-class WdgtCheckBox : public CustomTooltipWidget
+class WdgtCheckBox : public QWidget
 {
     Q_OBJECT
 

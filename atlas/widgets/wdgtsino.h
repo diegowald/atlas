@@ -1,13 +1,13 @@
 #ifndef WDGTSINO_H
 #define WDGTSINO_H
 
-#include "customtooltipwidget.h"
+#include <QWidget>
 
 namespace Ui {
 class WdgtSiNo;
 }
 
-class WdgtSiNo : public CustomTooltipWidget
+class WdgtSiNo : public QWidget
 {
     Q_OBJECT
 

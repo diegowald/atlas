@@ -8,6 +8,10 @@
 #include "dlgsetalarma.h"
 #include "model/factory.h"
 #include <QScrollBar>
+#include <QMessageBox>
+#include <QCloseEvent>
+
+
 
 DialogHistoriaClinica::DialogHistoriaClinica(QWidget *parent) :
     QDialog(parent),
@@ -25,7 +29,7 @@ void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia, AlarmaPtr alarm
 {
     QString s = "Historia clínica %1";
     setWindowTitle(s.arg(historia->persona()->nombre().length() == 0 ? "" : ("de " + historia->persona()->nombre())));
-    ui->widgetPersona->setData(historia->persona());
+    ui->widgetPersona->setData(historia->persona(), historia->id());
     _esPrimerConsulta = !historia->fechaPrimerConsulta().isValid();
     ui->datePrimerConsulta->setDate(_esPrimerConsulta ? QDate::currentDate() : historia->fechaPrimerConsulta());
     ui->txt2daConsulta->setVisible(!_esPrimerConsulta);
@@ -215,4 +219,35 @@ AlarmaPtr DialogHistoriaClinica::alarma()
 bool DialogHistoriaClinica::alarmaNueva() const
 {
     return _alarmaNueva;
+}
+
+void DialogHistoriaClinica::closeEvent(QCloseEvent *evt)
+{
+    if (ui->widgetPersona->esDNIUnico())
+    {
+        evt->accept();
+    }
+    else
+    {
+        QMessageBox::critical(this, "Error", "Falta completar DNI, o este número ya está ingresado");
+        evt->ignore();
+    }
+}
+
+void DialogHistoriaClinica::on_btnCancel_released()
+{
+    reject();
+}
+
+void DialogHistoriaClinica::on_btnOK_released()
+{
+    if (ui->widgetPersona->esDNIUnico())
+    {
+        accept();
+        hide();
+    }
+    else
+    {
+        QMessageBox::critical(this, "Error", "Falta completar DNI, o este número ya está ingresado");
+    }
 }

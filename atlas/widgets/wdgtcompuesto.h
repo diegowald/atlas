@@ -1,14 +1,14 @@
 #ifndef WDGTCOMPUESTO_H
 #define WDGTCOMPUESTO_H
 
-#include "customtooltipwidget.h"
+#include <QWidget>
 #include "../model/forward.h"
 
 namespace Ui {
 class WdgtCompuesto;
 }
 
-class WdgtCompuesto : public CustomTooltipWidget
+class WdgtCompuesto : public QWidget
 {
     Q_OBJECT
 

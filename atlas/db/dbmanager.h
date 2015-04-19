@@ -35,6 +35,8 @@ public:
     void insertAlarma(AlarmaPtr alarma);
     void updateAlarma(AlarmaPtr alarma);
 
+    bool existeDNI(const QString &dni, mongo::OID personaID);
+
 protected:
     QString connectionString() const;
     void connectToDatabase(mongo::DBClientConnection &conn);

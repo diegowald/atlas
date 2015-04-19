@@ -255,3 +255,4 @@ AlarmaPtr Factory::crearNuevaAlarma(HistoriaClinicaPtr historia)
 {
     return AlarmaPtr(new Alarma(historia));
 }
+

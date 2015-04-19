@@ -2,13 +2,11 @@
 #include "ui_wdgttexto.h"
 
 WdgtTexto::WdgtTexto(bool showNotes, QWidget *parent) :
-    CustomTooltipWidget(parent),
+    QWidget(parent),
     ui(new Ui::WdgtTexto)
 {
     (void) showNotes;
     ui->setupUi(this);
-    registerTooltipHandler(ui->textEdit);
-    registerTooltipHandler(this);
 }
 
 WdgtTexto::~WdgtTexto()
@@ -28,11 +26,9 @@ void WdgtTexto::setValue(const QString &value)
 
 void WdgtTexto::setNotes(const QString &newNote)
 {
-    ui->textEdit->setToolTip(newNote);
-    setToolTip(newNote);
 }
 
 QString WdgtTexto::notes() const
 {
-    return toolTip();
+    return "";
 }

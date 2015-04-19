@@ -1,13 +1,13 @@
 #ifndef WDGTTEXTO_H
 #define WDGTTEXTO_H
 
-#include "customtooltipwidget.h"
+#include <QWidget>
 
 namespace Ui {
 class WdgtTexto;
 }
 
-class WdgtTexto : public CustomTooltipWidget
+class WdgtTexto : public QWidget
 {
     Q_OBJECT
 

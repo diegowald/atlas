@@ -1,13 +1,13 @@
 #ifndef WDGTCOMBODOBLE_H
 #define WDGTCOMBODOBLE_H
 
-#include "customtooltipwidget.h"
+#include <QWidget>
 
 namespace Ui {
 class WdgtComboDoble;
 }
 
-class WdgtComboDoble : public CustomTooltipWidget
+class WdgtComboDoble : public QWidget
 {
     Q_OBJECT
 

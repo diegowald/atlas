@@ -55,7 +55,7 @@ private:
     QString _ocupacion;
     QString _comoSeEntero;
     QString _notas;
-
+    mongo::OID _id;
 };
 
 #endif // PERSONA_H

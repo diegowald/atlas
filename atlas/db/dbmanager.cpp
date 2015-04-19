@@ -239,3 +239,34 @@ void dbManager::error(const QString &operacion, const QString &mensaje)
 }
 
 
+bool dbManager::existeDNI(const QString &dni, mongo::OID personaID)
+{
+    mongo::DBClientConnection c;
+    connectToDatabase(c);
+
+    std::string s = "";
+
+    mongo::BSONObj query;
+    QString queryString = personaID.isSet() ?
+                "{ 'persona.dni' : '%1',  '_id' : {$ne : ObjectId(\"%2\")} }" :
+                "{ 'persona.dni' : '%1' }";
+    queryString = queryString.arg(dni).arg(QString::fromStdString(personaID.toString()));
+
+    qDebug() << queryString;
+
+    query = mongo::fromjson(queryString.toStdString());
+    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.historias", query);
+    if (c.getLastError().size() != 0)
+    {
+        mongo::BSONObj errObj = c.getLastErrorDetailed();
+        error("Buscar dni duplicado", QString::fromStdString(errObj.toString().c_str()));
+    }
+    bool exists = false;
+    while(cursor->more())
+    {
+        exists = true;
+        break;
+    }
+    return exists;
+
+}

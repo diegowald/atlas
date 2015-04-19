@@ -1,13 +1,13 @@
 #ifndef WDGTWITHLABEL_H
 #define WDGTWITHLABEL_H
 
-#include "customtooltipwidget.h"
+#include <QWidget>
 
 namespace Ui {
 class WdgtWithLabel;
 }
 
-class WdgtWithLabel : public CustomTooltipWidget
+class WdgtWithLabel : public QWidget
 {
     Q_OBJECT
 

@@ -2,11 +2,10 @@
 #include "ui_wdgtwithlabel.h"
 
 WdgtWithLabel::WdgtWithLabel(bool showNotes, QWidget *parent) :
-    CustomTooltipWidget(parent),
+    QWidget(parent),
     ui(new Ui::WdgtWithLabel)
 {
     ui->setupUi(this);
-    registerTooltipHandler(this);
     ui->txtNotes->setVisible(showNotes);
 }
 

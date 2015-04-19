@@ -3,7 +3,7 @@
 PreguntaCheckBox::PreguntaCheckBox(const QString &label, const QString &nota, bool showNotes, QObject *parent)
     : PreguntaBase(label, nota, "checkbox", showNotes, parent)
 {
-
+    _checked = false;
 }
 
 PreguntaCheckBox::PreguntaCheckBox(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)

@@ -1,14 +1,14 @@
 #ifndef WDGTCOMBO_H
 #define WDGTCOMBO_H
 
-#include "customtooltipwidget.h"
+#include <QWidget>
 #include <QStringList>
 
 namespace Ui {
 class WdgtCombo;
 }
 
-class WdgtCombo : public CustomTooltipWidget
+class WdgtCombo : public QWidget
 {
     Q_OBJECT
 

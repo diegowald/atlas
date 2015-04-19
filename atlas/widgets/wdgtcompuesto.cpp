@@ -3,12 +3,10 @@
 #include "../model/preguntabase.h"
 
 WdgtCompuesto::WdgtCompuesto(bool showNotes, QWidget *parent) :
-    CustomTooltipWidget(parent),
+    QWidget(parent),
     ui(new Ui::WdgtCompuesto)
 {
     ui->setupUi(this);
-    registerTooltipHandler(ui->groupBox);
-    registerTooltipHandler(this);
     ui->groupBox->setChecked(false);
     ui->txtNotes->setVisible(showNotes);
 }
@@ -40,12 +38,10 @@ bool WdgtCompuesto::isChecked() const
 
 void WdgtCompuesto::setNotes(const QString &newNote)
 {
-    ui->groupBox->setToolTip(newNote);
-    setToolTip(newNote);
     ui->txtNotes->setText(newNote);
 }
 
 QString WdgtCompuesto::notes() const
 {
-    return toolTip();
+    return ui->txtNotes->text();
 }
