@@ -3,7 +3,15 @@
 
 #include <QWidget>
 #include "model/forward.h"
-#include "mongo/client/dbclient.h"
+
+
+#ifdef WIN32
+#include <WinSock2.h>
+#include <Windows.h>
+#endif
+
+#include <mongo/client/dbclient.h>
+
 
 namespace Ui {
 class WidgetPaciente;

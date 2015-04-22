@@ -29,15 +29,18 @@ HistoriaClinicaPtr Factory::crearNuevaHistoriaClinica()
     QList<PreguntaBasePtr> cuestionario1erConsulta = cloneCuestionario();
     QList<PreguntaBasePtr> cuestionario2daConsulta = cloneCuestionario();
 
-    HistoriaClinicaPtr hist = HistoriaClinicaPtr::create(crearPersona(), antecedentes,
-                                                         testKinesiologico,
-                                                         cuestionario1erConsulta, cuestionario2daConsulta);
+    HistoriaClinicaPtr hist = HistoriaClinicaPtr(
+                new HistoriaClinica(crearPersona(),
+                                    antecedentes,
+                                    testKinesiologico,
+                                    cuestionario1erConsulta,
+                                    cuestionario2daConsulta));
     return hist;
 }
 
 HistoriaClinicaPtr Factory::crearHistoria(mongo::BSONObj &obj)
 {
-    HistoriaClinicaPtr hist = HistoriaClinicaPtr::create(obj);
+    HistoriaClinicaPtr hist = HistoriaClinicaPtr(new HistoriaClinica(obj));
     return hist;
 }
 

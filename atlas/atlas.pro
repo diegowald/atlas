@@ -12,19 +12,19 @@ CONFIG += c++11
 TARGET = atlas
 TEMPLATE = app
 
-win32:LIBS += -LC:\boost\lib
+win32:LIBS += -LE:\lib
 else:LIBS += -lboost_system
 
-win32:INCLUDEPATH += C:\boost\boost_1_57_0
+win32:INCLUDEPATH += E:\boost_1_57_0
 
-win32:LIBS += -LE:\QtProjects\atlas\atlas\3rdparty\mongo\lib
+win32:LIBS += -LF:\QtProjects\atlas\atlas\3rdparty\mongo\lib
 else:LIBS += -L$$PWD/../../mongo-cxx-driver/build/linux2/use-system-boost/ -lmongoclient
 #LIBS += -L/home/diego/QtProjects/mongo-cxx-driver/build/linux2/use-system-boost -lmongoclient
 
 win32:INCLUDEPATH += 3rdparty/mongo/include
 else:INCLUDEPATH += $$PWD/../../mongo-cxx-driver/src
 
-win32:DEPENDPATH += E:/QtProjects/atlas/atlas/3rdparty/mongo/include
+win32:DEPENDPATH += F:/QtProjects/atlas/atlas/3rdparty/mongo/include
 else:DEPENDPATH += $$PWD/../../mongo-cxx-driver/src
 
 
@@ -105,3 +105,5 @@ FORMS    += mainwindow.ui \
     dialogs/dialogdbserver.ui
 
 win32:QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+win32:DEFINES+="WINVER=0x0501"
+win32:DEFINES+="_WIN32_WINNT=0x0501"
