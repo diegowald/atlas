@@ -1,4 +1,5 @@
 #include "preguntatexto.h"
+#include <QTextDocument>
 
 PreguntaTexto::PreguntaTexto(const QString &label, const QString &nota, bool showNotes, QObject *parent)
     : PreguntaBase(label, nota, "text", showNotes, parent)
@@ -41,4 +42,21 @@ void PreguntaTexto::applyChanges()
 {
     _text = _widget->value();
     setNota(_widget->notes());
+}
+
+QString PreguntaTexto::toHtml()
+{
+    return toHtml(true);
+}
+
+QString PreguntaTexto::toHtml(bool incluirNotas)
+{
+    QTextDocument doc;
+    doc.setHtml(_text);
+    QString text = doc.toPlainText();
+    QString s = "<table width=\"100%\" style=\"border:1px solid black;\">";
+    s += QString("<tr><td>%1</td><td>%2</td></tr>").arg(label()).arg(text);
+    s += QString("<tr><td colspan=\"2\">%1</td></tr>").arg(nota());
+    s += "</table>";
+    return s;
 }

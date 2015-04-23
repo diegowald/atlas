@@ -57,3 +57,18 @@ void PreguntaCombo::applyChanges()
     _selectedValue = _widget->value();
     setNota(_widget->notes());
 }
+
+QString PreguntaCombo::toHtml()
+{
+    return toHtml(true);
+}
+
+QString PreguntaCombo::toHtml(bool incluirNotas)
+{
+    QString s = "<table width=\"100%\" style=\"border:1px solid black;\"";
+    s += QString("<tr><td>%1</td><td>%2</td></tr>").arg(label()).arg(_selectedValue);
+    if (incluirNotas)
+        s += QString("<tr><td colspan=\"2\">%1</td></tr>").arg(nota());
+    s += "</table>";
+    return s;
+}

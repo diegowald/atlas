@@ -19,6 +19,10 @@ public:
     virtual mongo::BSONObj value();
 
     virtual void applyChanges();
+
+    virtual QString toHtml();
+    virtual QString toHtml(bool incluirNotas);
+
 private:
     QList<PreguntaBasePtr> _subPreguntas;
     bool _checked;

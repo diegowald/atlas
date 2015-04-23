@@ -63,7 +63,8 @@ AlarmaPtr dbManager::getAlarmaPaciente(mongo::OID historiaID)
     std::string s = "";
     if (c.isStillConnected())
     {
-        std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", BSON("idHistoria" << historiaID));
+        QString collection = _databaseName + ".alarmas";
+        std::auto_ptr<mongo::DBClientCursor> cursor = c.query(collection.toStdString(), BSON("idHistoria" << historiaID));
         if (c.getLastError().size() != 0)
         {
             mongo::BSONObj errObj = c.getLastErrorDetailed();
@@ -88,7 +89,8 @@ HistoriaClinicaPtr dbManager::getHistoria(mongo::OID historiaID)
     mongo::DBClientConnection c;
     connectToDatabase(c);
 
-    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.historias", BSON("_id" << historiaID));
+    QString collection = _databaseName + ".historias";
+    std::auto_ptr<mongo::DBClientCursor> cursor = c.query(collection.toStdString(), BSON("_id" << historiaID));
     if (c.getLastError().size() != 0)
     {
         mongo::BSONObj errObj = c.getLastErrorDetailed();
@@ -118,7 +120,8 @@ QMap<QString, AlarmaPtr> dbManager::alarmas()
     {
         QString q = "{ $and : [ {realizado : false}, {fechaAlarma : { $lte : NumberLong(%1)} } ] }";
         mongo::BSONObj qry = mongo::fromjson(q.arg(QDate::currentDate().toJulianDay()).toStdString());
-        std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.alarmas", mongo::BSONObj());
+        QString collection = _databaseName + ".alarmas";
+        std::auto_ptr<mongo::DBClientCursor> cursor = c.query(collection.toStdString(), mongo::BSONObj());
         if (c.getLastError().size() != 0)
         {
             mongo::BSONObj errObj = c.getLastErrorDetailed();
@@ -146,7 +149,8 @@ void dbManager::insertHistoria(HistoriaClinicaPtr historia)
     //c.connect("localhost");
     std::string s = "";
 
-    c.insert("atlas.historias", historia->toBson());
+    QString collection = _databaseName + ".historias";
+    c.insert(collection.toStdString(), historia->toBson());
     if (c.getLastError().size() != 0)
     {
         mongo::BSONObj errObj = c.getLastErrorDetailed();
@@ -160,7 +164,9 @@ void dbManager::updateHistoria(HistoriaClinicaPtr historia)
     connectToDatabase(c);
     std::string s = "";
 
-    c.update("atlas.historias",
+
+    QString collection = _databaseName + ".historias";
+    c.update(collection.toStdString(),
              BSON("_id" << historia->id()),
              historia->toBson());
     if (c.getLastError().size() != 0)
@@ -177,7 +183,8 @@ void dbManager::insertAlarma(AlarmaPtr alarma)
     //c.connect("localhost");
     std::string s = "";
 
-    c.insert("atlas.alarmas",
+    QString collection = _databaseName + ".alarmas";
+    c.insert(collection.toStdString(),
              alarma->toBson());
     if (c.getLastError().size() != 0)
     {
@@ -193,7 +200,8 @@ void dbManager::updateAlarma(AlarmaPtr alarma)
     //c.connect("localhost");
     std::string s = "";
 
-    c.update("atlas.alarmas",
+    QString collection = _databaseName + ".alarmas";
+    c.update(collection.toStdString(),
              BSON("_id" << alarma->id()),
              alarma->toBson(), true);
     if (c.getLastError().size() != 0)
@@ -214,7 +222,8 @@ QMap<QString, HistoriaClinicaPtr> dbManager::historias(const QString queryString
     mongo::BSONObj query;
 
     query = mongo::fromjson(queryString.toStdString());
-    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.historias", query);
+    QString collection = _databaseName + ".historias";
+    std::auto_ptr<mongo::DBClientCursor> cursor = c.query(collection.toStdString(), query);
     if (c.getLastError().size() != 0)
     {
         mongo::BSONObj errObj = c.getLastErrorDetailed();
@@ -255,7 +264,8 @@ bool dbManager::existeDNI(const QString &dni, mongo::OID personaID)
     qDebug() << queryString;
 
     query = mongo::fromjson(queryString.toStdString());
-    std::auto_ptr<mongo::DBClientCursor> cursor = c.query("atlas.historias", query);
+    QString collection = _databaseName + ".historias";
+    std::auto_ptr<mongo::DBClientCursor> cursor = c.query(collection.toStdString(), query);
     if (c.getLastError().size() != 0)
     {
         mongo::BSONObj errObj = c.getLastErrorDetailed();

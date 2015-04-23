@@ -8,6 +8,10 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT *= printsupport
+}
+
 CONFIG += c++11
 TARGET = atlas
 TEMPLATE = app
@@ -56,7 +60,8 @@ SOURCES += main.cpp\
     model/alarma.cpp \
     db/dbmanager.cpp \
     dialogs/dlgedittooltip.cpp \
-    dialogs/dialogdbserver.cpp
+    dialogs/dialogdbserver.cpp \
+    model/htmlable.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -86,7 +91,8 @@ HEADERS  += mainwindow.h \
     model/alarma.h \
     db/dbmanager.h \
     dialogs/dlgedittooltip.h \
-    dialogs/dialogdbserver.h
+    dialogs/dialogdbserver.h \
+    model/htmlable.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \

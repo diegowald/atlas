@@ -42,3 +42,18 @@ void PreguntaCheckBox::applyChanges()
     _checked = _widget->value();
     setNota(_widget->notes());
 }
+
+QString PreguntaCheckBox::toHtml()
+{
+    return toHtml(true);
+}
+
+QString PreguntaCheckBox::toHtml(bool incluirNotas)
+{
+    QString s = "<table width=\"100%\" style=\"border:1px solid black;\">";
+    s += QString("<tr><td>%1</td><td>%2</td></tr>").arg(label()).arg(_checked ? "Sí" : "No");
+    if (incluirNotas)
+        s += QString("<tr><td colspan=\"2\">%1</td></tr>").arg(nota());
+    s += "</table>";
+    return s;
+}

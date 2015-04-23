@@ -5,8 +5,9 @@
 #include "forward.h"
 #include <QDate>
 #include "../db/serializable.h"
+#include "htmlable.h"
 
-class HistoriaClinica : public QObject, public Serializable
+class HistoriaClinica : public QObject, public Serializable, public htmlAble
 {
     Q_OBJECT
 public:
@@ -35,11 +36,12 @@ public:
 
     virtual mongo::BSONObj toBson();
 
+    virtual QString toHtml();
 
 private:
     mongo::BSONObj arrayBson(QList<PreguntaBasePtr> list);
     void fromArrayBson(std::vector<mongo::BSONElement> &arr, QList<PreguntaBasePtr> &list);
-
+    QString html(QList<PreguntaBasePtr> &lista, int cantColumnas);
 signals:
 
 public slots:

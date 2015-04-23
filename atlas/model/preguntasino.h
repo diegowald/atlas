@@ -18,6 +18,8 @@ public:
     virtual mongo::BSONObj value();
     virtual void applyChanges();
 
+    virtual QString toHtml();
+    virtual QString toHtml(bool incluirNotas);
 private:
     bool _value;
     WdgtSiNo *_widget;

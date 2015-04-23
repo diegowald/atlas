@@ -166,3 +166,52 @@ mongo::OID HistoriaClinica::id()
 {
     return _id;
 }
+
+QString HistoriaClinica::toHtml()
+{
+    QString s = "<table width=\"100%\" style=\"border:1px solid black;\">";
+
+    s += "<tr>";
+    s += QString("<td>Primer Consulta : %1</td><td>Segunda Consulta: %2</td><td># %3</td>")
+            .arg(_fechaPrimerConsulta.toString("dd/MM/yyyy"))
+            .arg(_fechaSegundaConsulta.toString("dd/MM/yyyy"))
+            .arg(_numeroPaciente);
+    s += "</tr>";
+    s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(_persona->toHtml());
+    s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(html(_antecedentes, 3));
+    s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(html(_testKinesiologico, 3));
+    s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(html(_cuestionario1erConsulta, 3));
+    s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(html(_cuestionario2daConsulta, 3));
+
+    s += "</table>";
+
+    return s;
+}
+
+QString HistoriaClinica::html(QList<PreguntaBasePtr> &lista, int cantColumnas)
+{
+    QString s = "<table width=\"100%\" style=\"border:1px solid black;\">";
+
+    int columna = 1;
+    foreach (PreguntaBasePtr pregunta, lista)
+    {
+        if (columna == 1)
+        {
+            s += "<tr>";
+        }
+        s += QString("<td>%1</td>").arg(pregunta->toHtml());
+        if (columna == cantColumnas)
+        {
+            s += "</tr>";
+            columna = 0;
+        }
+        columna++;
+    }
+    if (!s.endsWith("</tr>"))
+    {
+        s += "</tr>";
+    }
+
+    s += "</table>";
+    return s;
+}

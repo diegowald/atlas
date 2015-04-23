@@ -163,6 +163,9 @@
      <string>&amp;Archivo</string>
     </property>
     <addaction name="actionNuevaHistoriaClinica"/>
+    <addaction name="separator"/>
+    <addaction name="actionVista_PreviaHistoriaClinica"/>
+    <addaction name="actionImprimir_Historia_Clinica"/>
    </widget>
    <widget class="QMenu" name="menuAn_lisis">
     <property name="title">
@@ -216,6 +219,22 @@
    </property>
    <property name="toolTip">
     <string>Detecta mi IP</string>
+   </property>
+  </action>
+  <action name="actionImprimir_Historia_Clinica">
+   <property name="text">
+    <string>Imprimir Historia Clinica</string>
+   </property>
+   <property name="toolTip">
+    <string>Imprme la historia clínica</string>
+   </property>
+  </action>
+  <action name="actionVista_PreviaHistoriaClinica">
+   <property name="text">
+    <string>Vista Previa Historia Clinica</string>
+   </property>
+   <property name="toolTip">
+    <string>Presneta vista previa de impresino de historia clinica</string>
    </property>
   </action>
  </widget>

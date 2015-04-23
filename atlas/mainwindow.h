@@ -5,6 +5,7 @@
 #include "model/factory.h"
 #include <QMap>
 #include <QTableWidgetItem>
+#include <QtPrintSupport/QPrinter>
 
 namespace Ui {
 class MainWindow;
@@ -39,11 +40,21 @@ private slots:
 
     void on_tableAlarmas_cellDoubleClicked(int row, int column);
 
+    void on_actionImprimir_Historia_Clinica_triggered();
+
+    void print(QPrinter *printer);
+    void on_actionVista_PreviaHistoriaClinica_triggered();
+
+    void on_tablePacientes_itemSelectionChanged();
+
 private:
     Ui::MainWindow *ui;
     Factory* _factory;
     QMap<QString, HistoriaClinicaPtr> _historias;
     QMap<QString, AlarmaPtr> _alarmas;
+
+    QString _idHistoria;
+    QString _html;
 };
 
 #endif // MAINWINDOW_H

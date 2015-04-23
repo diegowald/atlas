@@ -77,3 +77,18 @@ void PreguntaComboDoble::applyChanges()
     _selected2 = _widget->value2();
     setNota(_widget->notes());
 }
+
+QString PreguntaComboDoble::toHtml()
+{
+    return toHtml(true);
+}
+
+QString PreguntaComboDoble::toHtml(bool incluirNotas)
+{
+    QString s = "<table width=\"100%\" style=\"border:1px solid black;\">";
+    s += QString("<tr><td>%1</td><td>%2</td><td>%3</td></tr>").arg(label()).arg(_selected1).arg(_selected2);
+    if (incluirNotas)
+        s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(nota());
+    s += "</table>";
+    return s;
+}

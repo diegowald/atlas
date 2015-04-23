@@ -19,6 +19,9 @@ public:
     virtual mongo::BSONObj value();
 
     virtual void applyChanges();
+
+    virtual QString toHtml();
+    virtual QString toHtml(bool incluirNotas);
 private:
     bool _checked;
     WdgtCheckBox *_widget;

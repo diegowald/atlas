@@ -18,6 +18,8 @@ public:
     virtual void applyChanges();
 
     virtual mongo::BSONObj value();
+    virtual QString toHtml();
+    virtual QString toHtml(bool incluirNotas);
 private:
     QStringList _lista1;
     QStringList _lista2;

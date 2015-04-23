@@ -4,8 +4,9 @@
 #include <QObject>
 #include "forward.h"
 #include "../db/serializable.h"
+#include "htmlable.h"
 
-class PreguntaBase : public QObject, public Serializable
+class PreguntaBase : public QObject, public Serializable, public htmlAble
 {
     Q_OBJECT
 public:
@@ -30,6 +31,8 @@ public:
     virtual mongo::BSONObj value() = 0;
 
     bool isShowingNotes() const;
+    virtual QString toHtml() = 0;
+    virtual QString toHtml(bool incluirNotas) = 0;
 
 private:
     QWidget* widgetWithLabel();

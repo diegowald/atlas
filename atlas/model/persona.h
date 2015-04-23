@@ -4,8 +4,9 @@
 #include <QObject>
 #include <QDate>
 #include "../db/serializable.h"
+#include "htmlable.h"
 
-class Persona : public QObject, public Serializable
+class Persona : public QObject, public Serializable, public htmlAble
 {
     Q_OBJECT
 public:
@@ -38,6 +39,7 @@ public:
     QString notas() const;
 
     virtual mongo::BSONObj toBson();
+    virtual QString toHtml();
 
 signals:
 

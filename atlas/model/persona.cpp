@@ -150,3 +150,23 @@ mongo::BSONObj Persona::toBson()
     return obj;
 }
 
+QString Persona::toHtml()
+{
+    QString s = "<table width=\"100%\" style=\"border:1px solid black;\">";
+
+    s += "<tr>";
+    s += QString("<td>Nombre: %1</td><td>DNI: %2</td>").arg(_nombre).arg(_dni);
+    s += "</tr><tr>";
+    s += QString("<td>Domicilio: %1</td><td>Localidad: %2</td>").arg(_domicilio).arg(_localidad);
+    s += "</tr><tr>";
+    s += QString("<td>Telefonos: %1</td><td>email: %2</td>").arg(_telefonos).arg(_email);
+    s += "</tr><tr>";
+    s += QString("<td>Fecha de Nacimiento: %1</td><td>Edad: %2</td>").arg(_fechaNacimiento.toString("dd/MM/yyyy")).arg(_edad);
+    s += "</tr><tr>";
+    s += QString("<td>Ocupacion: %1</td><td>Como se entero: %2</td>").arg(_ocupacion).arg(_comoSeEntero);
+    s += "</tr><tr>";
+    s += QString("<td colspan=\"2\">Notas: %1</td><td>DNI: %2</td>").arg(_notas);
+    s += "</tr>";
+    s += "</table>";
+    return s;
+}

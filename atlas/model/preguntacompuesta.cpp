@@ -70,3 +70,22 @@ void PreguntaCompuesta::applyChanges()
     _checked = _widget->isChecked();
     setNota(_widget->notes());
 }
+
+QString PreguntaCompuesta::toHtml()
+{
+    return toHtml(true);
+}
+
+QString PreguntaCompuesta::toHtml(bool incluirNotas)
+{
+    QString s = "<table width=\"100%\" style=\"border:1px solid black;\">";
+    s += QString("<tr><td>%1</td><td>%2</td></tr>").arg(label()).arg(_checked ? "Si" : "No");
+    foreach (PreguntaBasePtr pregunta, _subPreguntas)
+    {
+        s += QString("<tr><td colspan=\"2\">%1</td></tr>").arg(pregunta->toHtml(false));
+    }
+    if (incluirNotas)
+        s += QString("<tr><td colspan=\"2\">%1</td></tr>").arg(nota());
+    s += "</table>";
+    return s;
+}

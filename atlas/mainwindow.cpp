@@ -16,6 +16,14 @@
 #include "db/dbmanager.h"
 #include "dialogs/dlgsetalarma.h"
 
+// Printing
+#include <QtPrintSupport/QPrintDialog>
+#include <QtPrintSupport/QPrintPreviewDialog>
+#include <QTextDocument>
+
+// Save
+#include <QFile>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -23,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     _factory = new Factory();
     refreshAlarmas();
+    _idHistoria = "";
+    _html = "";
 }
 
 MainWindow::~MainWindow()
@@ -39,8 +49,11 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
     if (dlg.exec() == QDialog::Accepted)
     {
         dlg.applyData();
-        dbManager::instance()->insertHistoria(historia);
-
+        for (int i = 0; i < 3000; ++i)
+        {
+            dbManager::instance()->insertHistoria(historia);
+            qDebug() << "Registro " << i << " insertado.";
+        }
         AlarmaPtr alarma = dlg.alarma();
         if (!alarma.isNull())
         {
@@ -53,6 +66,8 @@ void MainWindow::on_pushButton_released()
 {
     _historias.clear();
     ui->statusBar->showMessage("Buscando registros", 2000);
+    _idHistoria = "";
+    _html = "";
     QString queryString = "";
     if (ui->txtNombre->text().trimmed().length() > 0)
     {
@@ -126,8 +141,8 @@ void MainWindow::fillViewAlarmas()
 
 void MainWindow::on_tablePacientes_cellDoubleClicked(int row, int column)
 {
-    QString id = ui->tablePacientes->item(row, 0)->data(Qt::UserRole).toString();
-    HistoriaClinicaPtr historia = _historias[id];
+    _idHistoria = ui->tablePacientes->item(row, 0)->data(Qt::UserRole).toString();
+    HistoriaClinicaPtr historia = _historias[_idHistoria];
     AlarmaPtr alarma = dbManager::instance()->getAlarmaPaciente(historia->id());
     DialogHistoriaClinica dlg;
     dlg.setData(historia, alarma);
@@ -177,4 +192,56 @@ void MainWindow::on_tableAlarmas_cellDoubleClicked(int row, int column)
         dbManager::instance()->updateAlarma(alarma);
     }
     refreshAlarmas();
+}
+
+void MainWindow::on_actionImprimir_Historia_Clinica_triggered()
+{
+    if (0 < _idHistoria.length())
+    {
+        HistoriaClinicaPtr historia = _historias[_idHistoria];
+        // Prints ActiveWindow
+        QPrinter printer(QPrinter::HighResolution);
+        QPrintDialog dlg(&printer, this);
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            _html = historia->toHtml();
+            // Print
+            print(&printer);
+        }
+    }
+}
+
+void MainWindow::print(QPrinter *printer)
+{
+    if (0 < _html.length())
+    {
+        QTextDocument textDoc;
+        textDoc.setHtml(_html);
+        textDoc.print(printer);
+    }
+}
+
+void MainWindow::on_actionVista_PreviaHistoriaClinica_triggered()
+{
+    if (0 < _idHistoria.length())
+    {
+        HistoriaClinicaPtr historia = _historias[_idHistoria];
+        _html = historia->toHtml();
+        QFile file("diego.html");
+        file.open(QIODevice::WriteOnly);
+        QTextStream stream(&file);
+        stream << _html;
+        file.close();
+        //QPrinter printer(QPrinter::HighResolution);
+        QPrinter printer;
+        QPrintPreviewDialog dlg(&printer, this);
+        connect (&dlg, SIGNAL(paintRequested(QPrinter*)), this, SLOT(print(QPrinter*)));
+        dlg.setWindowState(dlg.windowState() | Qt::WindowMaximized);
+        dlg.exec();
+    }
+}
+
+void MainWindow::on_tablePacientes_itemSelectionChanged()
+{
+    _idHistoria = ui->tablePacientes->item(ui->tablePacientes->currentRow(), 0)->data(Qt::UserRole).toString();
 }

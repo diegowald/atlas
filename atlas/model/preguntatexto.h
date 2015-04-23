@@ -17,6 +17,9 @@ public:
 
     virtual mongo::BSONObj value();
     virtual void applyChanges();
+
+    virtual QString toHtml();
+    virtual QString toHtml(bool incluirNotas);
 private:
     QString _text;
     WdgtTexto *_widget;
