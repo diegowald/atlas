@@ -33,6 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
     refreshAlarmas();
     _idHistoria = "";
     _html = "";
+    ui->actionImprimir_Historia_Clinica->setEnabled(false);
+    ui->actionVista_PreviaHistoriaClinica->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -244,4 +246,6 @@ void MainWindow::on_actionVista_PreviaHistoriaClinica_triggered()
 void MainWindow::on_tablePacientes_itemSelectionChanged()
 {
     _idHistoria = ui->tablePacientes->item(ui->tablePacientes->currentRow(), 0)->data(Qt::UserRole).toString();
+    ui->actionImprimir_Historia_Clinica->setEnabled(true);
+    ui->actionVista_PreviaHistoriaClinica->setEnabled(true);
 }
