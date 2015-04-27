@@ -33,14 +33,21 @@
     <number>2</number>
    </property>
    <item>
-    <widget class="QTextEdit" name="textEdit">
+    <widget class="ColorizedTextEdit" name="textEdit">
      <property name="contextMenuPolicy">
-      <enum>Qt::CustomContextMenu</enum>
+      <enum>Qt::DefaultContextMenu</enum>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ColorizedTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header location="global">widgets/colorizedtextedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -27,10 +27,10 @@ void WdgtSiNo::setValue(bool newValue)
 
 void WdgtSiNo::setNotes(const QString &newNote)
 {
-    ui->txtNotes->setText(newNote);
+    ui->txtNotes->setPlainText(newNote);
 }
 
 QString WdgtSiNo::notes() const
 {
-    return ui->txtNotes->text();
+    return ui->txtNotes->toPlainText();
 }

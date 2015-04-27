@@ -61,7 +61,9 @@ SOURCES += main.cpp\
     db/dbmanager.cpp \
     dialogs/dlgedittooltip.cpp \
     dialogs/dialogdbserver.cpp \
-    model/htmlable.cpp
+    model/htmlable.cpp \
+    util/resaltadortexto.cpp \
+    widgets/colorizedtextedit.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -92,7 +94,9 @@ HEADERS  += mainwindow.h \
     db/dbmanager.h \
     dialogs/dlgedittooltip.h \
     dialogs/dialogdbserver.h \
-    model/htmlable.h
+    model/htmlable.h \
+    util/resaltadortexto.h \
+    widgets/colorizedtextedit.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \
@@ -113,3 +117,6 @@ FORMS    += mainwindow.ui \
 win32:QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
 win32:DEFINES+="WINVER=0x0501"
 win32:DEFINES+="_WIN32_WINNT=0x0501"
+
+RESOURCES += \
+    atlas.qrc

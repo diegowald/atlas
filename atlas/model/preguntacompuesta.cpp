@@ -19,7 +19,6 @@ PreguntaCompuesta::PreguntaCompuesta(mongo::BSONObj &obj, bool showNotes, QObjec
     for (std::vector<mongo::BSONElement>::iterator it = elements.begin(); it != elements.end(); ++it)
     {
         mongo::BSONObj obj2 = it->Obj();
-        //qDebug() << obj2.jsonString().c_str();
         _subPreguntas.append(Factory::crearPregunta(obj2, false));
     }
     _checked = o["checked"].Bool();

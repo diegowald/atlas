@@ -38,10 +38,10 @@ bool WdgtCompuesto::isChecked() const
 
 void WdgtCompuesto::setNotes(const QString &newNote)
 {
-    ui->txtNotes->setText(newNote);
+    ui->txtNotes->setPlainText(newNote);
 }
 
 QString WdgtCompuesto::notes() const
 {
-    return ui->txtNotes->text();
+    return ui->txtNotes->toPlainText();
 }

@@ -9,7 +9,6 @@ PreguntaCombo::PreguntaCombo(const QString &label, const QString &nota, QStringL
 PreguntaCombo::PreguntaCombo(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
 {
     mongo::BSONObj value = obj["value"].Obj();
-    //qDebug() << value.jsonString().c_str();
     mongo::BSONObj objValues = value["values"].Obj();
     std::vector<mongo::BSONElement> values;
     objValues.elems(values);

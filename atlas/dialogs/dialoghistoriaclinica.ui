@@ -122,7 +122,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
@@ -232,51 +232,211 @@
           <number>2</number>
          </property>
          <item>
-          <layout class="QFormLayout" name="formColumnKinesio3">
-           <property name="horizontalSpacing">
-            <number>2</number>
+          <widget class="QGroupBox" name="groupBox_4">
+           <property name="title">
+            <string>Primer Consulta</string>
            </property>
-           <property name="verticalSpacing">
-            <number>2</number>
-           </property>
-          </layout>
-         </item>
-         <item>
-          <widget class="Line" name="line_3">
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <property name="spacing">
+             <number>2</number>
+            </property>
+            <property name="leftMargin">
+             <number>2</number>
+            </property>
+            <property name="topMargin">
+             <number>2</number>
+            </property>
+            <property name="rightMargin">
+             <number>2</number>
+            </property>
+            <property name="bottomMargin">
+             <number>2</number>
+            </property>
+            <item>
+             <widget class="QScrollArea" name="scrollPrimerConsulta">
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <widget class="QWidget" name="scrollAreaPrimerConsulta">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>376</width>
+                 <height>390</height>
+                </rect>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_10">
+                <property name="spacing">
+                 <number>2</number>
+                </property>
+                <property name="leftMargin">
+                 <number>2</number>
+                </property>
+                <property name="topMargin">
+                 <number>2</number>
+                </property>
+                <property name="rightMargin">
+                 <number>2</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>2</number>
+                </property>
+                <item>
+                 <layout class="QFormLayout" name="form1Kinesio1erConsulta">
+                  <property name="horizontalSpacing">
+                   <number>2</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>2</number>
+                  </property>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="Line" name="line_6">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QFormLayout" name="form2Kinesio1erConsulta">
+                  <property name="horizontalSpacing">
+                   <number>2</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>2</number>
+                  </property>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="Line" name="line_7">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QFormLayout" name="form3Kinesio1erConsulta">
+                  <property name="horizontalSpacing">
+                   <number>2</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>2</number>
+                  </property>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <layout class="QFormLayout" name="formColumnKinesio2">
-           <property name="horizontalSpacing">
-            <number>2</number>
+          <widget class="QGroupBox" name="groupBox_3">
+           <property name="title">
+            <string>Segunda Consulta</string>
            </property>
-           <property name="verticalSpacing">
-            <number>2</number>
-           </property>
-          </layout>
-         </item>
-         <item>
-          <widget class="Line" name="line_4">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <property name="spacing">
+             <number>2</number>
+            </property>
+            <property name="leftMargin">
+             <number>2</number>
+            </property>
+            <property name="topMargin">
+             <number>2</number>
+            </property>
+            <property name="rightMargin">
+             <number>2</number>
+            </property>
+            <property name="bottomMargin">
+             <number>2</number>
+            </property>
+            <item>
+             <widget class="QScrollArea" name="scrollSegundaConsulta">
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <widget class="QWidget" name="scrollAreaSegundaConsulta">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>375</width>
+                 <height>390</height>
+                </rect>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <property name="spacing">
+                 <number>2</number>
+                </property>
+                <property name="leftMargin">
+                 <number>2</number>
+                </property>
+                <property name="topMargin">
+                 <number>2</number>
+                </property>
+                <property name="rightMargin">
+                 <number>2</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>2</number>
+                </property>
+                <item>
+                 <layout class="QFormLayout" name="form1Kinesio2daConsulta">
+                  <property name="horizontalSpacing">
+                   <number>2</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>2</number>
+                  </property>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="Line" name="line_3">
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QFormLayout" name="form2Kinesio2daConsulta">
+                  <property name="horizontalSpacing">
+                   <number>2</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>2</number>
+                  </property>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="Line" name="line_4">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QFormLayout" name="form3Kinesio2daConsulta">
+                  <property name="horizontalSpacing">
+                   <number>2</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>2</number>
+                  </property>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
           </widget>
-         </item>
-         <item>
-          <layout class="QFormLayout" name="formColumnKinesio1">
-           <property name="horizontalSpacing">
-            <number>2</number>
-           </property>
-           <property name="verticalSpacing">
-            <number>2</number>
-           </property>
-          </layout>
          </item>
         </layout>
        </item>
@@ -333,8 +493,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>374</width>
-               <height>392</height>
+               <width>98</width>
+               <height>28</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -405,8 +565,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>374</width>
-               <height>392</height>
+               <width>98</width>
+               <height>28</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_7">

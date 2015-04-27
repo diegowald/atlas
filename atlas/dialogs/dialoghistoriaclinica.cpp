@@ -18,6 +18,28 @@ DialogHistoriaClinica::DialogHistoriaClinica(QWidget *parent) :
     ui(new Ui::DialogHistoriaClinica)
 {
     ui->setupUi(this);
+
+    connect(ui->scrollArea->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollArea_2->verticalScrollBar(), SLOT(setValue(int)));
+
+    connect(ui->scrollArea_2->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollArea->verticalScrollBar(), SLOT(setValue(int)));
+
+    connect(ui->scrollArea->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollArea_2->horizontalScrollBar(), SLOT(setValue(int)));
+
+    connect(ui->scrollArea_2->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollArea->horizontalScrollBar(), SLOT(setValue(int)));
+
+    connect(ui->scrollPrimerConsulta->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollSegundaConsulta->verticalScrollBar(), SLOT(setValue(int)));
+    connect(ui->scrollPrimerConsulta->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollSegundaConsulta->horizontalScrollBar(), SLOT(setValue(int)));
+
+    connect(ui->scrollSegundaConsulta->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollPrimerConsulta->verticalScrollBar(), SLOT(setValue(int)));
+    connect(ui->scrollSegundaConsulta->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->scrollPrimerConsulta->horizontalScrollBar(), SLOT(setValue(int)));
 }
 
 DialogHistoriaClinica::~DialogHistoriaClinica()
@@ -46,24 +68,20 @@ void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia, AlarmaPtr alarm
     }
     ui->txtNumeroPaciente->setText(historia->numeroPaciente());
     setAntecedentes(historia->antecedentes());
-    setTestKinesiologico(historia->testKinesiologico());
+    setTestKinesiologico(historia->testKinesiologico1erConsulta(),
+                         ui->form1Kinesio1erConsulta,
+                         ui->form2Kinesio1erConsulta,
+                         ui->form3Kinesio1erConsulta);
+    setTestKinesiologico(historia->testKinesiologico2darConsulta(),
+                         ui->form1Kinesio2daConsulta,
+                         ui->form2Kinesio2daConsulta,
+                         ui->form3Kinesio2daConsulta);
     setCuestionario(historia->cuestionario1erConsulta(), ui->gridPrimerConsulta);
     setCuestionario(historia->cuestionario2daConsulta(), ui->gridSegundaConsulta);
     _historia = historia;
     _alarma = alarma;
     _alarmaNueva = _alarma.isNull();
 
-    connect(ui->scrollArea->verticalScrollBar(), SIGNAL(valueChanged(int)),
-            ui->scrollArea_2->verticalScrollBar(), SLOT(setValue(int)));
-
-    connect(ui->scrollArea_2->verticalScrollBar(), SIGNAL(valueChanged(int)),
-            ui->scrollArea->verticalScrollBar(), SLOT(setValue(int)));
-
-    connect(ui->scrollArea->horizontalScrollBar(), SIGNAL(valueChanged(int)),
-            ui->scrollArea_2->horizontalScrollBar(), SLOT(setValue(int)));
-
-    connect(ui->scrollArea_2->horizontalScrollBar(), SIGNAL(valueChanged(int)),
-            ui->scrollArea->horizontalScrollBar(), SLOT(setValue(int)));
 }
 
 void DialogHistoriaClinica::applyData()
@@ -95,7 +113,6 @@ void DialogHistoriaClinica::setAntecedentes(QList<PreguntaBasePtr> &antecedentes
         PreguntaTextoPtr p = pregunta.dynamicCast<PreguntaTexto>();
         if (!p)
         {
-            //ui->gridLayoutAntecedentes->addWidget(pregunta->widget(true), currRow, currColumn, 1, 1);
             QFormLayout * layout;
             switch (currColumn)
             {
@@ -124,7 +141,7 @@ void DialogHistoriaClinica::setAntecedentes(QList<PreguntaBasePtr> &antecedentes
     }
 }
 
-void DialogHistoriaClinica::setTestKinesiologico(QList<PreguntaBasePtr> &testKinesiologico)
+void DialogHistoriaClinica::setTestKinesiologico(QList<PreguntaBasePtr> &testKinesiologico, QFormLayout *form1, QFormLayout *form2, QFormLayout *form3)
 {
     int currColumn = 0;
     int currRow = 0;
@@ -134,13 +151,13 @@ void DialogHistoriaClinica::setTestKinesiologico(QList<PreguntaBasePtr> &testKin
         switch (currColumn)
         {
         case 0:
-            layout = ui->formColumnKinesio1;
+            layout = form1;
             break;
         case 1:
-            layout = ui->formColumnKinesio2;
+            layout = form2;
             break;
         case 2:
-            layout = ui->formColumnKinesio3;
+            layout = form3;
             break;
         }
         layout->addRow(pregunta->label(), pregunta->widget());
@@ -179,7 +196,12 @@ void DialogHistoriaClinica::applyAntecedentes()
 
 void DialogHistoriaClinica::applyTestKinesiologico()
 {
-    foreach (PreguntaBasePtr pregunta, _historia->testKinesiologico())
+    foreach (PreguntaBasePtr pregunta, _historia->testKinesiologico1erConsulta())
+    {
+        pregunta->applyChanges();
+    }
+
+    foreach (PreguntaBasePtr pregunta, _historia->testKinesiologico2darConsulta())
     {
         pregunta->applyChanges();
     }

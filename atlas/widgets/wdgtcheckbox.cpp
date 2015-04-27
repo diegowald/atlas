@@ -26,10 +26,10 @@ void WdgtCheckBox::setValue(bool newValue)
 
 void WdgtCheckBox::setNotes(const QString &newNote)
 {
-    ui->txtNotes->setText(newNote);
+    ui->txtNotes->setPlainText(newNote);
 }
 
 QString WdgtCheckBox::notes() const
 {
-    return ui->txtNotes->text();
+    return ui->txtNotes->toPlainText();
 }

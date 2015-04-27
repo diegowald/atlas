@@ -11,7 +11,7 @@ class HistoriaClinica : public QObject, public Serializable, public htmlAble
 {
     Q_OBJECT
 public:
-    explicit HistoriaClinica(PersonaPtr persona, QList<PreguntaBasePtr> &templateAntecedentes, QList<PreguntaBasePtr> &templateTestKinesiologico,
+    explicit HistoriaClinica(PersonaPtr persona, QList<PreguntaBasePtr> &templateAntecedentes, QList<PreguntaBasePtr> &templateTestKinesiologico1erConsulta, QList<PreguntaBasePtr> &templateTestKinesiologico2daConsulta,
                              QList<PreguntaBasePtr> &templateCuestionario1erConsulta, QList<PreguntaBasePtr> &templateCuestionario2daConsulta,
                              QObject *parent = 0);
 
@@ -24,7 +24,8 @@ public:
     QDate fechaSegundaConsulta();
     QString numeroPaciente();
     QList<PreguntaBasePtr> &antecedentes();
-    QList<PreguntaBasePtr> &testKinesiologico();
+    QList<PreguntaBasePtr> &testKinesiologico1erConsulta();
+    QList<PreguntaBasePtr> &testKinesiologico2darConsulta();
     QList<PreguntaBasePtr> &cuestionario1erConsulta();
     QList<PreguntaBasePtr> &cuestionario2daConsulta();
     QString idString();
@@ -50,7 +51,8 @@ private:
     QDate _fechaPrimerConsulta;
     QDate _fechaSegundaConsulta;
     QList<PreguntaBasePtr> _antecedentes;
-    QList<PreguntaBasePtr> _testKinesiologico;
+    QList<PreguntaBasePtr> _testKinesiologico1erConsulta;
+    QList<PreguntaBasePtr> _testKinesiologico2daConsulta;
     QList<PreguntaBasePtr> _cuestionario1erConsulta;
     QList<PreguntaBasePtr> _cuestionario2daConsulta;
     QString _numeroPaciente;

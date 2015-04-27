@@ -25,14 +25,16 @@ Factory::~Factory()
 HistoriaClinicaPtr Factory::crearNuevaHistoriaClinica()
 {
     QList<PreguntaBasePtr> antecedentes = cloneAntecedentes();
-    QList<PreguntaBasePtr> testKinesiologico = cloneTestKinesiologico();
+    QList<PreguntaBasePtr> testKinesiologico1erConsulta = cloneTestKinesiologico();
+    QList<PreguntaBasePtr> testKinesiologico2daConsulta = cloneTestKinesiologico();
     QList<PreguntaBasePtr> cuestionario1erConsulta = cloneCuestionario();
     QList<PreguntaBasePtr> cuestionario2daConsulta = cloneCuestionario();
 
     HistoriaClinicaPtr hist = HistoriaClinicaPtr(
                 new HistoriaClinica(crearPersona(),
                                     antecedentes,
-                                    testKinesiologico,
+                                    testKinesiologico1erConsulta,
+                                    testKinesiologico2daConsulta,
                                     cuestionario1erConsulta,
                                     cuestionario2daConsulta));
     return hist;
@@ -198,13 +200,13 @@ void Factory::cargarCuestionario()
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Oídos", "",
                                                                             QList<PreguntaBasePtr>()
                                                                             << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierda", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecha", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecha", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Zumbidos", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Puntadas", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
 
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Mareos", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Mareos", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", true))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Zumbidos", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", true))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Puntadas", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", true)), false)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Mareos", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", true)), false)));
 
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Desvanecimientos", "",
                                                                             QList<PreguntaBasePtr>()

@@ -28,7 +28,6 @@ dbManager *dbManager::instance()
 
 QString dbManager::connectionString() const
 {
-    //return "ds049661.mongolab.com:49661/atlas -u atlas_dev -p atlas1234"; // --authenticationDatabase atlas";
     return _connection;
 }
 
@@ -146,7 +145,6 @@ void dbManager::insertHistoria(HistoriaClinicaPtr historia)
 {
     mongo::DBClientConnection c;
     connectToDatabase(c);
-    //c.connect("localhost");
     std::string s = "";
 
     QString collection = _databaseName + ".historias";
@@ -180,7 +178,6 @@ void dbManager::insertAlarma(AlarmaPtr alarma)
 {
     mongo::DBClientConnection c;
     connectToDatabase(c);
-    //c.connect("localhost");
     std::string s = "";
 
     QString collection = _databaseName + ".alarmas";
@@ -197,7 +194,6 @@ void dbManager::updateAlarma(AlarmaPtr alarma)
 {
     mongo::DBClientConnection c;
     connectToDatabase(c);
-    //c.connect("localhost");
     std::string s = "";
 
     QString collection = _databaseName + ".alarmas";

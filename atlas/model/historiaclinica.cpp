@@ -7,14 +7,16 @@
 
 HistoriaClinica::HistoriaClinica(PersonaPtr persona,
                                  QList<PreguntaBasePtr> &templateAntecedentes,
-                                 QList<PreguntaBasePtr> &templateTestKinesiologico,
+                                 QList<PreguntaBasePtr> &templateTestKinesiologico1erConsulta,
+                                 QList<PreguntaBasePtr> &templateTestKinesiologico2daConsulta,
                                  QList<PreguntaBasePtr> &templateCuestionario1erConsulta,
                                  QList<PreguntaBasePtr> &templateCuestionario2daConsulta,
                                  QObject *parent) : QObject(parent)
 {
     _persona = persona;
     _antecedentes = templateAntecedentes;
-    _testKinesiologico = templateTestKinesiologico;
+    _testKinesiologico1erConsulta = templateTestKinesiologico1erConsulta;
+    _testKinesiologico2daConsulta = templateTestKinesiologico2daConsulta;
     _cuestionario1erConsulta = templateCuestionario1erConsulta;
     _cuestionario2daConsulta = templateCuestionario2daConsulta;
     _fechaPrimerConsulta = QDate();
@@ -24,7 +26,6 @@ HistoriaClinica::HistoriaClinica(PersonaPtr persona,
 
 HistoriaClinica::HistoriaClinica(mongo::BSONObj &obj, QObject *parent) : QObject(parent)
 {
-    //qDebug() << QString(obj.jsonString().c_str());
     mongo::BSONObj p = obj["persona"].Obj();
     _persona = PersonaPtr(new Persona(p));
 
@@ -43,7 +44,15 @@ HistoriaClinica::HistoriaClinica(mongo::BSONObj &obj, QObject *parent) : QObject
         arr = obj["testKinesiologico"].Obj();
         elements.clear();
         arr.elems(elements);
-        fromArrayBson(elements, _testKinesiologico);
+        fromArrayBson(elements, _testKinesiologico1erConsulta);
+    }
+
+    if (obj.hasField("testKinesiologico2daConsulta"))
+    {
+        arr = obj["testKinesiologico2daConsulta"].Obj();
+        elements.clear();
+        arr.elems(elements);
+        fromArrayBson(elements, _testKinesiologico2daConsulta);
     }
 
     arr = obj["cuestionario1erConsulta"].Obj();
@@ -90,9 +99,14 @@ QList<PreguntaBasePtr>& HistoriaClinica::antecedentes()
     return _antecedentes;
 }
 
-QList<PreguntaBasePtr>& HistoriaClinica::testKinesiologico()
+QList<PreguntaBasePtr>& HistoriaClinica::testKinesiologico1erConsulta()
 {
-    return _testKinesiologico;
+    return _testKinesiologico1erConsulta;
+}
+
+QList<PreguntaBasePtr> &HistoriaClinica::testKinesiologico2darConsulta()
+{
+    return _testKinesiologico2daConsulta;
 }
 
 QList<PreguntaBasePtr> &HistoriaClinica::cuestionario1erConsulta()
@@ -128,7 +142,8 @@ mongo::BSONObj HistoriaClinica::toBson()
                   << "FechaPrimerConsulta" << (_fechaPrimerConsulta.isValid() ?  _fechaPrimerConsulta.toJulianDay() : -1)
                   << "FechaSegundaConsulta" << (_fechaSegundaConsulta.isValid() ? _fechaSegundaConsulta.toJulianDay() : -1)
                   << "antecedentes" << arrayBson(_antecedentes)
-                  << "testKinesiologico" << arrayBson(_testKinesiologico)
+                  << "testKinesiologico" << arrayBson(_testKinesiologico1erConsulta)
+                  << "testKinesiologico2daConsulta" << arrayBson(_testKinesiologico2daConsulta)
                   << "cuestionario1erConsulta" << arrayBson(_cuestionario1erConsulta)
                   << "cuestionario2daConsulta" << arrayBson(_cuestionario2daConsulta)
                   << "numeroPaciente" << _numeroPaciente.toStdString());
@@ -148,11 +163,9 @@ mongo::BSONObj HistoriaClinica::arrayBson(QList<PreguntaBasePtr> list)
 void HistoriaClinica::fromArrayBson(std::vector<mongo::BSONElement> &arr, QList<PreguntaBasePtr> &list)
 {
     list.clear();
-    //qDebug() << arr.size();
     for(uint i = 0; i < arr.size(); ++i)
     {
         mongo::BSONObj obj = arr[i].Obj();
-        //qDebug() << obj.jsonString().c_str();
         list.append(Factory::crearPregunta(obj, true));
     }
 }
@@ -179,7 +192,8 @@ QString HistoriaClinica::toHtml()
     s += "</tr>";
     s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(_persona->toHtml());
     s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(html(_antecedentes, 3));
-    s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(html(_testKinesiologico, 3));
+    s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(html(_testKinesiologico1erConsulta, 3));
+    s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(html(_testKinesiologico2daConsulta, 3));
     s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(html(_cuestionario1erConsulta, 3));
     s += QString("<tr><td colspan=\"3\">%1</td></tr>").arg(html(_cuestionario2daConsulta, 3));
 

@@ -32,10 +32,10 @@ void WdgtCombo::setValue(const QString &newValue)
 
 void WdgtCombo::setNotes(const QString &newNote)
 {
-    ui->txtNotes->setText(newNote);
+    ui->txtNotes->setPlainText(newNote);
 }
 
 QString WdgtCombo::notes() const
 {
-    return ui->txtNotes->text();
+    return ui->txtNotes->toPlainText();
 }

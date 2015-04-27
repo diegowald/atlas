@@ -21,10 +21,10 @@ void WdgtWithLabel::addWidget(const QString &label, QWidget *widget)
 
 void WdgtWithLabel::setNotes(const QString &newNote)
 {
-    ui->txtNotes->setText(newNote);
+    ui->txtNotes->setPlainText(newNote);
 }
 
 QString WdgtWithLabel::notes() const
 {
-    return ui->txtNotes->text();
+    return ui->txtNotes->toPlainText();
 }

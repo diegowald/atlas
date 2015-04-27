@@ -82,7 +82,7 @@
     <widget class="QSpinBox" name="spinEdad"/>
    </item>
    <item row="6" column="0" colspan="7">
-    <widget class="QTextEdit" name="txtNotas">
+    <widget class="ColorizedTextEdit" name="txtNotas">
      <property name="placeholderText">
       <string>Notas</string>
      </property>
@@ -175,6 +175,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ColorizedTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header location="global">widgets/colorizedtextedit.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>txtNombre</tabstop>
   <tabstop>txtDomicilio</tabstop>

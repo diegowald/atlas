@@ -11,6 +11,7 @@
 #endif
 
 #include <mongo/client/dbclient.h>
+#include "util/resaltadortexto.h"
 
 
 namespace Ui {
@@ -37,6 +38,7 @@ private:
     Ui::WidgetPaciente *ui;
     PersonaPtr _persona;
     mongo::OID _idHistoria;
+    ResaltadorTexto *_resaltador;
 
     bool _dniUnico;
 };

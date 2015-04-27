@@ -22,7 +22,6 @@ public:
 
     virtual QWidget *widget(bool includeLabel);
     virtual QWidget *widget() = 0;
-    //virtual QString respuesta() = 0;
     virtual PreguntaBasePtr clone() = 0;
 
     virtual void applyChanges() = 0;

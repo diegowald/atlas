@@ -11,6 +11,7 @@ WidgetPaciente::WidgetPaciente(QWidget *parent) :
 {
     ui->setupUi(this);
     _dniUnico = true;
+    _resaltador = new ResaltadorTexto(ui->txtNotas->document());
 }
 
 WidgetPaciente::~WidgetPaciente()

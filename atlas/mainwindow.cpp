@@ -8,7 +8,6 @@
 #include <mongo/db/json.h>
 #include "model/historiaclinica.h"
 
-//#include <auto_ptr.h>
 #include "model/persona.h"
 #include "dialogs/dlglocalips.h"
 #include <QDebug>
@@ -23,6 +22,9 @@
 
 // Save
 #include <QFile>
+
+// Coloring
+#include "util/resaltadortexto.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -218,8 +220,10 @@ void MainWindow::print(QPrinter *printer)
     if (0 < _html.length())
     {
         QTextDocument textDoc;
+        ResaltadorTexto resaltador(&textDoc);
         textDoc.setHtml(_html);
         textDoc.print(printer);
+        (void)resaltador;
     }
 }
 
@@ -234,7 +238,6 @@ void MainWindow::on_actionVista_PreviaHistoriaClinica_triggered()
         QTextStream stream(&file);
         stream << _html;
         file.close();
-        //QPrinter printer(QPrinter::HighResolution);
         QPrinter printer;
         QPrintPreviewDialog dlg(&printer, this);
         connect (&dlg, SIGNAL(paintRequested(QPrinter*)), this, SLOT(print(QPrinter*)));

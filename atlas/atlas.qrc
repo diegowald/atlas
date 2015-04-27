@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="blue">glyphicons_100_Blue.png</file>
+        <file alias="normal">glyphicons_100_font.png</file>
+        <file alias="green">glyphicons_100_Green.png</file>
+        <file alias="red">glyphicons_100_Red.png</file>
+        <file alias="bold">glyphicons_102_bold.png</file>
+        <file alias="underline">glyphicons_103_text_underline.png</file>
+    </qresource>
+</RCC>

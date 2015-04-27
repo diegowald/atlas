@@ -48,10 +48,10 @@ void WdgtComboDoble::setValue2(const QString &newValue)
 
 void WdgtComboDoble::setNotes(const QString &newNote)
 {
-    ui->txtNotes->setText(newNote);
+    ui->txtNotes->setPlainText(newNote);
 }
 
 QString WdgtComboDoble::notes() const
 {
-    return ui->txtNotes->text();
+    return ui->txtNotes->toPlainText();
 }
