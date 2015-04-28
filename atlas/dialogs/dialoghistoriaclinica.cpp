@@ -72,10 +72,17 @@ void DialogHistoriaClinica::setData(HistoriaClinicaPtr historia, AlarmaPtr alarm
                          ui->form1Kinesio1erConsulta,
                          ui->form2Kinesio1erConsulta,
                          ui->form3Kinesio1erConsulta);
-    setTestKinesiologico(historia->testKinesiologico2darConsulta(),
-                         ui->form1Kinesio2daConsulta,
-                         ui->form2Kinesio2daConsulta,
-                         ui->form3Kinesio2daConsulta);
+    if (0 < historia->testKinesiologico2darConsulta().count())
+    {
+        setTestKinesiologico(historia->testKinesiologico2darConsulta(),
+                             ui->form1Kinesio2daConsulta,
+                             ui->form2Kinesio2daConsulta,
+                             ui->form3Kinesio2daConsulta);
+    }
+    else
+    {
+        ui->groupTestKinesiologico2daConsulta->setVisible(false);
+    }
     setCuestionario(historia->cuestionario1erConsulta(), ui->gridPrimerConsulta);
     setCuestionario(historia->cuestionario2daConsulta(), ui->gridSegundaConsulta);
     _historia = historia;

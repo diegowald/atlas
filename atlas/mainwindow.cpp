@@ -83,6 +83,13 @@ void MainWindow::on_pushButton_released()
             queryString += ", ";
         queryString += QString("'persona.dni' : \"%1\"").arg(ui->txtDNI->text().trimmed());
     }
+    if (ui->txtLocalidad->text().trimmed().length() > 0)
+    {
+        if (queryString.length() > 0)
+            queryString += ", ";
+        //queryString += QString("'persona.localidad' : { $regex : /^%1/i }").arg(ui->txtLocalidad->text().trimmed());
+        queryString += QString("'persona.localidad' :  /^%1/i ").arg(ui->txtLocalidad->text().trimmed());
+    }
     if (ui->radioPrimerConsulta->isChecked())
     {
         if (queryString.length() > 0)
@@ -91,6 +98,7 @@ void MainWindow::on_pushButton_released()
     }
     queryString = "{ " + queryString + " }";
 
+    qDebug() << queryString;
     _historias = dbManager::instance()->historias(queryString);
     fillView();
 }

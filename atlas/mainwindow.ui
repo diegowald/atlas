@@ -21,30 +21,34 @@
        <number>2</number>
       </property>
       <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
+       <widget class="QLineEdit" name="txtNombre">
+        <property name="placeholderText">
          <string>Nombre</string>
         </property>
-        <property name="buddy">
-         <cstring>txtNombre</cstring>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="txtNombre"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
+       <widget class="QLineEdit" name="txtDNI">
+        <property name="placeholderText">
          <string>DNI</string>
         </property>
-        <property name="buddy">
-         <cstring>txtDNI</cstring>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="txtDNI"/>
+       <widget class="QLineEdit" name="txtLocalidad">
+        <property name="placeholderText">
+         <string>Localidad</string>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="radioPrimerConsulta">
@@ -242,8 +246,12 @@
  <tabstops>
   <tabstop>txtNombre</tabstop>
   <tabstop>txtDNI</tabstop>
+  <tabstop>txtLocalidad</tabstop>
+  <tabstop>radioPrimerConsulta</tabstop>
+  <tabstop>radioTodos</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>tablePacientes</tabstop>
+  <tabstop>tableAlarmas</tabstop>
  </tabstops>
  <resources/>
  <connections/>
