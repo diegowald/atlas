@@ -12,8 +12,28 @@ Persona::Persona(mongo::BSONObj &persona, QObject *parent)
     _localidad = persona["localidad"].String().c_str();
     _telefonos = persona["telefonos"].String().c_str();
     _email = persona["email"].String().c_str();
-    _fechaNacimiento = QDate::fromJulianDay(persona["fechaNacimiento"].Long());
-    _edad = persona["edad"].Int();
+
+
+    mongo::BSONType t = persona["fechaNacimiento"].type();
+
+    switch (t)
+    {
+    case mongo::NumberInt:
+        _fechaNacimiento = QDate::fromJulianDay((long) persona["fechaNacimiento"].Int());
+        break;
+    case mongo::NumberDouble:
+        _fechaNacimiento = QDate::fromJulianDay((long) persona["fechaNacimiento"].Double());
+        break;
+    case mongo::NumberLong:
+        _fechaNacimiento = QDate::fromJulianDay(persona["fechaNacimiento"].Long());
+        break;
+    default:
+        break;
+    }
+    _edad = persona["edad"].type() == mongo::NumberDouble ?
+                (int) persona["edad"].Double()
+            : persona["edad"].Int();
+
     _ocupacion = persona["ocupacion"].String().c_str();
     _comoSeEntero = persona["comoSeEntero"].String().c_str();
     _notas = persona["notas"].String().c_str();

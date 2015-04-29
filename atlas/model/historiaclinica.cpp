@@ -29,9 +29,41 @@ HistoriaClinica::HistoriaClinica(mongo::BSONObj &obj, QObject *parent) : QObject
     mongo::BSONObj p = obj["persona"].Obj();
     _persona = PersonaPtr(new Persona(p));
 
-    long fecha = obj["FechaPrimerConsulta"].Long();
+    mongo::BSONType t = obj["FechaPrimerConsulta"].type();
+
+    long fecha = -1;
+    switch(t)
+    {
+        case mongo::NumberInt:
+            fecha = (long) obj["FechaPrimerConsulta"].Int();
+            break;
+        case mongo::NumberDouble:
+            fecha = (long) obj["FechaPrimerConsulta"].Double();
+            break;
+        case mongo::NumberLong:
+            fecha = obj["FechaPrimerConsulta"].Long();
+            break;
+        default:
+            break;
+    }
+
     _fechaPrimerConsulta = (fecha == -1) ? QDate() : QDate::fromJulianDay(fecha);
-    fecha = obj["FechaSegundaConsulta"].Long();
+
+    t = obj["FechaSegundaConsulta"].type();
+    switch(t)
+    {
+        case mongo::NumberInt:
+            fecha = (long) obj["FechaSegundaConsulta"].Int();
+            break;
+        case mongo::NumberDouble:
+            fecha = (long) obj["FechaSegundaConsulta"].Double();
+            break;
+        case mongo::NumberLong:
+            fecha = obj["FechaSegundaConsulta"].Long();
+            break;
+        default:
+            break;
+    }
     _fechaSegundaConsulta = (fecha == -1) ? QDate() : QDate::fromJulianDay(fecha);
 
     mongo::BSONObj arr = obj["antecedentes"].Obj();
