@@ -53,11 +53,7 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
     if (dlg.exec() == QDialog::Accepted)
     {
         dlg.applyData();
-        for (int i = 0; i < 3000; ++i)
-        {
-            dbManager::instance()->insertHistoria(historia);
-            qDebug() << "Registro " << i << " insertado.";
-        }
+        dbManager::instance()->insertHistoria(historia);
         AlarmaPtr alarma = dlg.alarma();
         if (!alarma.isNull())
         {

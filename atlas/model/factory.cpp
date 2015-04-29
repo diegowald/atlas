@@ -27,6 +27,7 @@ HistoriaClinicaPtr Factory::crearNuevaHistoriaClinica()
     QList<PreguntaBasePtr> antecedentes = cloneAntecedentes();
     QList<PreguntaBasePtr> testKinesiologico1erConsulta = cloneTestKinesiologico();
     QList<PreguntaBasePtr> testKinesiologico2daConsulta = cloneTestKinesiologico();
+    testKinesiologico2daConsulta.clear();
     QList<PreguntaBasePtr> cuestionario1erConsulta = cloneCuestionario();
     QList<PreguntaBasePtr> cuestionario2daConsulta = cloneCuestionario();
 

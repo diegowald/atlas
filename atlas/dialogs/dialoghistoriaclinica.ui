@@ -122,7 +122,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
@@ -262,8 +262,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>376</width>
-                 <height>390</height>
+                 <width>381</width>
+                 <height>408</height>
                 </rect>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -364,8 +364,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>375</width>
-                 <height>390</height>
+                 <width>380</width>
+                 <height>408</height>
                 </rect>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_8">
