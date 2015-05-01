@@ -95,7 +95,7 @@ void Factory::cargarAntecedentes()
     _templateAntecedentes.append(PreguntaCheckBoxPtr(new PreguntaCheckBox("Oncologicos", "", true)));
     _templateAntecedentes.append(PreguntaCheckBoxPtr(new PreguntaCheckBox("Circulatorios", "", true)));
     _templateAntecedentes.append(PreguntaCheckBoxPtr(new PreguntaCheckBox("Quirurgicos", "", true)));
-    _templateAntecedentes.append(PreguntaComboPtr(new PreguntaCombo("Nacio por", "", QStringList() << "Parto Normal" << "Cesarea", true)));
+    _templateAntecedentes.append(PreguntaComboPtr(new PreguntaCombo("Nacio por", "", QStringList() << "" << "Parto Normal" << "Cesarea", true)));
     _templateAntecedentes.append(PreguntaCheckBoxPtr(new PreguntaCheckBox("Caidas, golpes intensos, accidentes, fracturas?", "", true)));
     _templateAntecedentes.append(PreguntaTextoPtr(new PreguntaTexto("Tratamiento Medico?", "", true)));
     _templateAntecedentes.append(PreguntaTextoPtr(new PreguntaTexto("Como ha estado animicamente", "", true)));
@@ -126,48 +126,48 @@ void Factory::cargarCuestionario()
     _templateCuestionario.clear();
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Cuello", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Espalda", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Hombro", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Brazo", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Codo", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Muñeca", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Manos", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Lumbares", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Piernas", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Rodillas", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Pies", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
                                                                             << PreguntaCheckBoxPtr(new PreguntaCheckBox("Plantillas", "", false))
                                                                             << PreguntaCheckBoxPtr(new PreguntaCheckBox("Juanetes", "", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Hernia de disco", "",
@@ -190,35 +190,35 @@ void Factory::cargarCuestionario()
 
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Dolor de cabeza", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierda", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecha", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierda", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecha", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
 
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Mandíbula", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierda", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecha", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierda", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecha", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
 
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Oídos", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierda", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecha", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Zumbidos", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Puntadas", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierda", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecha", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Zumbidos", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Puntadas", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
 
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Mareos", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Mareos", "", QStringList() << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "Ocasional" << "Frecuente" << "Continuo", true)), false)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Mareos", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", true)), false)));
 
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Desvanecimientos", "",
                                                                             QList<PreguntaBasePtr>()
-                                                                            << PreguntaComboPtr(new PreguntaCombo("Desmayos", "", QStringList() << "Nunca" << "Ocasional" << "Frecuente", true)), false)));
+                                                                            << PreguntaComboPtr(new PreguntaCombo("Desmayos", "", QStringList() << "" << "Nunca" << "Ocasional" << "Frecuente", true)), false)));
 
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Descanso", "",
                                                                             QList<PreguntaBasePtr>()
                                                                             << PreguntaSiNoPtr(new PreguntaSiNo("Cansancio en el día?", "", false))
                                                                             << PreguntaSiNoPtr(new PreguntaSiNo("Le cuesta dormir?", "", false))
                                                                             << PreguntaSiNoPtr(new PreguntaSiNo("Sueño liviano?", "", false))
-                                                                            << PreguntaComboPtr(new PreguntaCombo("Se levanta", "", QStringList() << "Cansado" << "Descansado", false)), true)));
+                                                                            << PreguntaComboPtr(new PreguntaCombo("Se levanta", "", QStringList() << "" << "Cansado" << "Descansado", false)), true)));
 }
 
 PreguntaBasePtr Factory::crearPregunta(mongo::BSONObj &obj, bool showNotes)
