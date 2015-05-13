@@ -92,3 +92,23 @@ QString PreguntaComboDoble::toHtml(bool incluirNotas)
     s += "</table>";
     return s;
 }
+
+QStringList PreguntaComboDoble::opciones1()
+{
+    return _lista1;
+}
+
+QStringList PreguntaComboDoble::opciones2()
+{
+    return _lista2;
+}
+
+QString PreguntaComboDoble::option1Selected() const
+{
+    return _selected1;
+}
+
+QString PreguntaComboDoble::option2Selected() const
+{
+    return _selected2;
+}

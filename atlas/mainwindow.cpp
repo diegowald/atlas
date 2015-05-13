@@ -26,6 +26,10 @@
 // Coloring
 #include "util/resaltadortexto.h"
 
+// Reporting
+#include "dialogs/dlgreportepatologiasdetectadas.h"
+#include "reporting/reports.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -255,4 +259,20 @@ void MainWindow::on_tablePacientes_itemSelectionChanged()
     _idHistoria = ui->tablePacientes->item(ui->tablePacientes->currentRow(), 0)->data(Qt::UserRole).toString();
     ui->actionImprimir_Historia_Clinica->setEnabled(true);
     ui->actionVista_PreviaHistoriaClinica->setEnabled(true);
+}
+
+void MainWindow::on_actionContabilizacion_Patologias_entre_Fechas_triggered()
+{
+    DlgReportePatologiasDetectadas dlg(this);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        QDate dateFrom = dlg.dateFrom();
+        QDate dateTo = dlg.dateTo();
+        bool filterOn1stAppt = dlg.filterOn1stAppt();
+
+        Reports rpt;
+        QDialog *dlgReporte = rpt.runContabilizacionPatologiasEntreFechas(dateFrom, dateTo, filterOn1stAppt, this);
+        dlgReporte->exec();
+        dlgReporte->deleteLater();
+    }
 }

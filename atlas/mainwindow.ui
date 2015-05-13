@@ -176,6 +176,7 @@
      <string>Análisis</string>
     </property>
     <addaction name="actionAnalisis"/>
+    <addaction name="actionContabilizacion_Patologias_entre_Fechas"/>
    </widget>
    <widget class="QMenu" name="menuOpciones">
     <property name="title">
@@ -239,6 +240,11 @@
    </property>
    <property name="toolTip">
     <string>Presneta vista previa de impresino de historia clinica</string>
+   </property>
+  </action>
+  <action name="actionContabilizacion_Patologias_entre_Fechas">
+   <property name="text">
+    <string>Contabilizacion Patologias entre Fechas</string>
    </property>
   </action>
  </widget>

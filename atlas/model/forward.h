@@ -17,5 +17,15 @@ CONSTRUCT(PreguntaCompuesta)
 CONSTRUCT(PreguntaSiNo)
 CONSTRUCT(PreguntaTexto)
 CONSTRUCT(Alarma)
+// Reportes
+CONSTRUCT(ReporteBase)
+CONSTRUCT(ReportePreguntaCheckBox)
+CONSTRUCT(ReportePreguntaCombo)
+CONSTRUCT(ReportePreguntaComboDoble)
+CONSTRUCT(ReportePreguntaCompuesta)
+CONSTRUCT(ReportePreguntaSiNo)
+CONSTRUCT(ReportePreguntaTexto)
+CONSTRUCT(Sumarizador)
+
 #endif // FORWARD
 

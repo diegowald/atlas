@@ -60,3 +60,8 @@ QString PreguntaTexto::toHtml(bool incluirNotas)
     s += "</table>";
     return s;
 }
+
+QString PreguntaTexto::text() const
+{
+    return _text;
+}

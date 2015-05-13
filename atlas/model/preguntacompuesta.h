@@ -23,6 +23,9 @@ public:
     virtual QString toHtml();
     virtual QString toHtml(bool incluirNotas);
 
+    QList<PreguntaBasePtr> subPreguntas();
+    bool isChecked() const;
+
 private:
     QList<PreguntaBasePtr> _subPreguntas;
     bool _checked;

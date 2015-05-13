@@ -33,6 +33,8 @@ public:
     virtual QString toHtml() = 0;
     virtual QString toHtml(bool incluirNotas) = 0;
 
+    QString type() const { return _type; }
+
 private:
     QWidget* widgetWithLabel();
 

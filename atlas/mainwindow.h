@@ -47,6 +47,8 @@ private slots:
 
     void on_tablePacientes_itemSelectionChanged();
 
+    void on_actionContabilizacion_Patologias_entre_Fechas_triggered();
+
 private:
     Ui::MainWindow *ui;
     Factory* _factory;

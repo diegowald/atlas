@@ -20,6 +20,8 @@ public:
 
     virtual QString toHtml();
     virtual QString toHtml(bool incluirNotas);
+
+    QString text() const;
 private:
     QString _text;
     WdgtTexto *_widget;

@@ -20,6 +20,8 @@ public:
 
     virtual QString toHtml();
     virtual QString toHtml(bool incluirNotas);
+
+    bool isYes() const;
 private:
     bool _value;
     WdgtSiNo *_widget;

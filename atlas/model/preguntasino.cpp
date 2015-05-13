@@ -57,3 +57,8 @@ QString PreguntaSiNo::toHtml(bool incluirNotas)
     s += "</table>";
     return s;
 }
+
+bool PreguntaSiNo::isYes() const
+{
+    return _value;
+}

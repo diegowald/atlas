@@ -57,3 +57,8 @@ QString PreguntaCheckBox::toHtml(bool incluirNotas)
     s += "</table>";
     return s;
 }
+
+bool PreguntaCheckBox::isChecked() const
+{
+    return _checked;
+}

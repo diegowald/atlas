@@ -22,6 +22,8 @@ public:
 
     virtual QString toHtml();
     virtual QString toHtml(bool incluirNotas);
+
+    bool isChecked() const;
 private:
     bool _checked;
     WdgtCheckBox *_widget;

@@ -20,6 +20,11 @@ public:
     virtual mongo::BSONObj value();
     virtual QString toHtml();
     virtual QString toHtml(bool incluirNotas);
+
+    QStringList opciones1();
+    QStringList opciones2();
+    QString option1Selected() const;
+    QString option2Selected() const;
 private:
     QStringList _lista1;
     QStringList _lista2;

@@ -10,6 +10,15 @@
 #include "preguntatexto.h"
 #include "alarma.h"
 
+// Reporting
+#include "../reporting/reportebase.h"
+#include "../reporting/reportepreguntacheckbox.h"
+#include "../reporting/reportepreguntacombo.h"
+#include "../reporting/reportepreguntacombodoble.h"
+#include "../reporting/reportepreguntacompuesta.h"
+#include "../reporting/reportepreguntasino.h"
+#include "../reporting/reportepreguntatexto.h"
+
 Factory::Factory(QObject *parent) : QObject(parent)
 {
     cargarAntecedentes();
@@ -253,6 +262,37 @@ PreguntaBasePtr Factory::crearPregunta(mongo::BSONObj &obj, bool showNotes)
         preg = PreguntaTextoPtr(new PreguntaTexto(obj, showNotes));
     }
     return preg;
+}
+
+ReporteBasePtr Factory::crearDatoReporte(PreguntaBasePtr pregunta)
+{
+    QString type = pregunta->type();
+    ReporteBasePtr rpt;
+    if (type == "checkbox")
+    {
+        rpt = ReportePreguntaCheckBoxPtr(new ReportePreguntaCheckBox(qSharedPointerDynamicCast<PreguntaCheckBox>(pregunta)));
+    }
+    else if (type == "combo")
+    {
+        rpt = ReportePreguntaComboPtr(new ReportePreguntaCombo(qSharedPointerDynamicCast<PreguntaCombo>(pregunta)));
+    }
+    else if (type == "combodoble")
+    {
+        rpt = ReportePreguntaComboDoblePtr(new ReportePreguntaComboDoble(qSharedPointerDynamicCast<PreguntaComboDoble>(pregunta)));
+    }
+    else if (type == "compuesta")
+    {
+        rpt = ReportePreguntaCompuestaPtr(new ReportePreguntaCompuesta(qSharedPointerDynamicCast<PreguntaCompuesta>(pregunta)));
+    }
+    else if (type == "yesno")
+    {
+        rpt = ReportePreguntaSiNoPtr(new ReportePreguntaSiNo(qSharedPointerDynamicCast<PreguntaSiNo>(pregunta)));
+    }
+    else if (type == "text")
+    {
+        rpt = ReportePreguntaTextoPtr(new ReportePreguntaTexto(qSharedPointerDynamicCast<PreguntaTexto>(pregunta)));
+    }
+    return rpt;
 }
 
 AlarmaPtr Factory::crearAlarma(mongo::BSONObj &obj)

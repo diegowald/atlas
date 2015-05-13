@@ -88,3 +88,14 @@ QString PreguntaCompuesta::toHtml(bool incluirNotas)
     s += "</table>";
     return s;
 }
+
+
+QList<PreguntaBasePtr> PreguntaCompuesta::subPreguntas()
+{
+    return _subPreguntas;
+}
+
+bool PreguntaCompuesta::isChecked() const
+{
+    return _checked;
+}

@@ -63,7 +63,18 @@ SOURCES += main.cpp\
     dialogs/dialogdbserver.cpp \
     model/htmlable.cpp \
     util/resaltadortexto.cpp \
-    widgets/colorizedtextedit.cpp
+    widgets/colorizedtextedit.cpp \
+    dialogs/dlgreportepatologiasdetectadas.cpp \
+    reporting/reports.cpp \
+    reporting/reportebase.cpp \
+    reporting/reportepreguntacheckbox.cpp \
+    reporting/reportepreguntacombo.cpp \
+    reporting/reportepreguntacombodoble.cpp \
+    reporting/reportepreguntacompuesta.cpp \
+    reporting/reportepreguntasino.cpp \
+    reporting/reportepreguntatexto.cpp \
+    reporting/sumarizador.cpp \
+    dialogs/dlgreporte.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -96,7 +107,18 @@ HEADERS  += mainwindow.h \
     dialogs/dialogdbserver.h \
     model/htmlable.h \
     util/resaltadortexto.h \
-    widgets/colorizedtextedit.h
+    widgets/colorizedtextedit.h \
+    dialogs/dlgreportepatologiasdetectadas.h \
+    reporting/reports.h \
+    reporting/reportebase.h \
+    reporting/reportepreguntacheckbox.h \
+    reporting/reportepreguntacombo.h \
+    reporting/reportepreguntacombodoble.h \
+    reporting/reportepreguntacompuesta.h \
+    reporting/reportepreguntasino.h \
+    reporting/reportepreguntatexto.h \
+    reporting/sumarizador.h \
+    dialogs/dlgreporte.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \
@@ -112,7 +134,9 @@ FORMS    += mainwindow.ui \
     dialogs/dlglocalips.ui \
     dialogs/dlgsetalarma.ui \
     dialogs/dlgedittooltip.ui \
-    dialogs/dialogdbserver.ui
+    dialogs/dialogdbserver.ui \
+    dialogs/dlgreportepatologiasdetectadas.ui \
+    dialogs/dlgreporte.ui
 
 win32:QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
 win32:DEFINES+="WINVER=0x0501"

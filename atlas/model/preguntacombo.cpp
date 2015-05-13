@@ -71,3 +71,13 @@ QString PreguntaCombo::toHtml(bool incluirNotas)
     s += "</table>";
     return s;
 }
+
+QString PreguntaCombo::optionSelected() const
+{
+    return _selectedValue;
+}
+
+QStringList PreguntaCombo::opciones()
+{
+    return _listaValores;
+}
