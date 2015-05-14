@@ -26,10 +26,10 @@ void ReportePreguntaCheckBox::add(PreguntaBasePtr pregunta)
 QString ReportePreguntaCheckBox::stats(int total)
 {
     QString html = "Cantidad de preguntas: " + QString::number(_counter->count())
-            + " -> " + QString::number(_counter->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_counter->count() / total * 100.0) + "%<br>";
     html += "Seleccionado: " + QString::number(_checked->count())
-            + " -> " + QString::number(_checked->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_checked->count() / total * 100.0) + "%<br>";
     html += "No seleccionado: " + QString::number(_unchecked->count())
-            + " -> " + QString::number(_unchecked->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_unchecked->count() / total * 100.0) + "%<br>";
     return html;
 }

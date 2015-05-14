@@ -26,10 +26,10 @@ void ReportePreguntaTexto::add(PreguntaBasePtr pregunta)
 QString ReportePreguntaTexto::stats(int total)
 {
     QString html = "Cantidad de preguntas: " + QString::number(_counter->count())
-            + " -> " + QString::number(_counter->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_counter->count() / total * 100.0) + "%<br>";
     html += "Con Texto introducido: " + QString::number(_counterNoVacios->count())
-            + " -> " + QString::number(_counterNoVacios->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_counterNoVacios->count() / total * 100.0) + "%<br>";
     html += "Sin texts: " + QString::number(_counterVacios->count())
-            + " -> " + QString::number(_counterVacios->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_counterVacios->count() / total * 100.0) + "%<br>";
     return html;
 }

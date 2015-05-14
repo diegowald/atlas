@@ -36,12 +36,12 @@ void ReportePreguntaCombo::add(PreguntaBasePtr pregunta)
 QString ReportePreguntaCombo::stats(int total)
 {
     QString html = "Cantidad de preguntas: " + QString::number(_counter->count())
-            + " -> " + QString::number(_counter->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_counter->count() / total * 100.0) + "%<br>";
     foreach(QString key, _opciones.keys())
     {
         SumarizadorPtr ctr = _opciones[key];
         html += key + ": " + QString::number(ctr->count())
-                + " -> " + QString::number(ctr->count() / total * 100) + "%<br>";
+                + " -> " + QString::number((double)ctr->count() / total * 100.0) + "%<br>";
     }
     return html;
 }

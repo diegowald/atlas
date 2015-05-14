@@ -45,7 +45,7 @@ void ReportePreguntaCompuesta::add(PreguntaBasePtr pregunta)
 QString ReportePreguntaCompuesta::stats(int total)
 {
     QString html = "Cantidad de preguntas: " + QString::number(_counter->count())
-            + " -> " + QString::number(_counter->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_counter->count() / total * 100.0) + "%<br>";
     foreach(QString key, _subReportes.keys())
     {
         ReporteBasePtr rpt = _subReportes[key];

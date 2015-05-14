@@ -41,14 +41,14 @@ void ReportePreguntaComboDoble::add(PreguntaBasePtr pregunta)
 QString ReportePreguntaComboDoble::stats(int total)
 {
     QString html = "Cantidad de preguntas: " + QString::number(_counter->count())
-            + " -> " + QString::number(_counter->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_counter->count() / total * 100.0) + "%<br>";
     foreach(QString key, _counterOpciones.keys())
     {
         foreach(QString key2, _counterOpciones[key].keys())
         {
             SumarizadorPtr ctr = _counterOpciones[key][key2];
             html += key + ", " + key2 + ": " + QString::number(ctr->count())
-                    + " -> " + QString::number(ctr->count() / total * 100) + "%<br>";
+                    + " -> " + QString::number((double)ctr->count() / total * 100.0) + "%<br>";
         }
     }
     return html;

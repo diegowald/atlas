@@ -271,6 +271,7 @@ void MainWindow::on_actionContabilizacion_Patologias_entre_Fechas_triggered()
         bool filterOn1stAppt = dlg.filterOn1stAppt();
 
         Reports rpt;
+        ui->statusBar->showMessage("Generando reporte", 3000);
         QDialog *dlgReporte = rpt.runContabilizacionPatologiasEntreFechas(dateFrom, dateTo, filterOn1stAppt, this);
         dlgReporte->exec();
         dlgReporte->deleteLater();

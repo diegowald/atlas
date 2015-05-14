@@ -29,10 +29,10 @@ void ReportePreguntaSiNo::add(PreguntaBasePtr pregunta)
 QString ReportePreguntaSiNo::stats(int total)
 {
     QString html = "Cantidad de preguntas: " + QString::number(_counter->count())
-            + " -> " + QString::number(_counter->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_counter->count() / total * 100.0) + "%<br>";
     html += "Si: " + QString::number(_counterYes->count())
-            + " -> " + QString::number(_counterYes->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_counterYes->count() / total * 100.0) + "%<br>";
     html += "No: " + QString::number(_counterNo->count())
-            + " -> " + QString::number(_counterNo->count() / total * 100) + "%<br>";
+            + " -> " + QString::number((double)_counterNo->count() / total * 100.0) + "%<br>";
     return html;
 }
