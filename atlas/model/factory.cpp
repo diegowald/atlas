@@ -187,8 +187,11 @@ void Factory::cargarCuestionario()
                                                                             << PreguntaComboDoblePtr(new PreguntaComboDoble("Izquierdo", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
                                                                             << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
                                                                             << PreguntaCheckBoxPtr(new PreguntaCheckBox("Plantillas", "", false))
-                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Derecho", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)), true)));
-                                                                            //<< PreguntaCheckBoxPtr(new PreguntaCheckBox("Juanetes", "", false)), true)));
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Juanete Izq.", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false))
+                                                                            << PreguntaComboDoblePtr(new PreguntaComboDoble("Juanete Der.", "", QStringList() << "" << "Sin dolor" << "Leve" << "Moderado" << "Intenso", QStringList() << "" << "Ocasional" << "Frecuente" << "Continuo", false)),  true)));
+
+                                                                                                    //, true)));
+                                                                                //<< PreguntaCheckBoxPtr(new PreguntaCheckBox("Juanetes", "", false)), true)));
     _templateCuestionario.append(PreguntaCompuestaPtr(new PreguntaCompuesta("Hernia de disco", "",
                                                                                     QList<PreguntaBasePtr>()
                                                                                     << PreguntaCheckBoxPtr(new PreguntaCheckBox("Lumbar", "", false))
