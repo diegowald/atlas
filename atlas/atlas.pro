@@ -21,15 +21,23 @@ else:LIBS += -lboost_system
 
 win32:INCLUDEPATH += E:\boost_1_57_0
 
-win32:LIBS += -LF:\QtProjects\atlas\atlas\3rdparty\mongo\lib
+win32:INCLUDEPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\build\win32\32\dynamic-windows
+win32:DEPENDPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\build\win32\32\dynamic-windows
+win32:DEPENDPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\src
+win32:INCLUDEPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\src
+
+win32:LIBS += -LF:\QtProjects\mongo-cxx-driver-legacy-1.0.5\build\win32\32\dynamic-windows -lmongoclient
 else:LIBS += -L$$PWD/../../mongo-cxx-driver/build/linux2/use-system-boost/ -lmongoclient
 #LIBS += -L/home/diego/QtProjects/mongo-cxx-driver/build/linux2/use-system-boost -lmongoclient
 
-win32:INCLUDEPATH += 3rdparty/mongo/include
-else:INCLUDEPATH += $$PWD/../../mongo-cxx-driver/src
+#win32:INCLUDEPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\src
+#else:INCLUDEPATH += $$PWD/../../mongo-cxx-driver/src
 
-win32:DEPENDPATH += F:/QtProjects/atlas/atlas/3rdparty/mongo/include
+
+win32:DEPENDPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\src
 else:DEPENDPATH += $$PWD/../../mongo-cxx-driver/src
+
+
 
 
 SOURCES += main.cpp\
