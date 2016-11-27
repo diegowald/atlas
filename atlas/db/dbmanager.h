@@ -1,6 +1,5 @@
 #ifndef DBMANAGER_H
 #define DBMANAGER_H
-
 #include <QObject>
 #include "model/forward.h"
 
@@ -8,6 +7,7 @@
 #include <WinSock2.h>
 #include <Windows.h>
 #endif
+
 
 #include <mongo/client/dbclient.h>
 #include "model/factory.h"
@@ -63,5 +63,4 @@ private:
     QString _user;
     QString _password;
 };
-
 #endif // DBMANAGER_H
