@@ -6,11 +6,19 @@ PreguntaCheckBox::PreguntaCheckBox(const QString &label, const QString &nota, bo
     _checked = false;
 }
 
+#ifdef USEMONGO
 PreguntaCheckBox::PreguntaCheckBox(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
 {
     mongo::BSONObj value = obj["value"].Obj();
     _checked = value["checked"].Bool();
 }
+#else
+PreguntaCheckBox::PreguntaCheckBox(QJsonObject &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
+{
+    QJsonObject value = obj["value"].toObject();
+    _checked = value["checked"].toBool();
+}
+#endif
 
 PreguntaCheckBox::~PreguntaCheckBox()
 {
@@ -31,12 +39,20 @@ QWidget* PreguntaCheckBox::widget()
     return _widget;
 }
 
+#ifdef USEMONGO
 mongo::BSONObj PreguntaCheckBox::value()
 {
     mongo::BSONObj obj = BSON("checked" << _checked);
     return obj;
 }
-
+#else
+QJsonObject PreguntaCheckBox::value()
+{
+    QJsonObject obj;
+    obj["checked"] = _checked;
+    return obj;
+}
+#endif
 void PreguntaCheckBox::applyChanges()
 {
     _checked = _widget->value();

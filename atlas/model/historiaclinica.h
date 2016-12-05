@@ -14,8 +14,11 @@ public:
     explicit HistoriaClinica(PersonaPtr persona, QList<PreguntaBasePtr> &templateAntecedentes, QList<PreguntaBasePtr> &templateTestKinesiologico1erConsulta, QList<PreguntaBasePtr> &templateTestKinesiologico2daConsulta,
                              QList<PreguntaBasePtr> &templateCuestionario1erConsulta, QList<PreguntaBasePtr> &templateCuestionario2daConsulta,
                              QObject *parent = 0);
-
+#ifdef USEMONGO
     HistoriaClinica(mongo::BSONObj &obj, QObject *parent = 0);
+#else
+    HistoriaClinica(QJsonObject &obj, QObject *parent = 0);
+#endif
 
     ~HistoriaClinica();
 
@@ -29,19 +32,32 @@ public:
     QList<PreguntaBasePtr> &cuestionario1erConsulta();
     QList<PreguntaBasePtr> &cuestionario2daConsulta();
     QString idString();
+#ifdef USEMONGO
     mongo::OID id();
-
+#else
+    QString id();
+#endif
     void setFechaPrimerConsulta(QDate &date);
     void setFechaSegundaConsulta(QDate &date);
     void setNumeroPaciente(const QString &nro);
 
+#ifdef USEMONGO
     virtual mongo::BSONObj toBson();
+#else
+    virtual QJsonObject toJson();
+#endif
 
     virtual QString toHtml();
 
 private:
+#ifdef USEMONGO
     mongo::BSONObj arrayBson(QList<PreguntaBasePtr> list);
     void fromArrayBson(std::vector<mongo::BSONElement> &arr, QList<PreguntaBasePtr> &list);
+#else
+    QJsonArray arrayJson(QList<PreguntaBasePtr> list);
+    void fromArrayJson(QJsonArray &arr, QList<PreguntaBasePtr> &list);
+#endif
+
     QString html(QList<PreguntaBasePtr> &lista, int cantColumnas);
 signals:
 
@@ -56,7 +72,11 @@ private:
     QList<PreguntaBasePtr> _cuestionario1erConsulta;
     QList<PreguntaBasePtr> _cuestionario2daConsulta;
     QString _numeroPaciente;
+#ifdef USEMONGO
     mongo::OID _id;
+#else
+    QString _id;
+#endif
 };
 
 #endif // HISTORIACLINICA_H

@@ -10,7 +10,11 @@
 #include <Windows.h>
 #endif
 
+#ifdef USEMONGO
 #include <mongo/client/dbclient.h>
+#else
+#endif
+
 #include "util/resaltadortexto.h"
 
 
@@ -25,7 +29,11 @@ class WidgetPaciente : public QWidget
 public:
     explicit WidgetPaciente(QWidget *parent = 0);
     ~WidgetPaciente();
+#ifdef USEMONGO
     void setData(PersonaPtr persona, mongo::OID idHistoria);
+#else
+    void setData(PersonaPtr persona, const QString &idHistoria);
+#endif
     void applyData();
 
     bool esDNIUnico();
@@ -37,7 +45,11 @@ private slots:
 private:
     Ui::WidgetPaciente *ui;
     PersonaPtr _persona;
+#ifdef USEMONGO
     mongo::OID _idHistoria;
+#else
+    QString _idHistoria;
+#endif
     ResaltadorTexto *_resaltador;
 
     bool _dniUnico;

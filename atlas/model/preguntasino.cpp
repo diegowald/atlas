@@ -6,12 +6,19 @@ PreguntaSiNo::PreguntaSiNo(const QString &label, const QString &nota, bool showN
 
 }
 
+#ifdef USEMONGO
 PreguntaSiNo::PreguntaSiNo(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
 {
     mongo::BSONObj value = obj["value"].Obj();
     _value = value["value"].Bool();
 }
-
+#else
+PreguntaSiNo::PreguntaSiNo(QJsonObject &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
+{
+    QJsonObject value = obj["value"].toObject();
+    _value = value["value"].toBool();
+}
+#endif
 PreguntaSiNo::~PreguntaSiNo()
 {
 
@@ -31,11 +38,20 @@ QWidget* PreguntaSiNo::widget()
     return _widget;
 }
 
+#ifdef USEMONGO
 mongo::BSONObj PreguntaSiNo::value()
 {
     mongo::BSONObj obj = BSON("value" << _value);
     return obj;
 }
+#else
+QJsonObject PreguntaSiNo::value()
+{
+    QJsonObject obj;
+    obj["value"] = _value;
+    return obj;
+}
+#endif
 
 void PreguntaSiNo::applyChanges()
 {

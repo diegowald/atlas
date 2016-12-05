@@ -1,5 +1,6 @@
 #include "preguntacompuesta.h"
 #include "factory.h"
+#include <QJsonArray>
 
 PreguntaCompuesta::PreguntaCompuesta(const QString &label, const QString &nota, QList<PreguntaBasePtr> &subpreguntas, bool showNotes, QObject *parent) : PreguntaBase(label, nota, "compuesta", showNotes, parent)
 {
@@ -10,6 +11,7 @@ PreguntaCompuesta::PreguntaCompuesta(const QString &label, const QString &nota, 
     _checked = false;
 }
 
+#ifdef USEMONGO
 PreguntaCompuesta::PreguntaCompuesta(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
 {
     mongo::BSONObj o = obj["value"].Obj();
@@ -23,6 +25,19 @@ PreguntaCompuesta::PreguntaCompuesta(mongo::BSONObj &obj, bool showNotes, QObjec
     }
     _checked = o["checked"].Bool();
 }
+#else
+PreguntaCompuesta::PreguntaCompuesta(QJsonObject &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
+{
+    QJsonObject o = obj["value"].toObject();
+    QJsonArray arr = o["questions"].toArray();
+    for (int i = 0; i < arr.count(); ++i)
+    {
+        QJsonObject obj2 = arr[i].toObject();
+        _subPreguntas.append(Factory::crearPregunta(obj2, false));
+    }
+    _checked = o["checked"].toBool();
+}
+#endif
 
 PreguntaCompuesta::~PreguntaCompuesta()
 {
@@ -48,6 +63,7 @@ QWidget* PreguntaCompuesta::widget()
     return _widget;
 }
 
+#ifdef USEMONGO
 mongo::BSONObj PreguntaCompuesta::value()
 {
     mongo::BSONArrayBuilder builder;
@@ -59,6 +75,22 @@ mongo::BSONObj PreguntaCompuesta::value()
                               << "checked" << _checked);
     return obj;
 }
+#else
+QJsonObject PreguntaCompuesta::value()
+{
+    QJsonArray builder;
+    foreach (PreguntaBasePtr pregunta, _subPreguntas)
+    {
+        builder.append(pregunta->toJson());
+    }
+    QJsonObject obj;
+
+    obj["questions"] = builder;
+    obj["checked"] = _checked;
+
+    return obj;
+}
+#endif
 
 void PreguntaCompuesta::applyChanges()
 {

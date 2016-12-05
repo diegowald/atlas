@@ -1,6 +1,11 @@
 #include "alarma.h"
 #include "historiaclinica.h"
+
+#ifdef USEMONGO
 #include "db/dbmanager.h"
+#else
+#include "db/dbrestmanaget.h"
+#endif
 
 Alarma::Alarma(HistoriaClinicaPtr historia, QObject *parent) : QObject(parent)
 {
@@ -11,6 +16,7 @@ Alarma::Alarma(HistoriaClinicaPtr historia, QObject *parent) : QObject(parent)
     _realizado = false;
 }
 
+#ifdef USEMONGO
 Alarma::Alarma(mongo::BSONObj &obj, QObject *parent) : QObject(parent)
 {
     _idHistoria = obj["idHistoria"].OID();
@@ -21,6 +27,20 @@ Alarma::Alarma(mongo::BSONObj &obj, QObject *parent) : QObject(parent)
     _realizado = obj["realizado"].Bool();
     _id = obj["_id"].OID();
 }
+#else
+Alarma::Alarma(QJsonObject &obj, QObject *parent) : QObject(parent)
+{
+    _idHistoria = obj["idHistoria"].toObject()["$oid"].toString();
+    _nota = obj["nota"].toString();
+    _fechaCreacion = QDate::fromJulianDay(obj["fechaCreacion"].toInt());
+    _fechaAlarma = QDate::fromJulianDay(obj["fechaAlarma"].toInt());
+    _realizado = obj["realizado"].toBool();
+    _id = obj["_id"].toObject()["$oid"].toString();
+    connect(DBRestManager::instance(), &DBRestManager::historiaReturned,
+            this, &Alarma::on_historiaReturned);
+    DBRestManager::instance()->getHistoria(_idHistoria);
+}
+#endif
 
 Alarma::~Alarma()
 {
@@ -47,6 +67,7 @@ QDate Alarma::fechaAlarma() const
     return _fechaAlarma;
 }
 
+#ifdef USEMONGO
 mongo::BSONObj Alarma::toBson()
 {
     if (!_historiaClinica.isNull())
@@ -61,6 +82,25 @@ mongo::BSONObj Alarma::toBson()
                 << "realizado" << _realizado);
     return obj;
 }
+#else
+QJsonObject Alarma::toJson()
+{
+    if (!_historiaClinica.isNull())
+    {
+        _idHistoria = _historiaClinica->id();
+    }
+    QJsonObject obj;
+
+    QJsonObject oid;
+    oid["$oid"] = _idHistoria;
+    obj["idHistoria"] = oid;
+    obj["nota"] = _nota;
+    obj["fechaCreacion"] = _fechaCreacion.toJulianDay();
+    obj["fechaAlarma"] = _fechaAlarma.toJulianDay();
+    obj["realizado"] = _realizado;
+    return obj;
+}
+#endif
 
 void Alarma::setNota(const QString &value)
 {
@@ -77,14 +117,25 @@ void Alarma::setFechaAlarma(const QDate &value)
     _fechaAlarma = value;
 }
 
+#ifdef USEMONGO
 mongo::OID Alarma::id()
 {
     return _id;
 }
+#else
+QString Alarma::id()
+{
+    return _id;
+}
+#endif
 
 QString Alarma::idString()
 {
+#ifdef USEMONGO
     return QString::fromStdString(_id.toString());
+#else
+    return _id;
+#endif
 }
 
 bool Alarma::realizado() const
@@ -96,3 +147,16 @@ void Alarma::setRealizado(bool value)
 {
     _realizado = value;
 }
+
+
+#ifndef USEMONGO
+
+void Alarma::on_historiaReturned(HistoriaClinicaPtr historia)
+{
+    if (!historia.isNull() && (historia->id() == _idHistoria))
+    {
+        _historiaClinica = historia;
+    }
+}
+
+#endif

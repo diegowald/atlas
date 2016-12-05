@@ -1,4 +1,5 @@
 #include "preguntacombo.h"
+#include <QJsonArray>
 
 PreguntaCombo::PreguntaCombo(const QString &label, const QString &nota, QStringList &listaValores, bool showNotes, QObject *parent)
     : PreguntaBase(label, nota, "combo", showNotes, parent)
@@ -6,6 +7,7 @@ PreguntaCombo::PreguntaCombo(const QString &label, const QString &nota, QStringL
     _listaValores = listaValores;
 }
 
+#ifdef USEMONGO
 PreguntaCombo::PreguntaCombo(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
 {
     mongo::BSONObj value = obj["value"].Obj();
@@ -18,6 +20,19 @@ PreguntaCombo::PreguntaCombo(mongo::BSONObj &obj, bool showNotes, QObject *paren
     }
     _selectedValue = value["selected"].String().c_str();
 }
+#else
+PreguntaCombo::PreguntaCombo(QJsonObject &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
+{
+    QJsonObject value = obj["value"].toObject();
+    QJsonArray objValues = value["values"].toArray();
+
+    for (int i = 0; i < objValues.count(); ++i)
+    {
+        _listaValores.append(objValues[i].toString());
+    }
+    _selectedValue = value["selected"].toString();
+}
+#endif
 
 PreguntaCombo::~PreguntaCombo()
 {
@@ -39,6 +54,7 @@ QWidget* PreguntaCombo::widget()
     return _widget;
 }
 
+#ifdef USEMONGO
 mongo::BSONObj PreguntaCombo::value()
 {
     mongo::BSONArrayBuilder builder;
@@ -50,6 +66,20 @@ mongo::BSONObj PreguntaCombo::value()
                               << "selected" << _selectedValue.toStdString());
     return obj;
 }
+#else
+QJsonObject PreguntaCombo::value()
+{
+    QJsonArray builder;
+    foreach (QString pregunta, _listaValores)
+    {
+        builder.append(pregunta);
+    }
+    QJsonObject obj;
+    obj["values"] = builder;
+    obj["selected"] = _selectedValue;
+    return obj;
+}
+#endif
 
 void PreguntaCombo::applyChanges()
 {

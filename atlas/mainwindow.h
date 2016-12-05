@@ -23,8 +23,11 @@ private:
     void fillView();
     void fillViewAlarmas();
     QString connectionString() const;
+#if USEMONGO
     AlarmaPtr getAlarmaPaciente(mongo::OID historiaID);
-
+#else
+    AlarmaPtr getAlarmaPaciente(const QString &historiaID);
+#endif
 private slots:
     void on_actionNuevaHistoriaClinica_triggered();
 
@@ -48,6 +51,18 @@ private slots:
     void on_tablePacientes_itemSelectionChanged();
 
     void on_actionContabilizacion_Patologias_entre_Fechas_triggered();
+
+    void on_alarmaReturned(AlarmaPtr alarma, bool error);
+    void on_historiasReturned(QMap<QString, HistoriaClinicaPtr> historias, bool error);
+    void on_alarmasReturned(QMap<QString, AlarmaPtr> alarmas, bool error);
+
+    void on_historiaInserted(HistoriaClinicaPtr historia, bool error);
+    void on_historiaUpdated(HistoriaClinicaPtr historia, bool error);
+
+    void on_alarmaInserted(AlarmaPtr alarma, bool error);
+    void on_alarmaUpdated(AlarmaPtr alarma, bool error);
+
+    void on_existeDNIReturned(const QString &dni, const QString &personaID, bool exists);
 
 private:
     Ui::MainWindow *ui;

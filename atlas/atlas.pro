@@ -16,26 +16,28 @@ CONFIG += c++11
 TARGET = atlas
 TEMPLATE = app
 
-win32:LIBS += -LE:\lib
-else:LIBS += -lboost_system
+#win32:LIBS += -LE:\lib
+#else:LIBS += -lboost_system
 
-win32:INCLUDEPATH += E:\boost_1_57_0
+#win32:INCLUDEPATH += E:\boost_1_57_0
 
-win32:INCLUDEPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\build\win32\32\dynamic-windows
-win32:DEPENDPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\build\win32\32\dynamic-windows
-win32:DEPENDPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\src
-win32:INCLUDEPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\src
-
-win32:LIBS += -LF:\QtProjects\mongo-cxx-driver-legacy-1.0.5\build\win32\32\dynamic-windows -lmongoclient
-else:LIBS += -L$$PWD/../../mongo-cxx-driver/build/linux2/use-system-boost/ -lmongoclient
-#LIBS += -L/home/diego/QtProjects/mongo-cxx-driver/build/linux2/use-system-boost -lmongoclient
-
+#win32:INCLUDEPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\build\win32\32\dynamic-windows
+#win32:DEPENDPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\build\win32\32\dynamic-windows
+#win32:DEPENDPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\src
 #win32:INCLUDEPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\src
-#else:INCLUDEPATH += $$PWD/../../mongo-cxx-driver/src
+
+#win32:LIBS += -LF:\QtProjects\mongo-cxx-driver-legacy-1.0.5\build\win32\32\dynamic-windows -lmongoclient
+#else:LIBS += -L$$PWD/../../mongo-cxx-driver-legacy-1.0.5/build/linux2/use-system-boost/ -lmongoclient
+##LIBS += -L/home/diego/QtProjects/mongo-cxx-driver/build/linux2/use-system-boost -lmongoclient
+
+##win32:INCLUDEPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\src
+##else:INCLUDEPATH += $$PWD/../../mongo-cxx-driver/src
+
+#INCLUDEPATH += $$PWD/../../mongo-cxx-driver-legacy-1.0.5/src
 
 
-win32:DEPENDPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\src
-else:DEPENDPATH += $$PWD/../../mongo-cxx-driver/src
+#win32:DEPENDPATH += F:\QtProjects\mongo-cxx-driver-legacy-1.0.5\src
+#else:DEPENDPATH += $$PWD/../../mongo-cxx-driver-legacy-1.0.5/src
 
 
 
@@ -66,7 +68,7 @@ SOURCES += main.cpp\
     dialogs/dlglocalips.cpp \
     dialogs/dlgsetalarma.cpp \
     model/alarma.cpp \
-    db/dbmanager.cpp \
+#    db/dbmanager.cpp \
     dialogs/dlgedittooltip.cpp \
     dialogs/dialogdbserver.cpp \
     model/htmlable.cpp \
@@ -82,7 +84,9 @@ SOURCES += main.cpp\
     reporting/reportepreguntasino.cpp \
     reporting/reportepreguntatexto.cpp \
     reporting/sumarizador.cpp \
-    dialogs/dlgreporte.cpp
+    dialogs/dlgreporte.cpp \
+    db/httprequestworker.cpp \
+    db/dbrestmanaget.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -110,7 +114,7 @@ HEADERS  += mainwindow.h \
     dialogs/dlglocalips.h \
     dialogs/dlgsetalarma.h \
     model/alarma.h \
-    db/dbmanager.h \
+#    db/dbmanager.h \
     dialogs/dlgedittooltip.h \
     dialogs/dialogdbserver.h \
     model/htmlable.h \
@@ -126,7 +130,9 @@ HEADERS  += mainwindow.h \
     reporting/reportepreguntasino.h \
     reporting/reportepreguntatexto.h \
     reporting/sumarizador.h \
-    dialogs/dlgreporte.h
+    dialogs/dlgreporte.h \
+    db/httprequestworker.h \
+    db/dbrestmanaget.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \

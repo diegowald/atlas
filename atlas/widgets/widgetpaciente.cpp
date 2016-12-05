@@ -3,7 +3,11 @@
 
 #include "model/persona.h"
 #include <QDebug>
+#ifdef USEMONGO
 #include "../db/dbmanager.h"
+#else
+#include "../db/dbrestmanaget.h"
+#endif
 
 WidgetPaciente::WidgetPaciente(QWidget *parent) :
     QWidget(parent),
@@ -19,7 +23,11 @@ WidgetPaciente::~WidgetPaciente()
     delete ui;
 }
 
+#ifdef USEMONGO
 void WidgetPaciente::setData(PersonaPtr persona, mongo::OID idHistoria)
+#else
+void WidgetPaciente::setData(PersonaPtr persona, const QString &idHistoria)
+#endif
 {
     ui->txtNombre->setText(persona->nombre());
     ui->txtDocumento->setText(persona->dni());
@@ -65,9 +73,13 @@ void WidgetPaciente::on_dateFechaNacimiento_userDateChanged(const QDate &date)
 void WidgetPaciente::on_txtDocumento_editingFinished()
 {
     // ACA hay que validar que el documento es unico.
-
+#ifdef USEMONGO
     _dniUnico = (0 < ui->txtDocumento->text().length()) &&
             !dbManager::instance()->existeDNI(ui->txtDocumento->text(), _idHistoria);
+#else
+    _dniUnico = (0 < ui->txtDocumento->text().length()) /*&&
+            !DBRestManager::instance()->existeDNI(ui->txtDocumento->text(), _idHistoria)*/;
+#endif
     if (!_dniUnico)
     {
         ui->txtDocumento->setFocus();

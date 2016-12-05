@@ -7,11 +7,19 @@ PreguntaTexto::PreguntaTexto(const QString &label, const QString &nota, bool sho
 
 }
 
+#ifdef USEMONGO
 PreguntaTexto::PreguntaTexto(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
 {
     mongo::BSONObj value = obj["value"].Obj();
     _text = value["text"].String().c_str();
 }
+#else
+PreguntaTexto::PreguntaTexto(QJsonObject &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, showNotes, parent)
+{
+    QJsonObject value = obj["value"].toObject();
+    _text = value["text"].toString();
+}
+#endif
 
 PreguntaTexto::~PreguntaTexto()
 {
@@ -32,11 +40,21 @@ QWidget* PreguntaTexto::widget()
     return _widget;
 }
 
+#ifdef USEMONGO
 mongo::BSONObj PreguntaTexto::value()
 {
     mongo::BSONObj obj = BSON("text" << _text.toStdString());
     return obj;
 }
+#else
+QJsonObject PreguntaTexto::value()
+{
+    QJsonObject obj;
+    obj["text"] = _text;
+    return obj;
+}
+#endif
+
 
 void PreguntaTexto::applyChanges()
 {

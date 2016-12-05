@@ -10,14 +10,25 @@ class PreguntaComboDoble : public PreguntaBase
 {
 public:
     PreguntaComboDoble(const QString &label, const QString &nota, QStringList &lista1, QStringList &lista2, bool showNotes, QObject *parent = 0);
+
+#ifdef USEMONGO
     PreguntaComboDoble(mongo::BSONObj &obj, bool showNotes, QObject *parent = 0);
+#else
+    PreguntaComboDoble(QJsonObject &obj, bool showNotes, QObject *parent = 0);
+#endif
+
     ~PreguntaComboDoble();
 
     virtual PreguntaBasePtr clone();
     virtual QWidget* widget();
     virtual void applyChanges();
 
+#ifdef USEMONGO
     virtual mongo::BSONObj value();
+#else
+    virtual QJsonObject value();
+#endif
+
     virtual QString toHtml();
     virtual QString toHtml(bool incluirNotas);
 

@@ -1,7 +1,11 @@
 #include "historiaclinica.h"
 #include "persona.h"
 #include "preguntabase.h"
+#ifdef USEMONGO
 #include <mongo/bson/bsonelement.h>
+#else
+#include <QJsonArray>
+#endif
 #include "persona.h"
 #include "factory.h"
 
@@ -24,6 +28,7 @@ HistoriaClinica::HistoriaClinica(PersonaPtr persona,
     _numeroPaciente = "-1";
 }
 
+#ifdef USEMONGO
 HistoriaClinica::HistoriaClinica(mongo::BSONObj &obj, QObject *parent) : QObject(parent)
 {
     mongo::BSONObj p = obj["persona"].Obj();
@@ -100,6 +105,45 @@ HistoriaClinica::HistoriaClinica(mongo::BSONObj &obj, QObject *parent) : QObject
     _numeroPaciente = obj["numeroPaciente"].String().c_str();
     _id = obj["_id"].OID();
 }
+#else
+HistoriaClinica::HistoriaClinica(QJsonObject &obj, QObject *parent) : QObject(parent)
+{
+    QJsonObject p = obj["persona"].toObject();
+    _persona = PersonaPtr(new Persona(p));
+
+
+    long fecha = obj["FechaPrimerConsulta"].toInt();
+    _fechaPrimerConsulta = (fecha == -1) ? QDate() : QDate::fromJulianDay(fecha);
+
+    fecha = obj["FechaSegundaConsulta"].toInt();
+    _fechaSegundaConsulta = (fecha == -1) ? QDate() : QDate::fromJulianDay(fecha);
+
+    QJsonArray arr = obj["antecedentes"].toArray();
+
+    fromArrayJson(arr, _antecedentes);
+
+    if (obj.contains("testKinesiologico"))
+    {
+        arr = obj["testKinesiologico"].toArray();
+        fromArrayJson(arr, _testKinesiologico1erConsulta);
+    }
+
+    if (obj.contains("testKinesiologico2daConsulta"))
+    {
+        arr = obj["testKinesiologico2daConsulta"].toArray();
+        fromArrayJson(arr, _testKinesiologico2daConsulta);
+    }
+
+    arr = obj["cuestionario1erConsulta"].toArray();
+    fromArrayJson(arr, _cuestionario1erConsulta);
+
+    arr = obj["cuestionario2daConsulta"].toArray();
+    fromArrayJson(arr, _cuestionario2daConsulta);
+
+    _numeroPaciente = obj["numeroPaciente"].toString();
+    _id = obj["_id"].toObject()["$oid"].toString();
+}
+#endif
 
 HistoriaClinica::~HistoriaClinica()
 {
@@ -166,7 +210,7 @@ void HistoriaClinica::setNumeroPaciente(const QString &nro)
     _numeroPaciente = nro;
 }
 
-
+#ifdef USEMONGO
 mongo::BSONObj HistoriaClinica::toBson()
 {
     mongo::BSONObj obj =
@@ -181,7 +225,24 @@ mongo::BSONObj HistoriaClinica::toBson()
                   << "numeroPaciente" << _numeroPaciente.toStdString());
     return obj;
 }
+#else
+QJsonObject HistoriaClinica::toJson()
+{
+    QJsonObject obj;
+    obj["persona"] = _persona->toJson();
+    obj["FechaPrimerConsulta"] = (_fechaPrimerConsulta.isValid() ?  _fechaPrimerConsulta.toJulianDay() : -1);
+    obj["FechaSegundaConsulta"] = (_fechaSegundaConsulta.isValid() ? _fechaSegundaConsulta.toJulianDay() : -1);
+    obj["antecedentes"] = arrayJson(_antecedentes);
+    obj["testKinesiologico"] = arrayJson(_testKinesiologico1erConsulta);
+    obj["testKinesiologico2daConsulta"] = arrayJson(_testKinesiologico2daConsulta);
+    obj["cuestionario1erConsulta"] = arrayJson(_cuestionario1erConsulta);
+    obj["cuestionario2daConsulta"] = arrayJson(_cuestionario2daConsulta);
+    obj["numeroPaciente"] = _numeroPaciente;
+    return obj;
+}
+#endif
 
+#ifdef USEMONGO
 mongo::BSONObj HistoriaClinica::arrayBson(QList<PreguntaBasePtr> list)
 {
     mongo::BSONArrayBuilder builder;
@@ -191,7 +252,19 @@ mongo::BSONObj HistoriaClinica::arrayBson(QList<PreguntaBasePtr> list)
     }
     return builder.arr();
 }
+#else
+QJsonArray HistoriaClinica::arrayJson(QList<PreguntaBasePtr> list)
+{
+    QJsonArray builder;
+    foreach (PreguntaBasePtr pregunta, list)
+    {
+        builder.append(pregunta->toJson());
+    }
+    return builder;
+}
+#endif
 
+#ifdef USEMONGO
 void HistoriaClinica::fromArrayBson(std::vector<mongo::BSONElement> &arr, QList<PreguntaBasePtr> &list)
 {
     list.clear();
@@ -201,13 +274,32 @@ void HistoriaClinica::fromArrayBson(std::vector<mongo::BSONElement> &arr, QList<
         list.append(Factory::crearPregunta(obj, true));
     }
 }
+#else
+void HistoriaClinica::fromArrayJson(QJsonArray &arr, QList<PreguntaBasePtr> &list)
+{
+    list.clear();
+    for(uint i = 0; i < arr.size(); ++i)
+    {
+        QJsonObject obj = arr[i].toObject();
+        list.append(Factory::crearPregunta(obj, true));
+    }
+}
+#endif
 
 QString HistoriaClinica::idString()
 {
-    return QString(_id.toString().c_str());
+#ifdef USEMONGO
+    return _id.toString().c_str());
+#else
+    return _id;
+#endif
 }
 
+#ifdef USEMONGO
 mongo::OID HistoriaClinica::id()
+#else
+QString HistoriaClinica::id()
+#endif
 {
     return _id;
 }

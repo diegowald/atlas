@@ -11,7 +11,11 @@ class PreguntaBase : public QObject, public Serializable, public htmlAble
     Q_OBJECT
 public:
     explicit PreguntaBase(const QString &label, const QString &nota, const QString &type, bool showNotes, QObject *parent /*= 0*/);
+#ifdef USEMONGO
     PreguntaBase(mongo::BSONObj &obj, bool showNotes, QObject *parent = 0);
+#else
+    PreguntaBase(QJsonObject &obj, bool showNotes, QObject *parent = 0);
+#endif
     ~PreguntaBase();
 
     virtual void setLabel(const QString &Label);
@@ -26,9 +30,13 @@ public:
 
     virtual void applyChanges() = 0;
 
+#ifdef USEMONGO
     virtual mongo::BSONObj toBson();
     virtual mongo::BSONObj value() = 0;
-
+#else
+    virtual QJsonObject toJson();
+    virtual QJsonObject value() = 0;
+#endif
     bool isShowingNotes() const;
     virtual QString toHtml() = 0;
     virtual QString toHtml(bool incluirNotas) = 0;

@@ -4,6 +4,7 @@ Persona::Persona(QObject *parent) : QObject(parent)
 {
 }
 
+#ifdef USEMONGO
 Persona::Persona(mongo::BSONObj &persona, QObject *parent)
 {
     _nombre = persona["nombre"].String().c_str();
@@ -38,6 +39,44 @@ Persona::Persona(mongo::BSONObj &persona, QObject *parent)
     _comoSeEntero = persona["comoSeEntero"].String().c_str();
     _notas = persona["notas"].String().c_str();
 }
+#else
+Persona::Persona(QJsonObject &persona, QObject *parent)
+{
+    _nombre = persona["nombre"].toString();
+    _domicilio = persona["domicilio"].toString();
+    _dni = persona["dni"].toString();
+    _localidad = persona["localidad"].toString();
+    _telefonos = persona["telefonos"].toString();
+    _email = persona["email"].toString();
+
+
+    /*
+    mongo::BSONType t = persona["fechaNacimiento"].type();
+
+    switch (t)
+    {
+    case mongo::NumberInt:
+        _fechaNacimiento = QDate::fromJulianDay((long) persona["fechaNacimiento"].Int());
+        break;
+    case mongo::NumberDouble:
+        _fechaNacimiento = QDate::fromJulianDay((long) persona["fechaNacimiento"].Double());
+        break;
+    case mongo::NumberLong:
+        _fechaNacimiento = QDate::fromJulianDay(persona["fechaNacimiento"].Long());
+        break;
+    default:
+        break;
+    }
+    */
+
+    _fechaNacimiento = QDate::fromJulianDay(persona["fechaNacimiento"].toInt());
+    _edad = persona["edad"].toInt();
+
+    _ocupacion = persona["ocupacion"].toString();
+    _comoSeEntero = persona["comoSeEntero"].toString();
+    _notas = persona["notas"].toString();
+}
+#endif
 
 Persona::~Persona()
 {
@@ -153,6 +192,7 @@ QString Persona::notas() const
     return _notas;
 }
 
+#ifdef USEMONGO
 mongo::BSONObj Persona::toBson()
 {
     mongo::BSONObj obj = BSON(
@@ -169,6 +209,24 @@ mongo::BSONObj Persona::toBson()
                 << "notas" << _notas.toStdString());
     return obj;
 }
+#else
+QJsonObject Persona::toJson()
+{
+    QJsonObject obj;
+    obj["nombre"] = _nombre;
+    obj["domicilio"] = _domicilio;
+    obj["dni"] = _dni;
+    obj["localidad"] = _localidad;
+    obj["telefonos"] = _telefonos;
+    obj["email"] = _email;
+    obj["fechaNacimiento"] = _fechaNacimiento.toJulianDay();
+    obj["edad"] = _edad;
+    obj["ocupacion"] = _ocupacion;
+    obj["comoSeEntero"] = _comoSeEntero;
+    obj["notas"] = _notas;
+    return obj;
+}
+#endif
 
 QString Persona::toHtml()
 {

@@ -11,7 +11,11 @@ class Persona : public QObject, public Serializable, public htmlAble
     Q_OBJECT
 public:
     explicit Persona(QObject *parent = 0);
+#ifdef USEMONGO
     Persona(mongo::BSONObj &persona, QObject *parent = 0);
+#else
+    Persona(QJsonObject &persona, QObject *parent = 0);
+#endif
     ~Persona();
 
     void setNombre(const QString &Nombre);
@@ -38,7 +42,12 @@ public:
     QString comoSeEntero() const;
     QString notas() const;
 
+#ifdef USEMONGO
     virtual mongo::BSONObj toBson();
+#else
+    virtual QJsonObject toJson();
+#endif
+
     virtual QString toHtml();
 
 signals:
@@ -57,7 +66,11 @@ private:
     QString _ocupacion;
     QString _comoSeEntero;
     QString _notas;
+#ifdef USEMONGO
     mongo::OID _id;
+#else
+    QString _id;
+#endif
 };
 
 #endif // PERSONA_H

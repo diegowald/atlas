@@ -9,6 +9,7 @@ PreguntaBase::PreguntaBase(const QString &label, const QString &nota, const QStr
     _showNotes = showNotes;
 }
 
+#ifdef USEMONGO
 PreguntaBase::PreguntaBase(mongo::BSONObj &obj, bool showNotes, QObject *parent)
 {
     _label = obj["label"].String().c_str();
@@ -16,6 +17,15 @@ PreguntaBase::PreguntaBase(mongo::BSONObj &obj, bool showNotes, QObject *parent)
     _type = obj["type"].String().c_str();
     _showNotes = showNotes;
 }
+#else
+PreguntaBase::PreguntaBase(QJsonObject &obj, bool showNotes, QObject *parent)
+{
+    _label = obj["label"].toString();
+    _nota = obj["nota"].toString();
+    _type = obj["type"].toString();
+    _showNotes = showNotes;
+}
+#endif
 
 PreguntaBase::~PreguntaBase()
 {
@@ -54,6 +64,7 @@ QWidget *PreguntaBase::widgetWithLabel()
     return wdget;
 }
 
+#ifdef USEMONGO
 mongo::BSONObj PreguntaBase::toBson()
 {
     mongo::BSONObj obj = BSON(
@@ -63,6 +74,18 @@ mongo::BSONObj PreguntaBase::toBson()
                 << "value" << value());
     return obj;
 }
+#else
+QJsonObject PreguntaBase::toJson()
+{
+    QJsonObject obj;
+
+    obj["label"] = _label;
+    obj["nota"] = _nota;
+    obj["type"] = _type;
+    obj["value"] = value();
+    return obj;
+}
+#endif
 
 bool PreguntaBase::isShowingNotes() const
 {

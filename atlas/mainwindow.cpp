@@ -5,14 +5,22 @@
 #include "model/factory.h"
 #include <QMessageBox>
 
+#ifdef USEMONGO
 #include <mongo/db/json.h>
+#else
+#endif
+
 #include "model/historiaclinica.h"
 
 #include "model/persona.h"
 #include "dialogs/dlglocalips.h"
 #include <QDebug>
 #include "model/alarma.h"
+#ifdef USEMONGO
 #include "db/dbmanager.h"
+#else
+#include "db/dbrestmanaget.h"
+#endif
 #include "dialogs/dlgsetalarma.h"
 
 // Printing
@@ -35,12 +43,31 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+#ifdef USEMONGO
+#else
+    connect(DBRestManager::instance(), &DBRestManager::alarmaReturned, this, &MainWindow::on_alarmaReturned);
+
+    //connect(DBRestManager::instance(), &DBRestManager::historiaReturned, this, &MainWindow::on_historiaReturned);
+    connect(DBRestManager::instance(), &DBRestManager::historiasReturned,  this, &MainWindow::on_historiasReturned);
+    connect(DBRestManager::instance(), &DBRestManager::alarmasReturned, this, &MainWindow::on_alarmasReturned);
+
+    connect(DBRestManager::instance(), &DBRestManager::historiaInserted, this, &MainWindow::on_historiaInserted);
+    connect(DBRestManager::instance(), &DBRestManager::historiaUpdated, this, &MainWindow::on_historiaUpdated);
+
+    connect(DBRestManager::instance(), &DBRestManager::alarmaInserted, this, &MainWindow::on_alarmaInserted);
+    connect(DBRestManager::instance(), &DBRestManager::alarmaUpdated, this, &MainWindow::on_alarmaUpdated);
+
+    connect(DBRestManager::instance(), &DBRestManager::existeDNIReturned, this, &MainWindow::on_existeDNIReturned);
+#endif
+
     _factory = new Factory();
     refreshAlarmas();
     _idHistoria = "";
     _html = "";
     ui->actionImprimir_Historia_Clinica->setEnabled(false);
     ui->actionVista_PreviaHistoriaClinica->setEnabled(false);
+
 }
 
 MainWindow::~MainWindow()
@@ -57,15 +84,31 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
     if (dlg.exec() == QDialog::Accepted)
     {
         dlg.applyData();
+#ifdef USEMONGO
         dbManager::instance()->insertHistoria(historia);
+#else
+        DBRestManager::instance()->insertHistoria(historia);
+#endif
         AlarmaPtr alarma = dlg.alarma();
         if (!alarma.isNull())
         {
+#ifdef USEMONGO
             dbManager::instance()->insertAlarma(alarma);
+#else
+            DBRestManager::instance()->insertAlarma(alarma);
+#endif
         }
     }
 }
 
+#ifndef USEMONGO
+void MainWindow::on_historiaInserted(HistoriaClinicaPtr historia, bool error)
+{
+
+}
+#endif
+
+#ifdef USEMONGO
 void MainWindow::on_pushButton_released()
 {
     _historias.clear();
@@ -102,6 +145,52 @@ void MainWindow::on_pushButton_released()
     _historias = dbManager::instance()->historias(queryString);
     fillView();
 }
+#else
+void MainWindow::on_pushButton_released()
+{
+    _historias.clear();
+    ui->statusBar->showMessage("Buscando registros", 2000);
+    _idHistoria = "";
+    _html = "";
+    QString queryString = "";
+    if (ui->txtNombre->text().trimmed().length() > 0)
+    {
+        queryString = QString("$text : { $search : \"%1\" }").arg(ui->txtNombre->text().trimmed());
+    }
+    if (ui->txtDNI->text().trimmed().length() > 0)
+    {
+        if (queryString.length() > 0)
+            queryString += ", ";
+        queryString += QString("'persona.dni':\"%1\"").arg(ui->txtDNI->text().trimmed());
+    }
+    if (ui->txtLocalidad->text().trimmed().length() > 0)
+    {
+        if (queryString.length() > 0)
+            queryString += ", ";
+        //queryString += QString("'persona.localidad':{$regex:/^%1/i}").arg(ui->txtLocalidad->text().trimmed());
+        queryString += QString("'persona.localidad': /^%1/i").arg(ui->txtLocalidad->text().trimmed());
+    }
+    if (ui->radioPrimerConsulta->isChecked())
+    {
+        if (queryString.length() > 0)
+            queryString += ", ";
+        queryString += QString("FechaSegundaConsulta:-1");
+    }
+    queryString = "{" + queryString + "}";
+
+    qDebug() << queryString;
+    DBRestManager::instance()->historias(queryString);
+}
+
+void MainWindow::on_historiasReturned(QMap<QString, HistoriaClinicaPtr> historias, bool error)
+{
+    if (!error)
+        _historias = historias;
+    else
+        _historias.clear();
+    fillView();
+}
+#endif
 
 void MainWindow::on_actionAnalisis_triggered()
 {
@@ -142,7 +231,12 @@ void MainWindow::fillViewAlarmas()
     {
         int row = ui->tableAlarmas->rowCount();
         ui->tableAlarmas->insertRow(row);
-        QTableWidgetItem *item = new QTableWidgetItem(alarma->historiaClinica()->persona()->nombre());
+
+        QTableWidgetItem *item = new QTableWidgetItem("");
+        if (!alarma->historiaClinica().isNull() && !alarma->historiaClinica()->persona().isNull())
+        {
+            item->setText(alarma->historiaClinica()->persona()->nombre());
+        }
         item->setData(Qt::UserRole, alarma->idString());
         ui->tableAlarmas->setItem(row, 0, item);
 
@@ -151,11 +245,13 @@ void MainWindow::fillViewAlarmas()
     }
 }
 
+#ifdef USEMONGO
 void MainWindow::on_tablePacientes_cellDoubleClicked(int row, int column)
 {
     _idHistoria = ui->tablePacientes->item(row, 0)->data(Qt::UserRole).toString();
     HistoriaClinicaPtr historia = _historias[_idHistoria];
     AlarmaPtr alarma = dbManager::instance()->getAlarmaPaciente(historia->id());
+
     DialogHistoriaClinica dlg;
     dlg.setData(historia, alarma);
     if (dlg.exec() == QDialog::Accepted)
@@ -177,6 +273,50 @@ void MainWindow::on_tablePacientes_cellDoubleClicked(int row, int column)
         }
     }
 }
+#else
+void MainWindow::on_tablePacientes_cellDoubleClicked(int row, int column)
+{
+    _idHistoria = ui->tablePacientes->item(row, 0)->data(Qt::UserRole).toString();
+    HistoriaClinicaPtr historia = _historias[_idHistoria];
+    DBRestManager::instance()->getAlarmaPaciente(_idHistoria);
+}
+
+
+void MainWindow::on_alarmaReturned(AlarmaPtr alarma, bool error)
+{
+    if ((_idHistoria == "") || error)
+        return;
+
+    HistoriaClinicaPtr historia = _historias[_idHistoria];
+
+    DialogHistoriaClinica dlg;
+    dlg.setData(historia, alarma);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        dlg.applyData();
+        DBRestManager::instance()->updateHistoria(historia);
+
+        AlarmaPtr alarma = dlg.alarma();
+        if (!alarma.isNull())
+        {
+            if (dlg.alarmaNueva())
+            {
+                DBRestManager::instance()->insertAlarma(alarma);
+            }
+            else
+            {
+                DBRestManager::instance()->updateAlarma(alarma);
+            }
+        }
+    }
+}
+
+void MainWindow::on_historiaUpdated(HistoriaClinicaPtr historia, bool error)
+{
+    refreshAlarmas();
+    on_pushButton_released();
+}
+#endif
 
 void MainWindow::on_actionDetectar_mi_IP_triggered()
 {
@@ -185,12 +325,30 @@ void MainWindow::on_actionDetectar_mi_IP_triggered()
 }
 
 
+#ifdef USEMONGO
 void MainWindow::refreshAlarmas()
 {
     ui->statusBar->showMessage("Buscando alarmas", 2000);
     _alarmas = dbManager::instance()->alarmas();
     fillViewAlarmas();
 }
+#else
+void MainWindow::refreshAlarmas()
+{
+    ui->statusBar->showMessage("Buscando alarmas", 2000);
+    DBRestManager::instance()->alarmas();
+}
+
+void MainWindow::on_alarmasReturned(QMap<QString, AlarmaPtr> alarmas, bool error)
+{
+    if (!error)
+        _alarmas = alarmas;
+    else
+        _alarmas.clear();
+    fillViewAlarmas();
+}
+#endif
+
 
 void MainWindow::on_tableAlarmas_cellDoubleClicked(int row, int column)
 {
@@ -201,7 +359,11 @@ void MainWindow::on_tableAlarmas_cellDoubleClicked(int row, int column)
     if (dlg.exec() == QDialog::Accepted)
     {
         dlg.updateData(alarma);
+#ifdef USEMONGO
         dbManager::instance()->updateAlarma(alarma);
+#else
+        DBRestManager::instance()->updateAlarma(alarma);
+#endif
     }
     refreshAlarmas();
 }
@@ -276,4 +438,20 @@ void MainWindow::on_actionContabilizacion_Patologias_entre_Fechas_triggered()
         dlgReporte->exec();
         dlgReporte->deleteLater();
     }
+}
+
+
+
+
+
+void MainWindow::on_alarmaInserted(AlarmaPtr alarma, bool error)
+{
+}
+
+void MainWindow::on_alarmaUpdated(AlarmaPtr alarma, bool error)
+{
+}
+
+void MainWindow::on_existeDNIReturned(const QString &dni, const QString &personaID, bool exists)
+{
 }

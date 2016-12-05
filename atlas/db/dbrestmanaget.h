@@ -28,7 +28,7 @@ public:
     void insertAlarma(AlarmaPtr alarma);
     void updateAlarma(AlarmaPtr alarma);
 
-    bool existeDNI(const QString &dni, const QString &personaID);
+    void existeDNI(const QString &dni, const QString &personaID);
 
 protected:
     QString connectionString() const;
@@ -40,18 +40,18 @@ private:
     void error(const QString &operacion, const QString &mensaje);
 
 signals:
-    void alarmaReturned(AlarmaPtr alarma);
-    void historiaReturned(HistoriaClinicaPtr historia);
-    void historiasReturned(QMap<QString, HistoriaClinicaPtr> historias);
-    void alarmasReturned(QMap<QString, AlarmaPtr> alarmas);
+    void alarmaReturned(AlarmaPtr alarma, bool error);
+    void historiaReturned(HistoriaClinicaPtr historia, bool error);
+    void historiasReturned(QMap<QString, HistoriaClinicaPtr> historias, bool error);
+    void alarmasReturned(QMap<QString, AlarmaPtr> alarmas, bool error);
 
-    void historiaInserted(HistoriaClinicaPtr historia, const QString &error);
-    void historiaUpdated(HistoriaClinicaPtr historia, const QString &error);
+    void historiaInserted(HistoriaClinicaPtr historia, bool error);
+    void historiaUpdated(HistoriaClinicaPtr historia, bool error);
 
-    void alarmaInserted(AlarmaPtr alarma, const QString &error);
-    void alarmaUpdated(AlarmaPtr alarma, const QString &error);
+    void alarmaInserted(AlarmaPtr alarma, bool error);
+    void alarmaUpdated(AlarmaPtr alarma, bool error);
 
-    void existeDNIReturned(const QString &dni, const QString &personaID, bool exists);
+    void existeDNIReturned(const QString &dni, const QString &personaID, bool exists, bool error);
 
 private slots:
     void on_getAlarmaPaciente_finished(HttpRequestWorker *worker);

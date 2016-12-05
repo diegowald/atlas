@@ -147,8 +147,6 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
     }
     else if (input->var_layout == JSON) {
         QString new_line = "\r\n";
-        request_content.append("Content-Type: application/json;");
-        request_content.append(new_line);
         request_content.append(input->_content);
         request_content.append(new_line);
     }
@@ -261,7 +259,7 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
         request.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" + boundary);
     }
     else if(input->var_layout == JSON) {
-        //request.setHeader()
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json;");
     }
 
     if (input->http_method == "GET") {

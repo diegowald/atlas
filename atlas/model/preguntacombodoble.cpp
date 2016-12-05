@@ -1,4 +1,6 @@
 #include "preguntacombodoble.h"
+#include <QJsonArray>
+
 
 PreguntaComboDoble::PreguntaComboDoble(const QString &label, const QString &nota, QStringList &lista1, QStringList &lista2, bool showNotes, QObject *parent) : PreguntaBase(label, nota, "combodoble", showNotes, parent)
 {
@@ -6,6 +8,7 @@ PreguntaComboDoble::PreguntaComboDoble(const QString &label, const QString &nota
     _lista2 = lista2;
 }
 
+#ifdef USEMONGO
 PreguntaComboDoble::PreguntaComboDoble(mongo::BSONObj &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, parent)
 {
     mongo::BSONObj value = obj["value"].Obj();
@@ -27,6 +30,25 @@ PreguntaComboDoble::PreguntaComboDoble(mongo::BSONObj &obj, bool showNotes, QObj
     }
     _selected2 = value["selected2"].String().c_str();
 }
+#else
+PreguntaComboDoble::PreguntaComboDoble(QJsonObject &obj, bool showNotes, QObject *parent) : PreguntaBase(obj, parent)
+{
+    QJsonObject value = obj["value"].toObject();
+    QJsonArray objValues = value["values1"].toArray();
+    for (int i = 0; i < objValues.count(); ++i)
+    {
+        _lista1.append(objValues[i].toString());
+    }
+    _selected1 = value["selected1"].toString();
+
+    objValues = value["values2"].toArray();
+    for (int i = 0; i < objValues.count(); ++i)
+    {
+        _lista2.append(objValues[i].toString());
+    }
+    _selected2 = value["selected2"].toString();
+}
+#endif
 
 PreguntaComboDoble::~PreguntaComboDoble()
 {
@@ -50,6 +72,7 @@ QWidget* PreguntaComboDoble::widget()
     return _widget;
 }
 
+#ifdef USEMONGO
 mongo::BSONObj PreguntaComboDoble::value()
 {
     mongo::BSONArrayBuilder builder1;
@@ -70,6 +93,29 @@ mongo::BSONObj PreguntaComboDoble::value()
                               << "selected2" << _selected2.toStdString());
     return obj;
 }
+#else
+QJsonObject PreguntaComboDoble::value()
+{
+    QJsonArray builder1;
+    foreach (QString pregunta, _lista1)
+    {
+        builder1.append(pregunta);
+    }
+
+    QJsonArray builder2;
+    foreach (QString pregunta, _lista2)
+    {
+        builder2.append(pregunta);
+    }
+
+    QJsonObject obj;
+    obj["values1"] = builder1;
+    obj["selected1"] = _selected1;
+    obj["values2"] = builder2;
+    obj["selected2"] = _selected2;
+    return obj;
+}
+#endif
 
 void PreguntaComboDoble::applyChanges()
 {

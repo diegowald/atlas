@@ -50,7 +50,11 @@ HistoriaClinicaPtr Factory::crearNuevaHistoriaClinica()
     return hist;
 }
 
+#ifdef USEMONGO
 HistoriaClinicaPtr Factory::crearHistoria(mongo::BSONObj &obj)
+#else
+HistoriaClinicaPtr Factory::crearHistoria(QJsonObject &obj)
+#endif
 {
     HistoriaClinicaPtr hist = HistoriaClinicaPtr(new HistoriaClinica(obj));
     return hist;
@@ -245,9 +249,17 @@ void Factory::cargarCuestionario()
                                                                             << PreguntaComboPtr(new PreguntaCombo("Se levanta", "", QStringList() << "" << "Cansado" << "Descansado", false)), true)));
 }
 
+#ifdef USEMONGO
 PreguntaBasePtr Factory::crearPregunta(mongo::BSONObj &obj, bool showNotes)
+#else
+PreguntaBasePtr Factory::crearPregunta(QJsonObject &obj, bool showNotes)
+#endif
 {
+#ifdef USEMONGO
     QString type = obj["type"].String().c_str();
+#else
+    QString type = obj["type"].toString();
+#endif
     PreguntaBasePtr preg;
     if (type == "checkbox")
     {
@@ -307,7 +319,11 @@ ReporteBasePtr Factory::crearDatoReporte(PreguntaBasePtr pregunta)
     return rpt;
 }
 
+#ifdef USEMONGO
 AlarmaPtr Factory::crearAlarma(mongo::BSONObj &obj)
+#else
+AlarmaPtr Factory::crearAlarma(QJsonObject &obj)
+#endif
 {
     return AlarmaPtr(new Alarma(obj));
 }
