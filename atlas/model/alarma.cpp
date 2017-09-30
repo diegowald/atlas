@@ -4,8 +4,10 @@
 #ifdef USEMONGO
 #include "db/dbmanager.h"
 #else
-#include "db/dbrestmanaget.h"
+//#include "db/dbrestmanaget.h"
+#include "db/dbsingleton.h"
 #endif
+#include <QUuid>
 
 Alarma::Alarma(HistoriaClinicaPtr historia, QObject *parent) : QObject(parent)
 {
@@ -14,6 +16,8 @@ Alarma::Alarma(HistoriaClinicaPtr historia, QObject *parent) : QObject(parent)
     _fechaCreacion = QDate::currentDate();
     _fechaAlarma = QDate::currentDate();
     _realizado = false;
+    QUuid uuid = QUuid::createUuid();
+    _id = uuid.toString();
 }
 
 #ifdef USEMONGO
@@ -36,9 +40,13 @@ Alarma::Alarma(QJsonObject &obj, QObject *parent) : QObject(parent)
     _fechaAlarma = QDate::fromJulianDay(obj["fechaAlarma"].toInt());
     _realizado = obj["realizado"].toBool();
     _id = obj["_id"].toObject()["$oid"].toString();
-    connect(DBRestManager::instance(), &DBRestManager::historiaReturned,
+    if (_id.length() == 0)
+    {
+        _id = obj["id"].toString();
+    }
+    connect(DBSingleton::instance(), &DBSingleton::historiaReturned,
             this, &Alarma::on_historiaReturned);
-    DBRestManager::instance()->getHistoria(_idHistoria);
+    DBSingleton::instance()->getHistoria(_idHistoria);
 }
 #endif
 
@@ -98,6 +106,7 @@ QJsonObject Alarma::toJson()
     obj["fechaCreacion"] = _fechaCreacion.toJulianDay();
     obj["fechaAlarma"] = _fechaAlarma.toJulianDay();
     obj["realizado"] = _realizado;
+    obj["id"] = _id;
     return obj;
 }
 #endif

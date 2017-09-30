@@ -1,11 +1,13 @@
 #include "dialogdbserver.h"
 #include "ui_dialogdbserver.h"
+#include <QFileDialog>
 
 DialogDBServer::DialogDBServer(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogDBServer)
 {
     ui->setupUi(this);
+    ui->txtFileName->setText("./atlas.db");
 }
 
 DialogDBServer::~DialogDBServer()
@@ -50,4 +52,16 @@ QString DialogDBServer::username()
 QString DialogDBServer::password()
 {
     return ui->txtPassword->text();
+}
+
+void DialogDBServer::on_btnOpenFIle_clicked()
+{
+    QString fn = QFileDialog::getOpenFileName(this, "Seleccionar archivo", "./", "Archivos db (*.db)");
+    ui->txtFileName->setText(fn);
+}
+
+
+QString DialogDBServer::filename()
+{
+    return ui->txtFileName->text();
 }

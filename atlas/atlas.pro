@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT       += core gui network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -86,7 +86,12 @@ SOURCES += main.cpp\
     reporting/sumarizador.cpp \
     dialogs/dlgreporte.cpp \
     db/httprequestworker.cpp \
-    db/dbrestmanaget.cpp
+    db/dbrestmanaget.cpp \
+    db/dbsqllitemanager.cpp \
+    db/dbsingleton.cpp \
+    db/querycondition.cpp \
+    dialogs/dlgrestorefromcloud.cpp \
+    dialogs/dlgrestoringfromcloud.cpp
 
 HEADERS  += mainwindow.h \
     widgets/widgetpaciente.h \
@@ -132,7 +137,13 @@ HEADERS  += mainwindow.h \
     reporting/sumarizador.h \
     dialogs/dlgreporte.h \
     db/httprequestworker.h \
-    db/dbrestmanaget.h
+    db/dbrestmanaget.h \
+    db/dbsqllitemanager.h \
+    db/idbmanager.h \
+    db/dbsingleton.h \
+    db/querycondition.h \
+    dialogs/dlgrestorefromcloud.h \
+    dialogs/dlgrestoringfromcloud.h
 
 FORMS    += mainwindow.ui \
     widgets/widgetpaciente.ui \
@@ -150,7 +161,9 @@ FORMS    += mainwindow.ui \
     dialogs/dlgedittooltip.ui \
     dialogs/dialogdbserver.ui \
     dialogs/dlgreportepatologiasdetectadas.ui \
-    dialogs/dlgreporte.ui
+    dialogs/dlgreporte.ui \
+    dialogs/dlgrestorefromcloud.ui \
+    dialogs/dlgrestoringfromcloud.ui
 
 win32:QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
 win32:DEFINES+="WINVER=0x0501"

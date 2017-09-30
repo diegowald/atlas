@@ -64,6 +64,8 @@ private slots:
 
     void on_existeDNIReturned(const QString &dni, const QString &personaID, bool exists);
 
+    void on_actionRecuperar_desde_la_nube_triggered();
+
 private:
     Ui::MainWindow *ui;
     Factory* _factory;

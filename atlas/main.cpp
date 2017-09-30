@@ -13,6 +13,9 @@
 #endif
 #include "dialogs/dialogdbserver.h"
 
+#include "db/dbsingleton.h"
+
+
 int main(int argc, char *argv[])
 {
 #if USEMONGO
@@ -28,6 +31,7 @@ int main(int argc, char *argv[])
         dbManager::instance()->setDB(dlg.ip(), dlg.database(), dlg.username(), dlg.password());
 #else
         //DBRestManager::instance()->setDB(dlg.ip(), dlg.database(), dlg.username(), dlg.password());
+        DBSingleton::instance()->setParameters(dlg.ip(), dlg.database(), dlg.username(), dlg.password(), dlg.filename());
 #endif
         MainWindow w;
         w.show();

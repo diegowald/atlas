@@ -159,7 +159,7 @@
      <x>0</x>
      <y>0</y>
      <width>561</width>
-     <height>24</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Archivo">
@@ -170,6 +170,8 @@
     <addaction name="separator"/>
     <addaction name="actionVista_PreviaHistoriaClinica"/>
     <addaction name="actionImprimir_Historia_Clinica"/>
+    <addaction name="separator"/>
+    <addaction name="actionRecuperar_desde_la_nube"/>
    </widget>
    <widget class="QMenu" name="menuAn_lisis">
     <property name="title">
@@ -245,6 +247,11 @@
   <action name="actionContabilizacion_Patologias_entre_Fechas">
    <property name="text">
     <string>Contabilizacion Patologias entre Fechas</string>
+   </property>
+  </action>
+  <action name="actionRecuperar_desde_la_nube">
+   <property name="text">
+    <string>Recuperar desde la nube</string>
    </property>
   </action>
  </widget>

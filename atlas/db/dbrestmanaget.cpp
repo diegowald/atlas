@@ -11,9 +11,7 @@
 #include <QDate>
 
 
-DBRestManager *DBRestManager::_instance = NULL;
-
-DBRestManager::DBRestManager(QObject *parent) : QObject(parent)
+DBRestManager::DBRestManager(QObject *parent) : IDBManager(parent)
 {
     _factory = new Factory();
     _apiKey = "3oUpZRiqZ_CiqIHFvv8YgwU5lfBMCCZg";
@@ -26,14 +24,15 @@ DBRestManager::~DBRestManager()
     delete _factory;
 }
 
-DBRestManager *DBRestManager::instance()
+void DBRestManager::setParameters(const QString &ip, const QString &database, const QString & username, const QString &password, const QString &filename)
 {
-    if (_instance == NULL)
-    {
-        _instance = new DBRestManager();
-    }
-    return _instance;
+    Q_UNUSED(ip)
+    Q_UNUSED(database);
+    Q_UNUSED(username);
+    Q_UNUSED(password);
+    Q_UNUSED(filename);
 }
+
 
 QString DBRestManager::connectionString() const
 {
@@ -418,16 +417,70 @@ void DBRestManager::on_updateAlarma_finished(HttpRequestWorker *worker)
 }
 
 
-void DBRestManager::historias(const QString queryString)
+void DBRestManager::historias(const QString &queryString)
 {
     QString url;
-    url = _baseURL + "/databases/" + _databaseName + "/collections/" + "historias" + "?q=" + queryString + "&apiKey=" + _apiKey;
-
+    if (queryString.length() > 0)
+    {
+        url = _baseURL + "/databases/" + _databaseName + "/collections/" + "historias" + "?q=" + queryString + "&apiKey=" + _apiKey;
+    }
+    else
+    {
+        url = _baseURL + "/databases/" + _databaseName + "/collections/" + "historias" + "?apiKey=" + _apiKey;
+    }
     HttpRequestInput req(url, "GET");
     HttpRequestWorker *worker = new HttpRequestWorker(this);
     connect(worker, &HttpRequestWorker::on_execution_finished, this, &DBRestManager::on_historias_finished);
 
     worker->execute(&req);
+}
+
+void DBRestManager::historias(QList<QSharedPointer<queryCondition> > &conditions)
+{
+    QString where = "";
+    if (conditions.count() > 0)
+    {
+        foreach(QSharedPointer<queryCondition> condition, conditions)
+        {
+            QString cond;
+            switch(condition->condition())
+            {
+            case queryCondition::conditionOperator::isNull:
+                break;
+            case queryCondition::conditionOperator::isNotNull:
+                break;
+            case queryCondition::conditionOperator::equals:
+                cond = QString("'%1':\"%2\"").arg(condition->fieldName()).arg(condition->values().at(0));
+                break;
+            case queryCondition::conditionOperator::notEquals:
+                break;
+            case queryCondition::conditionOperator::like:
+                cond = QString("$text : { $search : \"%1\" }").arg(condition->values().at(0));
+                break;
+            case queryCondition::conditionOperator::in:
+                break;
+            case queryCondition::conditionOperator::notIn:
+                break;
+            case queryCondition::conditionOperator::between:
+                break;
+            case queryCondition::conditionOperator::greaterThan:
+                break;
+            case queryCondition::conditionOperator::greaterOrEqual:
+                break;
+            case queryCondition::conditionOperator::lessThan:
+                break;
+            case queryCondition::conditionOperator::lessOrEqual:
+                break;
+            }
+            if (where.length() > 0)
+            {
+                where += ", ";
+            }
+            where += cond;
+        }
+        where = "{" + where + "}";
+    }
+    historias(where);
 }
 
 

@@ -19,7 +19,8 @@
 #ifdef USEMONGO
 #include "db/dbmanager.h"
 #else
-#include "db/dbrestmanaget.h"
+//#include "db/dbrestmanaget.h"
+#include "db/dbsingleton.h"
 #endif
 #include "dialogs/dlgsetalarma.h"
 
@@ -38,6 +39,10 @@
 #include "dialogs/dlgreportepatologiasdetectadas.h"
 #include "reporting/reports.h"
 
+// Backup / Restore
+#include "dialogs/dlgrestorefromcloud.h"
+#include "dialogs/dlgrestoringfromcloud.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -46,19 +51,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
 #ifdef USEMONGO
 #else
-    connect(DBRestManager::instance(), &DBRestManager::alarmaReturned, this, &MainWindow::on_alarmaReturned);
+    connect(DBSingleton::instance(), &DBSingleton::alarmaReturned, this, &MainWindow::on_alarmaReturned);
 
     //connect(DBRestManager::instance(), &DBRestManager::historiaReturned, this, &MainWindow::on_historiaReturned);
-    connect(DBRestManager::instance(), &DBRestManager::historiasReturned,  this, &MainWindow::on_historiasReturned);
-    connect(DBRestManager::instance(), &DBRestManager::alarmasReturned, this, &MainWindow::on_alarmasReturned);
+    connect(DBSingleton::instance(), &DBSingleton::historiasReturned,  this, &MainWindow::on_historiasReturned);
+    connect(DBSingleton::instance(), &DBSingleton::alarmasReturned, this, &MainWindow::on_alarmasReturned);
 
-    connect(DBRestManager::instance(), &DBRestManager::historiaInserted, this, &MainWindow::on_historiaInserted);
-    connect(DBRestManager::instance(), &DBRestManager::historiaUpdated, this, &MainWindow::on_historiaUpdated);
+    connect(DBSingleton::instance(), &DBSingleton::historiaInserted, this, &MainWindow::on_historiaInserted);
+    connect(DBSingleton::instance(), &DBSingleton::historiaUpdated, this, &MainWindow::on_historiaUpdated);
 
-    connect(DBRestManager::instance(), &DBRestManager::alarmaInserted, this, &MainWindow::on_alarmaInserted);
-    connect(DBRestManager::instance(), &DBRestManager::alarmaUpdated, this, &MainWindow::on_alarmaUpdated);
+    connect(DBSingleton::instance(), &DBSingleton::alarmaInserted, this, &MainWindow::on_alarmaInserted);
+    connect(DBSingleton::instance(), &DBSingleton::alarmaUpdated, this, &MainWindow::on_alarmaUpdated);
 
-    connect(DBRestManager::instance(), &DBRestManager::existeDNIReturned, this, &MainWindow::on_existeDNIReturned);
+    connect(DBSingleton::instance(), &DBSingleton::existeDNIReturned, this, &MainWindow::on_existeDNIReturned);
 #endif
 
     _factory = new Factory();
@@ -87,7 +92,7 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
 #ifdef USEMONGO
         dbManager::instance()->insertHistoria(historia);
 #else
-        DBRestManager::instance()->insertHistoria(historia);
+        DBSingleton::instance()->insertHistoria(historia);
 #endif
         AlarmaPtr alarma = dlg.alarma();
         if (!alarma.isNull())
@@ -95,7 +100,7 @@ void MainWindow::on_actionNuevaHistoriaClinica_triggered()
 #ifdef USEMONGO
             dbManager::instance()->insertAlarma(alarma);
 #else
-            DBRestManager::instance()->insertAlarma(alarma);
+            DBSingleton::instance()->insertAlarma(alarma);
 #endif
         }
     }
@@ -146,10 +151,12 @@ void MainWindow::on_pushButton_released()
     fillView();
 }
 #else
+//TODO: aca tengo que trabajar
 void MainWindow::on_pushButton_released()
 {
     _historias.clear();
     ui->statusBar->showMessage("Buscando registros", 2000);
+    /*
     _idHistoria = "";
     _html = "";
     QString queryString = "";
@@ -179,7 +186,28 @@ void MainWindow::on_pushButton_released()
     queryString = "{" + queryString + "}";
 
     qDebug() << queryString;
-    DBRestManager::instance()->historias(queryString);
+    DBSingleton::instance()->historias(queryString);*/
+    QList<QSharedPointer<queryCondition> > conditions;
+    if (ui->txtNombre->text().trimmed().length() > 0)
+    {
+        QSharedPointer<queryCondition> cond = QSharedPointer<queryCondition>::create("nombre", queryCondition::conditionOperator::like, QStringList() << ui->txtNombre->text().trimmed());
+        conditions.append(cond);
+    }
+    if (ui->txtDNI->text().trimmed().length() > 0)
+    {
+        QSharedPointer<queryCondition> cond = QSharedPointer<queryCondition>::create("dni", queryCondition::conditionOperator::equals, QStringList() << ui->txtDNI->text().trimmed());
+        conditions.append(cond);
+    }
+    if (ui->txtLocalidad->text().trimmed().length() > 0)
+    {
+        QSharedPointer<queryCondition> cond = QSharedPointer<queryCondition>::create("localidad", queryCondition::conditionOperator::like, QStringList() << ui->txtLocalidad->text().trimmed());
+        conditions.append(cond);
+    }
+    if (ui->radioPrimerConsulta->isChecked())
+    {
+        QSharedPointer<queryCondition> cond = QSharedPointer<queryCondition>::create("fechaSegundaConsulta", queryCondition::conditionOperator::equals, QStringList() << "-1");
+    }
+    DBSingleton::instance()->historias(conditions);
 }
 
 void MainWindow::on_historiasReturned(QMap<QString, HistoriaClinicaPtr> historias, bool error)
@@ -278,7 +306,7 @@ void MainWindow::on_tablePacientes_cellDoubleClicked(int row, int column)
 {
     _idHistoria = ui->tablePacientes->item(row, 0)->data(Qt::UserRole).toString();
     HistoriaClinicaPtr historia = _historias[_idHistoria];
-    DBRestManager::instance()->getAlarmaPaciente(_idHistoria);
+    DBSingleton::instance()->getAlarmaPaciente(_idHistoria);
 }
 
 
@@ -294,18 +322,18 @@ void MainWindow::on_alarmaReturned(AlarmaPtr alarma, bool error)
     if (dlg.exec() == QDialog::Accepted)
     {
         dlg.applyData();
-        DBRestManager::instance()->updateHistoria(historia);
+        DBSingleton::instance()->updateHistoria(historia);
 
         AlarmaPtr alarma = dlg.alarma();
         if (!alarma.isNull())
         {
             if (dlg.alarmaNueva())
             {
-                DBRestManager::instance()->insertAlarma(alarma);
+                DBSingleton::instance()->insertAlarma(alarma);
             }
             else
             {
-                DBRestManager::instance()->updateAlarma(alarma);
+                DBSingleton::instance()->updateAlarma(alarma);
             }
         }
     }
@@ -336,7 +364,7 @@ void MainWindow::refreshAlarmas()
 void MainWindow::refreshAlarmas()
 {
     ui->statusBar->showMessage("Buscando alarmas", 2000);
-    DBRestManager::instance()->alarmas();
+    DBSingleton::instance()->alarmas();
 }
 
 void MainWindow::on_alarmasReturned(QMap<QString, AlarmaPtr> alarmas, bool error)
@@ -362,7 +390,7 @@ void MainWindow::on_tableAlarmas_cellDoubleClicked(int row, int column)
 #ifdef USEMONGO
         dbManager::instance()->updateAlarma(alarma);
 #else
-        DBRestManager::instance()->updateAlarma(alarma);
+        DBSingleton::instance()->updateAlarma(alarma);
 #endif
     }
     refreshAlarmas();
@@ -454,4 +482,14 @@ void MainWindow::on_alarmaUpdated(AlarmaPtr alarma, bool error)
 
 void MainWindow::on_existeDNIReturned(const QString &dni, const QString &personaID, bool exists)
 {
+}
+
+void MainWindow::on_actionRecuperar_desde_la_nube_triggered()
+{
+    DlgRestoreFromCloud dlg;
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        DlgRestoringFromCloud dlg;
+        dlg.exec();
+    }
 }

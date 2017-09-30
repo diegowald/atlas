@@ -55,7 +55,9 @@ private:
     void fromArrayBson(std::vector<mongo::BSONElement> &arr, QList<PreguntaBasePtr> &list);
 #else
     QJsonArray arrayJson(QList<PreguntaBasePtr> list);
-    void fromArrayJson(QJsonArray &arr, QList<PreguntaBasePtr> &list);
+    void fromQJsonArray(QJsonArray &arr, QList<PreguntaBasePtr> &list);
+    void fromQObjectArray(QJsonObject &arr, QList<PreguntaBasePtr> &list);
+    void fromArrayJson(QJsonValue &arr, QList<PreguntaBasePtr> &list);
 #endif
 
     QString html(QList<PreguntaBasePtr> &lista, int cantColumnas);

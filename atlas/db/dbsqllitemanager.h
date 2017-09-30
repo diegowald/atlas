@@ -15,9 +15,11 @@ public:
     explicit DBSqlLiteManager(QObject *parent = nullptr);
     virtual ~DBSqlLiteManager();
 
+    virtual void setParameters(const QString &ip, const QString &database, const QString & username, const QString &password, const QString &filename);
+
     void getAlarmaPaciente(const QString &historiaID);
     void getHistoria(const QString &historiaID);
-    void historias(const QString query);
+    virtual void historias(const QString &query);
     virtual void historias(QList<QSharedPointer<queryCondition> > &conditions);
 
     void alarmas();
@@ -56,15 +58,7 @@ signals:
 private:
     Factory *_factory;
 
-    QString _connection;
-    QString _server;
-
-    QString _databaseName;
-    QString _user;
-    QString _password;
-
-    QString _apiKey;
-    QString _baseURL;
+    QString _filename;
 };
 
 #endif // DBSQLLITEMANAGER_H

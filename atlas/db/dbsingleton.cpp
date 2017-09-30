@@ -4,39 +4,45 @@
 #include "model/alarma.h"
 #include "model/historiaclinica.h"
 
-QSharedPointer<DBSingleton> DBSingleton::_instance = NULL;
+DBSingleton* DBSingleton::_instance = NULL;
 
 DBSingleton::DBSingleton(QObject *parent) : IDBManager(parent)
 {
-    //_dbManager = QSharedPointer<IDBManager>(new DBSqlLiteManager(this));
-    _dbManager = QSharedPointer<IDBManager>(new DBRestManager(this));
-    connect(_dbManager.data(), &IDBManager::alarmaReturned, this, &DBSingleton::alarmaReturned);
-    connect(_dbManager.data(), &IDBManager::historiaReturned, this, &DBSingleton::historiaReturned);
-    connect(_dbManager.data(), &IDBManager::historiasReturned, this, &DBSingleton::historiasReturned);
-    connect(_dbManager.data(), &IDBManager::alarmasReturned, this, &DBSingleton::alarmasReturned);
+    _dbManager = new DBSqlLiteManager(this);
+    //_dbManager = new DBRestManager(this);
+    connect(_dbManager, &IDBManager::alarmaReturned, this, &DBSingleton::on_alarmaReturned, Qt::AutoConnection);
+    connect(_dbManager, &IDBManager::historiaReturned, this, &DBSingleton::on_historiaReturned, Qt::AutoConnection);
+    connect(_dbManager, &IDBManager::historiasReturned, this, &DBSingleton::on_historiasReturned);
+    connect(_dbManager, &IDBManager::alarmasReturned, this, &DBSingleton::on_alarmasReturned);
 
-    connect(_dbManager.data(), &IDBManager::historiaInserted, this, &DBSingleton::historiaInserted);
-    connect(_dbManager.data(), &IDBManager::historiaUpdated, this, &DBSingleton::historiaUpdated);
+    connect(_dbManager, &IDBManager::historiaInserted, this, &DBSingleton::on_historiaInserted);
+    connect(_dbManager, &IDBManager::historiaUpdated, this, &DBSingleton::on_historiaUpdated);
 
-    connect(_dbManager.data(), &IDBManager::alarmaInserted, this, &DBSingleton::alarmaInserted);
-    connect(_dbManager.data(), &IDBManager::alarmaUpdated, this, &DBSingleton::alarmaUpdated);
+    connect(_dbManager, &IDBManager::alarmaInserted, this, &DBSingleton::on_alarmaInserted);
+    connect(_dbManager, &IDBManager::alarmaUpdated, this, &DBSingleton::on_alarmaUpdated);
 
-    connect(_dbManager.data(), &IDBManager::existeDNIReturned, this, &DBSingleton::existeDNIReturned);
+    connect(_dbManager, &IDBManager::existeDNIReturned, this, &DBSingleton::on_existeDNIReturned);
 }
 
 
 
 DBSingleton::~DBSingleton()
 {
+    _dbManager->deleteLater();
 }
 
-QSharedPointer<DBSingleton> DBSingleton::instance()
+DBSingleton* DBSingleton::instance()
 {
     if (_instance == NULL)
     {
-        _instance = QSharedPointer<DBSingleton>(new DBSingleton());
+        _instance = new DBSingleton();
     }
     return _instance;
+}
+
+void DBSingleton::setParameters(const QString &ip, const QString &database, const QString & username, const QString &password, const QString &filename)
+{
+    _dbManager->setParameters(ip, database, username, password, filename);
 }
 
 void DBSingleton::getAlarmaPaciente(const QString &historiaID)
@@ -82,4 +88,50 @@ void DBSingleton::updateAlarma(AlarmaPtr alarma)
 void DBSingleton::existeDNI(const QString &dni, const QString &personaID)
 {
     _dbManager->existeDNI(dni, personaID);
+}
+
+
+void DBSingleton::on_alarmaReturned(AlarmaPtr alarma, bool error)
+{
+    emit alarmaReturned(alarma, error);
+}
+
+void DBSingleton::on_historiaReturned(HistoriaClinicaPtr historia, bool error)
+{
+    emit historiaReturned(historia, error);
+}
+
+void DBSingleton::on_historiasReturned(QMap<QString, HistoriaClinicaPtr> historias, bool error)
+{
+    emit historiasReturned(historias, error);
+}
+
+void DBSingleton::on_alarmasReturned(QMap<QString, AlarmaPtr> alarmas, bool error)
+{
+    emit alarmasReturned(alarmas, error);
+}
+
+void DBSingleton::on_historiaInserted(HistoriaClinicaPtr historia, bool error)
+{
+    emit historiaInserted(historia, error);
+}
+
+void DBSingleton::on_historiaUpdated(HistoriaClinicaPtr historia, bool error)
+{
+    emit historiaUpdated(historia, error);
+}
+
+void DBSingleton::on_alarmaInserted(AlarmaPtr alarma, bool error)
+{
+    emit alarmaInserted(alarma, error);
+}
+
+void DBSingleton::on_alarmaUpdated(AlarmaPtr alarma, bool error)
+{
+    emit alarmaUpdated(alarma, error);
+}
+
+void DBSingleton::on_existeDNIReturned(const QString &dni, const QString &personaID, bool exists, bool error)
+{
+    emit existeDNIReturned(dni, personaID, exists, error);
 }

@@ -19,10 +19,14 @@ public:
     QString database();
     QString username();
     QString password();
+    QString filename();
+
 private slots:
     void on_radioIPLocal_toggled(bool checked);
 
     void on_buttonBox_accepted();
+
+    void on_btnOpenFIle_clicked();
 
 private:
     Ui::DialogDBServer *ui;

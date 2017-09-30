@@ -9,8 +9,10 @@ class DBSingleton : public IDBManager
 {
     Q_OBJECT
 public:
-    static QSharedPointer<DBSingleton> instance();
+    static DBSingleton* instance();
     virtual ~DBSingleton();
+
+    void setParameters(const QString &ip, const QString &database, const QString & username, const QString &password, const QString &filename);
 
     // IDBManager interface
 public:
@@ -28,10 +30,24 @@ public:
 private:
     explicit DBSingleton(QObject *parent = nullptr);
 
-private:
-    static QSharedPointer<DBSingleton> _instance;
+private slots:
+    void on_alarmaReturned(AlarmaPtr alarma, bool error);
+    void on_historiaReturned(HistoriaClinicaPtr historia, bool error);
+    void on_historiasReturned(QMap<QString, HistoriaClinicaPtr> historias, bool error);
+    void on_alarmasReturned(QMap<QString, AlarmaPtr> alarmas, bool error);
 
-    QSharedPointer<IDBManager> _dbManager;
+    void on_historiaInserted(HistoriaClinicaPtr historia, bool error);
+    void on_historiaUpdated(HistoriaClinicaPtr historia, bool error);
+
+    void on_alarmaInserted(AlarmaPtr alarma, bool error);
+    void on_alarmaUpdated(AlarmaPtr alarma, bool error);
+
+    void on_existeDNIReturned(const QString &dni, const QString &personaID, bool exists, bool error);
+
+private:
+    static DBSingleton* _instance;
+
+    IDBManager* _dbManager;
 
 
 };

@@ -16,6 +16,8 @@ public:
     IDBManager(QObject *parent = nullptr) : QObject(parent) {}
     virtual ~IDBManager() {}
 
+    virtual void setParameters(const QString &ip, const QString &database, const QString & username, const QString &password, const QString &filename) = 0;
+
     virtual void getAlarmaPaciente(const QString &historiaID) = 0;
     virtual void getHistoria(const QString &historiaID) = 0;
     //virtual void historias(const QString query) = 0;
@@ -31,6 +33,8 @@ public:
     virtual void updateAlarma(AlarmaPtr alarma) = 0;
 
     virtual void existeDNI(const QString &dni, const QString &personaID) = 0;
+
+
 
 signals:
     void alarmaReturned(AlarmaPtr alarma, bool error);

@@ -2,20 +2,18 @@
 #include <QDebug>
 #include "model/alarma.h"
 #include "model/historiaclinica.h"
+#include "model/persona.h"
 #include <QMessageBox>
 #include <QApplication>
 #include <QDate>
 
 #include <QJsonDocument>
 #include <QtSql/QSqlQuery>
-
+#include <QSqlError>
+#include <QVariant>
 
 DBSqlLiteManager::DBSqlLiteManager(QObject *parent) : IDBManager(parent)
 {
-    _factory = new Factory();
-    _apiKey = "3oUpZRiqZ_CiqIHFvv8YgwU5lfBMCCZg";
-    _baseURL = "https://api.mlab.com/api/1";
-    _databaseName = "atlasdev";
 }
 
 
@@ -24,39 +22,55 @@ DBSqlLiteManager::~DBSqlLiteManager()
     delete _factory;
 }
 
+void DBSqlLiteManager::setParameters(const QString &ip, const QString &database, const QString & username, const QString &password, const QString &filename)
+{
+    Q_UNUSED(ip);
+    Q_UNUSED(database);
+    Q_UNUSED(username);
+    Q_UNUSED(password);
+    _filename = filename;
+}
+
 QSqlDatabase DBSqlLiteManager::getDB()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(_filename);
+    db.open();
     return db;
 }
 
 QString DBSqlLiteManager::connectionString() const
 {
-    return _connection;
+    return _filename;
 }
 
 
 void DBSqlLiteManager::getAlarmaPaciente(const QString &historiaID)
 {
-    QString SQL;
-    SQL = "select doc from alarmas where historiaID = '" + historiaID + "'";
-
     QSqlDatabase db = getDB();
 
-    QSqlQuery res = db.exec(SQL);
+    QString SQL;
+    SQL = "select doc from alarmas where historiaID = :historiaID";
+
+    QSqlQuery query;
+    query.prepare(SQL);
+    query.bindValue(":historiaID", historiaID);
+
+    query.exec();
+    qDebug() << query.lastError().text();
 
     QString resDoc = "";
-    while (res.next())
+    while (query.next())
     {
-        resDoc= res.value(0).toString();
+        resDoc = query.value(0).toString();
+        break;
     }
 
     qDebug() << resDoc;
     AlarmaPtr alarma;
 
-    bool error = resDoc.length() == 0;
-
-    if (!error)
+    bool error = false;
+    if (resDoc.length() > 0)
     {
         QJsonDocument doc = QJsonDocument::fromJson(resDoc.toLatin1());
         QJsonObject obj = doc.object();
@@ -65,7 +79,7 @@ void DBSqlLiteManager::getAlarmaPaciente(const QString &historiaID)
             alarma = Factory::crearAlarma(obj);
         }
     }
-    emit alarmaReturned(alarma, error);
+    emit IDBManager::alarmaReturned(alarma, error);
 }
 
 void DBSqlLiteManager::getHistoria(const QString & historiaID)
@@ -73,16 +87,21 @@ void DBSqlLiteManager::getHistoria(const QString & historiaID)
     HistoriaClinicaPtr historia;
     if (historiaID.length() > 0)
     {
-        QString SQL;
-        SQL = "select doc from historias where historiaID = '" + historiaID + "'";
         QSqlDatabase db = getDB();
 
-        QSqlQuery res = db.exec(SQL);
+        QString SQL;
+        SQL = "select doc from historias where historiaID = :historiaID";
+
+        QSqlQuery query;
+        query.prepare(SQL);
+        query.bindValue(":historiaID", historiaID);
+
+        query.exec();
 
         QString resDoc = "";
-        while (res.next())
+        while (query.next())
         {
-            resDoc = res.value(0).toString();
+            resDoc = query.value(0).toString();
         }
 
         bool error = resDoc.length() == 0;
@@ -96,7 +115,7 @@ void DBSqlLiteManager::getHistoria(const QString & historiaID)
             if (!obj.isEmpty())
                 historia = _factory->crearHistoria(obj);
         }
-        emit historiaReturned(historia, error);
+        emit IDBManager::historiaReturned(historia, error);
     }
 }
 
@@ -104,20 +123,22 @@ void DBSqlLiteManager::getHistoria(const QString & historiaID)
 
 void DBSqlLiteManager::alarmas()
 {
-    QString SQL;
-    SQL = "select doc from alarmas where realizado = 0 and fechaAlarma <= %1";
-    SQL = SQL.arg(QDate::currentDate().toJulianDay());
-
     QSqlDatabase db = getDB();
+    QString SQL;
+    SQL = "select doc from alarmas where realizado = 0 and fechaAlarma <= :fechaAlarma";
 
-    QSqlQuery res = db.exec(SQL);
+    QSqlQuery query;
+    query.prepare(SQL);
+    query.bindValue(":fechaAlarma", QDate::currentDate().toJulianDay());
+
+    query.exec();
 
     bool error = false;
     QMap<QString, AlarmaPtr> alarmas;
-    while (res.next())
+    while (query.next())
     {
 
-        QString resDoc = res.value(0).toString();
+        QString resDoc = query.value(0).toString();
         QJsonDocument doc = QJsonDocument::fromJson(resDoc.toLatin1());
 
         QJsonObject obj = doc.object();
@@ -128,79 +149,115 @@ void DBSqlLiteManager::alarmas()
                 alarmas[alarma->id()] = alarma;
         }
     }
-    emit alarmasReturned(alarmas, error);
+    emit IDBManager::alarmasReturned(alarmas, error);
 }
 
 
 
 void DBSqlLiteManager::insertHistoria(HistoriaClinicaPtr historia)
 {
-    QString SQL = "insert into historias (historiaID, doc) values ('%1', '%2')";
+    QString SQL = "insert into historias (historiaID, doc, nombre, dni, localidad, fechaSegundaConsulta) values (:historiaID, :doc, :nombre, :dni, :localidad, :fechaSegundaConsulta)";
     QJsonDocument doc;
     doc.setObject(historia->toJson());
-    SQL = SQL.arg(historia->idString()).arg(QString(doc.toJson()));
 
     QSqlDatabase db = getDB();
-    db.exec(SQL);
+    QSqlQuery query;
+    query.prepare(SQL);
+    query.bindValue(":historiaID", historia->idString());
+    query.bindValue(":doc", QString(doc.toJson()));
+    query.bindValue(":nombre", historia->persona()->nombre());
+    query.bindValue(":dni", historia->persona()->dni());
+    query.bindValue(":localidad", historia->persona()->localidad());
+    query.bindValue(":fechaSegundaConsulta", historia->fechaSegundaConsulta());
+    query.exec();
 
+    qDebug() << db.lastError().text();
     bool error = false;
-    emit historiaInserted(historia, error);
+    emit IDBManager::historiaInserted(historia, error);
 }
 
 
 void DBSqlLiteManager::updateHistoria(HistoriaClinicaPtr historia)
 {
-    QString SQL = "UPDATE historias SET doc = '%1' WHERE historiaID = '%2'";
+    QSqlDatabase db = getDB();
+
+    QString SQL = "UPDATE historias SET doc = :doc, nombre = :nombre, dni = :dni, localidad = :localidad, fechaSegundaConsulta = :fechaSegundaConsulta  WHERE historiaID = :historiaID";
+
     QJsonDocument doc;
     doc.setObject(historia->toJson());
-    SQL = SQL.arg(QString(doc.toJson())).arg(historia->idString());
 
-    QSqlDatabase db = getDB();
-    db.exec(SQL);
+    QSqlQuery query;
+    query.prepare(SQL);
+    query.bindValue(":doc", QString(doc.toJson()));
+    qDebug() << QString(doc.toJson());
+    query.bindValue(":nombre", historia->persona()->nombre());
+    query.bindValue(":dni", historia->persona()->dni());
+    query.bindValue(":localidad", historia->persona()->localidad());
+    query.bindValue(":fechaSegundaConsulta", historia->fechaSegundaConsulta());
+    query.bindValue(":historiaID", historia->idString());
 
-    bool error = false;
-    emit historiaUpdated(historia, error);
+    bool error = query.exec();
+    qDebug() << db.lastError().databaseText();
+    emit IDBManager::historiaUpdated(historia, error);
 }
 
 void DBSqlLiteManager::insertAlarma(AlarmaPtr alarma)
 {
-    QString SQL = "insert into alarmas (alarmaID, historiaID, doc, realizado, fechaAlarma) VALUES ('%1', '%2', '%3', %4, %5)";
+    QSqlDatabase db = getDB();
+    QString SQL = "insert into alarmas (alarmaID, historiaID, doc, realizado, fechaAlarma) VALUES (:alarmaID, :historiaID, :doc, :realizado, :fechaAlarma)";
     QJsonDocument doc;
     doc.setObject(alarma->toJson());
 
-    SQL = SQL.arg(alarma->idString()).arg(alarma->historiaClinica()->idString()).arg(QString(doc.toJson())).arg(alarma->realizado()).arg(alarma->fechaAlarma().toJulianDay());
+    QSqlQuery query;
+    query.prepare(SQL);
 
-    QSqlDatabase db = getDB();
-    db.exec(SQL);
+    query.bindValue(":alarmaID", alarma->idString());
+    query.bindValue(":historiaID", alarma->historiaClinica().isNull() ? "" : alarma->historiaClinica()->idString());
+    qDebug() << doc.toJson();
+    query.bindValue(":doc", QString(doc.toJson()));
+    query.bindValue(":realizado", alarma->realizado() ? 1 : 0);
+    query.bindValue(":fechaAlarma", alarma->fechaAlarma().toJulianDay());
 
+    query.exec();
+qDebug() << query.lastError().text();
     bool error = false;
-    emit alarmaInserted(alarma, error);
+    emit IDBManager::alarmaInserted(alarma, error);
 }
 
 void DBSqlLiteManager::updateAlarma(AlarmaPtr alarma)
 {
-    QString SQL = "update alarmas set historiaID = '%1', doc = '%2', realizado = %3, fechaAlarma = %4 where alarmaID = '%5'";
+    QSqlDatabase db = getDB();
+
+
+    QString SQL = "update alarmas set historiaID = :historiaID, doc = :doc, realizado = :realizado, fechaAlarma = :fechaALarma where alarmaID = :alarmaID";
     QJsonDocument doc;
     doc.setObject(alarma->toJson());
-    SQL = SQL.arg(alarma->historiaClinica()->idString()).arg(QString(doc.toJson())).arg(alarma->realizado()).arg(alarma->fechaAlarma().toJulianDay()).arg(alarma->idString());
 
-    QSqlDatabase db = getDB();
-    db.exec(SQL);
+    QSqlQuery  query;
+    query.prepare(SQL);
+    query.bindValue(":historiaID", alarma->historiaClinica()->idString());
+    query.bindValue(":doc", QString(doc.toJson()));
+    query.bindValue(":realizado", alarma->realizado());
+    query.bindValue(":fechaALarma", alarma->fechaAlarma().toJulianDay());
+    query.bindValue(":alarmaID", alarma->idString());
 
-    bool error = false;
+    bool error = query.exec();
 
-    emit alarmaUpdated(alarma, error);
+    emit IDBManager::alarmaUpdated(alarma, error);
 }
 
 
-void DBSqlLiteManager::historias(const QString queryString)
+void DBSqlLiteManager::historias(const QString &queryString)
 {
-    QString SQL = "SELECT doc from historias WHERE %1";
-    SQL = SQL.arg(queryString);
+    QString SQL = "SELECT doc from historias";
+    if (queryString.trimmed().length() > 0)
+    {
+        SQL = SQL + " WHERE " + queryString;
+    }
 
     QSqlDatabase db = getDB();
     QSqlQuery res = db.exec(SQL);
-
+    qDebug() << res.lastError().text();
     QMap<QString, HistoriaClinicaPtr> map;
 
     bool error = false;
@@ -208,17 +265,21 @@ void DBSqlLiteManager::historias(const QString queryString)
     {
         QString resDoc = res.value(0).toString();
 
-        QJsonDocument doc = QJsonDocument::fromJson(resDoc.toLatin1());
+        QJsonDocument doc = QJsonDocument::fromJson(resDoc.toUtf8());
+
+        qDebug() << doc.toJson();
 
         QJsonObject obj = doc.object();
+        qDebug() << obj;
         if (!obj.isEmpty())
         {
             HistoriaClinicaPtr historia = _factory->crearHistoria(obj);
+            qDebug() << historia->idString();
             map[historia->id()] = historia;
         }
     }
 
-    emit historiasReturned(map, error);
+    emit IDBManager::historiasReturned(map, error);
 }
 
 void DBSqlLiteManager::historias(QList<QSharedPointer<queryCondition>> &conditions)
@@ -314,5 +375,5 @@ void DBSqlLiteManager::existeDNI(const QString &dni, const QString &personaID)
     }
 
     bool error = false;
-    emit existeDNIReturned(dni, personaID, exists, error);
+    emit IDBManager::existeDNIReturned(dni, personaID, exists, error);
 }

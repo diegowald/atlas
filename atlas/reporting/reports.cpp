@@ -2,7 +2,8 @@
 #ifdef USEMONGO
 #include "../db/dbmanager.h"
 #else
-#include "../db/dbrestmanaget.h"
+//#include "../db/dbrestmanaget.h"
+#include "../db/dbsingleton.h"
 #endif
 #include <QDate>
 #include <QMap>
@@ -15,7 +16,8 @@
 Reports::Reports(QObject *parent) : QObject(parent)
 {
 #ifndef USEMONGO
-    connect(DBRestManager::instance(), &DBRestManager::historiasReturned, this, &Reports::on_historiasReturned);
+    connect(DBSingleton::instance(), &DBSingleton::historiasReturned, this, &Reports::on_historiasReturned);
+
 #endif
 }
 
@@ -61,17 +63,29 @@ QDialog *Reports::runContabilizacionPatologiasEntreFechas(QDate &dateFrom, QDate
 #else
 QDialog *Reports::runContabilizacionPatologiasEntreFechas(QDate &dateFrom, QDate &dateTo, bool filterOn1stAppt, QWidget *parent)
 {
-    QString queryPattern = "{%1: { $gt: %2, $lt: %3 } }";
+/*    QString queryPattern = "{%1: { $gt: %2, $lt: %3 } }";
     QString query = queryPattern
             .arg(filterOn1stAppt ? "FechaPrimerConsulta" : "FechaSegundaConsulta")
             .arg(dateFrom.toJulianDay())
             .arg(dateTo.toJulianDay());
 
+
+    DBSingleton::instance()->historias(query);
+*/
     _dateFrom = dateFrom;
     _dateTo = dateTo;
     _filterOn1stAppt = filterOn1stAppt;
+    QList<QSharedPointer<queryCondition>> conditions;
 
-    DBRestManager::instance()->historias(query);
+    QSharedPointer<queryCondition> cond = QSharedPointer<queryCondition>::create(filterOn1stAppt ? "FechaPrimerConsulta" : "FechaSegundaConsulta",
+                                                                                 queryCondition::conditionOperator::greaterOrEqual,
+                                                                                 QStringList() << QString::number(dateFrom.toJulianDay()));
+    conditions.append(cond);
+    cond = QSharedPointer<queryCondition>::create(filterOn1stAppt ? "FechaPrimerConsulta" : "FechaSegundaConsulta",
+                                                                                 queryCondition::conditionOperator::lessOrEqual,
+                                                                                 QStringList() << QString::number(dateTo.toJulianDay()));
+    conditions.append(cond);
+    DBSingleton::instance()->historias(conditions);
 
     _dlg = new DlgReporte();
     return _dlg;

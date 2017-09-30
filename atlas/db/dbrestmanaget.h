@@ -4,20 +4,23 @@
 #include <QObject>
 #include "model/factory.h"
 #include "httprequestworker.h"
+#include "idbmanager.h"
 
-class DBRestManager : public QObject
+class DBRestManager : public IDBManager
 {
     Q_OBJECT
 public:
+    explicit DBRestManager(QObject *parent = 0);
     virtual ~DBRestManager();
 
-    static DBRestManager* instance();
+    virtual void setParameters(const QString &ip, const QString &database, const QString & username, const QString &password, const QString &filename);
 
     //void setDB(const QString &server, const QString &databaseName, const QString &user, const QString &password);
 
     void getAlarmaPaciente(const QString &historiaID);
     void getHistoria(const QString &historiaID);
-    void historias(const QString query);
+    void historias(const QString &query);
+    virtual void historias(QList<QSharedPointer<queryCondition> > &conditions);
 
     void alarmas();
 
@@ -35,7 +38,6 @@ protected:
     //void connectToDatabase(mongo::DBClientConnection &conn);
 
 private:
-    explicit DBRestManager(QObject *parent = 0);
 
     void error(const QString &operacion, const QString &mensaje);
 
@@ -74,8 +76,6 @@ public slots:
 
 
 private:
-    static DBRestManager *_instance;
-
     Factory *_factory;
 
     QString _connection;
