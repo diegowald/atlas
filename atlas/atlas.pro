@@ -165,9 +165,9 @@ FORMS    += mainwindow.ui \
     dialogs/dlgrestorefromcloud.ui \
     dialogs/dlgrestoringfromcloud.ui
 
-win32:QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
-win32:DEFINES+="WINVER=0x0501"
-win32:DEFINES+="_WIN32_WINNT=0x0501"
+#win32:QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+#win32:DEFINES+="WINVER=0x0501"
+#win32:DEFINES+="_WIN32_WINNT=0x0501"
 
 RESOURCES += \
     atlas.qrc

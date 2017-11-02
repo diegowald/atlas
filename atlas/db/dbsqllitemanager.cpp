@@ -35,7 +35,11 @@ QSqlDatabase DBSqlLiteManager::getDB()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(_filename);
-    db.open();
+    bool opened = db.open();
+    if (!opened)
+    {
+        QMessageBox::information(NULL, "Open", db.lastError().text());
+    }
     return db;
 }
 
@@ -254,7 +258,7 @@ void DBSqlLiteManager::historias(const QString &queryString)
     {
         SQL = SQL + " WHERE " + queryString;
     }
-
+qDebug() << SQL;
     QSqlDatabase db = getDB();
     QSqlQuery res = db.exec(SQL);
     qDebug() << res.lastError().text();

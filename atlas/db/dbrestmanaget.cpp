@@ -500,7 +500,7 @@ void DBRestManager::on_historias_finished(HttpRequestWorker *worker)
         error = true;
     }
 
-    //qDebug() << msg;
+    qDebug() << msg;
 
     QMap<QString, HistoriaClinicaPtr> map;
 

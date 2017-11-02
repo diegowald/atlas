@@ -2,7 +2,9 @@
 
 queryCondition::queryCondition(const QString &fieldName, const conditionOperator condition, const QStringList &values, QObject *parent) : QObject(parent)
 {
-
+    _fieldName = fieldName;
+    _condition = condition;
+    _values = values;
 }
 
 queryCondition::~queryCondition()
