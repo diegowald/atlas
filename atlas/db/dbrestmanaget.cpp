@@ -16,7 +16,7 @@ DBRestManager::DBRestManager(QObject *parent) : IDBManager(parent)
     _factory = new Factory();
     _apiKey = "3oUpZRiqZ_CiqIHFvv8YgwU5lfBMCCZg";
     _baseURL = "https://api.mlab.com/api/1";
-    _databaseName = "atlasdev";
+    _databaseName = "atlas";
 }
 
 DBRestManager::~DBRestManager()
