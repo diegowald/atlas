@@ -307,7 +307,7 @@ void DBSqlLiteManager::historias(QList<QSharedPointer<queryCondition>> &conditio
             cond += " <> '" + condition->values().at(0) + "'";
             break;
         case queryCondition::conditionOperator::like:
-            cond += " = '%" + condition->values().at(0) + "%'";
+            cond += " like '%" + condition->values().at(0) + "%'";
             break;
         case queryCondition::conditionOperator::in:
             cond += " in (";

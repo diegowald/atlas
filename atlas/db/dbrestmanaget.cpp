@@ -422,11 +422,11 @@ void DBRestManager::historias(const QString &queryString)
     QString url;
     if (queryString.length() > 0)
     {
-        url = _baseURL + "/databases/" + _databaseName + "/collections/" + "historias" + "?q=" + queryString + "&apiKey=" + _apiKey;
+        url = _baseURL + "/databases/" + _databaseName + "/collections/" + "historias" + "?q=" + queryString + "&l=10000&apiKey=" + _apiKey;
     }
     else
     {
-        url = _baseURL + "/databases/" + _databaseName + "/collections/" + "historias" + "?apiKey=" + _apiKey;
+        url = _baseURL + "/databases/" + _databaseName + "/collections/" + "historias" + "?l=10000&apiKey=" + _apiKey;
     }
     HttpRequestInput req(url, "GET");
     HttpRequestWorker *worker = new HttpRequestWorker(this);
